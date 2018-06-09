@@ -11,6 +11,11 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/info', function () {
+    echo phpinfo(); die;
+
     return view('welcome');
 });
+
+
+Route::get('/mongo', 'TestController@index');
