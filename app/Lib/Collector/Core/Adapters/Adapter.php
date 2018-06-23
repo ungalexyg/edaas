@@ -1,15 +1,18 @@
 <?php
 
-namespace Embed\Adapters;
+namespace App\Lib\Collector\Core\Adapters;
 
-use Embed\Bag;
-use Embed\DataInterface;
-use Embed\Http\DispatcherInterface;
-use Embed\Http\ImageResponse;
-use Embed\Http\Response;
-use Embed\Http\Url;
-use Embed\Providers\Provider;
-use Embed\Utils;
+use App\Lib\Collector\Core\Bag;
+use App\Lib\Collector\Core\DataInterface;
+use App\Lib\Collector\Core\Http\DispatcherInterface;
+use App\Lib\Collector\Core\Http\ImageResponse;
+use App\Lib\Collector\Core\Http\Response;
+use App\Lib\Collector\Core\Http\Url;
+use App\Lib\Collector\Core\Providers\Provider;
+use App\Lib\Collector\Core\Utils;
+
+
+
 
 /**
  * Base class extended by all adapters.

@@ -1,9 +1,9 @@
 <?php
 
-namespace Embed\Adapters;
+namespace App\Lib\Collector\Core\Adapters;
 
-use Embed\Http\Response;
-use Embed\Utils;
+use App\Lib\Collector\Core\Http\Response;
+use App\Lib\Collector\Core\Utils;
 
 /**
  * Adapter to generate embed code from pastie.org.

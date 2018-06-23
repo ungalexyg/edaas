@@ -1,8 +1,8 @@
 <?php
 
-namespace Embed\Http;
+namespace App\Lib\Collector\Core\Http;
 
-use Embed\Exceptions\EmbedException;
+use App\Lib\Collector\Core\Exceptions\EmbedException;
 use Composer\CaBundle\CaBundle;
 use stdClass;
 

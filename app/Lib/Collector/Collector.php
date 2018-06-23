@@ -1,18 +1,49 @@
+
 <?php 
 
 /*
 
+
 ###############################
-# Get posts data of user 
+# General flow
 ###############################
+
+/*
+|--------------------------------------------------------------------------
+| Prospect-Items collection
+|--------------------------------------------------------------------------
+|
+| Collect daily movers & shakers titles from "Root channels" 
+| 
+| "Root channels" = primary channels that initiate the growth & movement
+|
+
+- amazon 
+- ebay
+- others
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Zoom on Prospect
+|--------------------------------------------------------------------------
+|
+| Identify Prospect in "Discovery Channels"   
+| - FB
+
+
+
+
 
 #---------------------------
-# search in google fb title
+# search in google title per 
 #---------------------------
 
-# trems : 
-"site:facebook.com: Prismware Cutlery/Silverware Set (4 Pieces)"
-
+# trem : 
+site:facebook.com: Prismware Cutlery/Silverware Set (4 Pieces)
+site:www.facebook.com: Egg Poacher – COZILIFE Silicone Egg Poaching Cups with Ring Standers, For Microwave or Stovetop Egg Cooking, Kraft Box Packing, BPA Free, Pack of 4
 
 
 #---------------------------

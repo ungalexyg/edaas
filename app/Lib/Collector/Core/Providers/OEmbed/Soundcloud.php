@@ -1,6 +1,6 @@
 <?php
 
-namespace Embed\Providers\OEmbed;
+namespace App\Lib\Collector\Core\Providers\OEmbed;
 
 class Soundcloud extends EndPoint implements EndPointInterface
 {

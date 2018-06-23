@@ -1,10 +1,10 @@
 <?php
 
-namespace Embed\Adapters;
+namespace App\Lib\Collector\Core\Adapters;
 
-use Embed\Http\Response;
-use Embed\Utils;
-use Embed\Providers\Api;
+use App\Lib\Collector\Core\Http\Response;
+use App\Lib\Collector\Core\Utils;
+use App\Lib\Collector\Core\Providers\Api;
 
 /**
  * Adapter to provide information from archive.org API.

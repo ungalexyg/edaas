@@ -1,8 +1,8 @@
 <?php
 
-namespace Embed\Adapters;
+namespace App\Lib\Collector\Core\Adapters;
 
-use Embed\Http\Response;
+use App\Lib\Collector\Core\Http\Response;
 
 /**
  * Adapter to generate embed code from SassMeister.

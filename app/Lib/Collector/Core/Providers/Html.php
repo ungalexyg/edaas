@@ -1,10 +1,10 @@
 <?php
 
-namespace Embed\Providers;
+namespace App\Lib\Collector\Core\Providers;
 
-use Embed\Utils;
-use Embed\Adapters\Adapter;
-use Embed\Http\Url;
+use App\Lib\Collector\Core\Utils;
+use App\Lib\Collector\Core\Adapters\Adapter;
+use App\Lib\Collector\Core\Http\Url;
 use DOMDocument;
 use Exception;
 

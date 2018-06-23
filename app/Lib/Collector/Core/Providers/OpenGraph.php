@@ -1,9 +1,9 @@
 <?php
 
-namespace Embed\Providers;
+namespace App\Lib\Collector\Core\Providers;
 
-use Embed\Adapters\Adapter;
-use Embed\Utils;
+use App\Lib\Collector\Core\Adapters\Adapter;
+use App\Lib\Collector\Core\Utils;
 
 /**
  * Provider to get the data from the Open Graph elements in the HTML

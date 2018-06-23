@@ -1,10 +1,10 @@
 <?php
 
-namespace Embed\Providers;
+namespace App\Lib\Collector\Core\Providers;
 
-use Embed\Adapters\Adapter;
-use Embed\DataInterface;
-use Embed\Bag;
+use App\Lib\Collector\Core\Adapters\Adapter;
+use App\Lib\Collector\Core\DataInterface;
+use App\Lib\Collector\Core\Bag;
 
 /**
  * Abstract class used by all providers.

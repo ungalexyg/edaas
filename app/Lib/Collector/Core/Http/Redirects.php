@@ -1,6 +1,6 @@
 <?php
 
-namespace Embed\Http;
+namespace App\Lib\Collector\Core\Http;
 
 /**
  * Class to resolve some specific redirections.

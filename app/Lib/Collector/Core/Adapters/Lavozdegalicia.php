@@ -1,8 +1,8 @@
 <?php
 
-namespace Embed\Adapters;
+namespace App\Lib\Collector\Core\Adapters;
 
-use Embed\Http\Response;
+use App\Lib\Collector\Core\Http\Response;
 
 /**
  * Adapter to provide all information from lavozdegalicia.es that needs a special query parameter to generate a session cookie.

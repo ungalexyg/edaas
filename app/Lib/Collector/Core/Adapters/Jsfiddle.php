@@ -1,8 +1,8 @@
 <?php
 
-namespace Embed\Adapters;
+namespace App\Lib\Collector\Core\Adapters;
 
-use Embed\Utils;
+use App\Lib\Collector\Core\Utils;
 
 /**
  * Adapter to fix some issues from jsfiddle.

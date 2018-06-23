@@ -1,8 +1,8 @@
 <?php
 
-namespace Embed\Exceptions;
+namespace App\Lib\Collector\Core\Exceptions;
 
-use Embed\Http\Response;
+use App\Lib\Collector\Core\Http\Response;
 
 class InvalidUrlException extends EmbedException
 {

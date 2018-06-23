@@ -38,7 +38,7 @@ If you cannot (or don't want to) use composer, just include the [PSR-4 autoload.
 ## Usage
 
 ```php
-use Embed\Embed;
+use App\Lib\Collector\Core\Embed;
 
 //Load any url:
 $info = Embed::create('https://www.youtube.com/watch?v=PP1xn5wHtxE');
@@ -186,11 +186,11 @@ $info = Embed::create($url, [
 To dispatch the http request, Embed includes the interface `Embed\Http\DispatcherInterface`. By default the curl library is used but you can create your own dispatcher to use any other library like [guzzle](https://github.com/guzzle/guzzle):
 
 ```php
-use Embed\Embed;
-use Embed\Http\DispatcherInteface;
-use Embed\Http\Url;
-use Embed\Http\Response;
-use Embed\Http\ImageResponse;
+use App\Lib\Collector\Core\Embed;
+use App\Lib\Collector\Core\Http\DispatcherInteface;
+use App\Lib\Collector\Core\Http\Url;
+use App\Lib\Collector\Core\Http\Response;
+use App\Lib\Collector\Core\Http\ImageResponse;
 
 class MyDispatcher implements DispatcherInterface
 {
@@ -224,8 +224,8 @@ $info = Embed::create('http://example.com', null, new MyDispatcher());
 The default curl dispatcher accepts the same options that the [curl_setopt PHP function](http://php.net/manual/en/function.curl-setopt.php). You can edit the default values:
 
 ```php
-use Embed\Embed;
-use Embed\Http\CurlDispatcher;
+use App\Lib\Collector\Core\Embed;
+use App\Lib\Collector\Core\Http\CurlDispatcher;
 
 $dispatcher = new CurlDispatcher([
     CURLOPT_MAXREDIRS => 20,
@@ -247,7 +247,7 @@ $info = Embed::create('http://example.com', null, $dispatcher);
 The adapter get the data from all providers and choose the best values. But you can get all available values accessing directly to each provider. There's also the possibility to inspect all http requests executed for debug purposes:
 
 ```php
-use Embed\Embed;
+use App\Lib\Collector\Core\Embed;
 
 //Get the info
 $info = Embed::create('https://www.youtube.com/watch?v=PP1xn5wHtxE');

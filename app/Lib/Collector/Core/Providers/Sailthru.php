@@ -1,8 +1,8 @@
 <?php
 
-namespace Embed\Providers;
+namespace App\Lib\Collector\Core\Providers;
 
-use Embed\Adapters\Adapter;
+use App\Lib\Collector\Core\Adapters\Adapter;
 
 /**
  * Provider to get the data from the Sailthru data elements in the HTML

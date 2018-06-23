@@ -1,8 +1,8 @@
 <?php
 
-namespace Embed\Adapters;
+namespace App\Lib\Collector\Core\Adapters;
 
-use Embed\Providers;
+use App\Lib\Collector\Core\Providers;
 
 /**
  * Adapter to provide all information from any webpage.

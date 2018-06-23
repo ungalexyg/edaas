@@ -1,6 +1,6 @@
 <?php
 
-namespace Embed;
+namespace App\Lib\Collector\Core;
 
 /**
  * Class to store and access to data.

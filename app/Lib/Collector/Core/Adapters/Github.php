@@ -1,9 +1,9 @@
 <?php
 
-namespace Embed\Adapters;
+namespace App\Lib\Collector\Core\Adapters;
 
-use Embed\Http\Response;
-use Embed\Providers\Api;
+use App\Lib\Collector\Core\Http\Response;
+use App\Lib\Collector\Core\Providers\Api;
 
 /**
  * Adapter to get the embed code from gist.github.com.

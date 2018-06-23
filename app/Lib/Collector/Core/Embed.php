@@ -1,14 +1,20 @@
 <?php
+namespace App\Lib\Collector\Core;
 
-namespace Embed;
-
-use Embed\Adapters\Adapter;
-use Embed\Http\CurlDispatcher;
-use Embed\Http\DispatcherInterface;
-use Embed\Http\Url;
+use App\Lib\Collector\Core\Adapters\Adapter;
+use App\Lib\Collector\Core\Http\CurlDispatcher;
+use App\Lib\Collector\Core\Http\DispatcherInterface;
+use App\Lib\Collector\Core\Http\Url;
 
 abstract class Embed
 {
+
+    /**
+     * Core adaptors namesapce
+     */
+    const NAMESPACE_ADAPTORS = 'App\\Lib\\Collector\\Core\\Adapters\\';
+
+
     /**
      * @var array
      */
@@ -160,18 +166,20 @@ abstract class Embed
      */
     private static function getClass($name, array $config)
     {
-        if (!empty($config['custom_adapters_namespace'])) {
-            $namespaces = (array) $config['custom_adapters_namespace'];
+        # usage of custom adaptors namesapce not needed
 
-            foreach ($namespaces as $namespace) {
-                $class = $namespace.$name;
+        // if (!empty($config['custom_adapters_namespace'])) {
+        //     $namespaces = (array) $config['custom_adapters_namespace'];
 
-                if (class_exists($class)) {
-                    return $class;
-                }
-            }
-        }
+        //     foreach ($namespaces as $namespace) {
+        //         $class = $namespace.$name;
 
-        return 'Embed\\Adapters\\'.$name;
+        //         if (class_exists($class)) {
+        //             return $class;
+        //         }
+        //     }
+        // }
+
+        return self::NAMESPACE_ADAPTORS.$name;
     }
 }

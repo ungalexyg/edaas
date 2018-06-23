@@ -18,4 +18,6 @@ Route::get('/info', function () {
 });
 
 
-Route::get('/mongo', 'TestController@index');
+Route::get('/mongo', 'DevController@mongo');
+
+Route::get('/collect', 'DevController@collect');

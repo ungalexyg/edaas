@@ -1,8 +1,8 @@
 <?php
 
-namespace Embed\Http;
+namespace App\Lib\Collector\Core\Http;
 
-use Embed\Utils;
+use App\Lib\Collector\Core\Utils;
 use Exception;
 use DOMDocument;
 use SimpleXMLElement;

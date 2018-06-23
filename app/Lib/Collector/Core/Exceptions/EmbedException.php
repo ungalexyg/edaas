@@ -1,6 +1,6 @@
 <?php
 
-namespace Embed\Exceptions;
+namespace App\Lib\Collector\Core\Exceptions;
 
 use Exception;
 

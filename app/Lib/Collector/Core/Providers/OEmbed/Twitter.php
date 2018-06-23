@@ -1,6 +1,6 @@
 <?php
 
-namespace Embed\Providers\OEmbed;
+namespace App\Lib\Collector\Core\Providers\OEmbed;
 
 class Twitter extends EndPoint implements EndPointInterface
 {

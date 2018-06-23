@@ -1,6 +1,6 @@
 <?php
 
-namespace Embed;
+namespace App\Lib\Collector\Core;
 
 /**
  * Interface used by all adapters and providers.

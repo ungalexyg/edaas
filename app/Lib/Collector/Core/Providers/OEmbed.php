@@ -1,10 +1,10 @@
 <?php
 
-namespace Embed\Providers;
+namespace App\Lib\Collector\Core\Providers;
 
-use Embed\Adapters\Adapter;
-use Embed\Http\Response;
-use Embed\Http\Url;
+use App\Lib\Collector\Core\Adapters\Adapter;
+use App\Lib\Collector\Core\Http\Response;
+use App\Lib\Collector\Core\Http\Url;
 
 /**
  * Provider to get the data using the oEmbed API

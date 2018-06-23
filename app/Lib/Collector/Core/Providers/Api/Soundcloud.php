@@ -1,10 +1,10 @@
 <?php
 
-namespace Embed\Providers\Api;
+namespace App\Lib\Collector\Core\Providers\Api;
 
-use Embed\Http\Url;
-use Embed\Adapters\Adapter;
-use Embed\Providers\Provider;
+use App\Lib\Collector\Core\Http\Url;
+use App\Lib\Collector\Core\Adapters\Adapter;
+use App\Lib\Collector\Core\Providers\Provider;
 
 /**
  * Provider to use the API of soundcloud.

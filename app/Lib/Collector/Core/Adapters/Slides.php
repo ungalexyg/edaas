@@ -1,9 +1,9 @@
 <?php
 
-namespace Embed\Adapters;
+namespace App\Lib\Collector\Core\Adapters;
 
-use Embed\Utils;
-use Embed\Http\Response;
+use App\Lib\Collector\Core\Utils;
+use App\Lib\Collector\Core\Http\Response;
 
 /**
  * Adapter to get the embed code from slides.com.

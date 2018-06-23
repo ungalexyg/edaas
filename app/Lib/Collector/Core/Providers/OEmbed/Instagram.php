@@ -1,8 +1,8 @@
 <?php
 
-namespace Embed\Providers\OEmbed;
+namespace App\Lib\Collector\Core\Providers\OEmbed;
 
-use Embed\Http\Url;
+use App\Lib\Collector\Core\Http\Url;
 
 class Instagram extends EndPoint implements EndPointInterface
 {

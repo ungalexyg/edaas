@@ -1,6 +1,6 @@
 <?php
 
-namespace Embed\Providers\OEmbed;
+namespace App\Lib\Collector\Core\Providers\OEmbed;
 
 class Dotsub extends EndPoint implements EndPointInterface
 {
