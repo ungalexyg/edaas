@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Test;
 use Illuminate\Http\Request;
 use App\Lib\Collector\Core\Embed;
-
-
+use App\Lib\Collector\Adapters\GCSE;
 
 class DevController extends Controller
 {
@@ -70,23 +69,29 @@ class DevController extends Controller
         foreach($out as $key => $val) 
         {
             echo "<h1>$key</h1>";
-
             if(is_array($val)) 
             {
                 echo "<div>";
-                    print_r($val);
+                print_r($val);
                 echo "</div>";
             }
             else 
             {
                 echo "<div>$val</div>";
             }
-
             echo "<hr />";
         }
+
+
     }
 
 
+    public function gimages()
+    {
+       app(GCSE::class)->search("Baby Groot Flowerpot");
+       //app(GCSE::class)->search("Sunglasses");
+       //die("\n END");
+    }
 
 
 

@@ -21,3 +21,5 @@ Route::get('/info', function () {
 Route::get('/mongo', 'DevController@mongo');
 
 Route::get('/collect', 'DevController@collect');
+
+Route::get('/images', 'DevController@gimages');

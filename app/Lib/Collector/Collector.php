@@ -4,6 +4,25 @@
 /*
 
 
+/**
+ * --------------------------------------------------------------------------
+ *  TODO:
+ * --------------------------------------------------------------------------
+ *
+ * DONE: check how to ensure that returning image from G-CSE is really a product 
+ * - replaced '*.myshopify.com/collections {query}' '*.myshopify.com/products' {query}
+ * 
+ * 1) TODO: try to run query in G-CSE based on given image url/base64
+ * 
+ * TODO: check how to find the search query (products titles)
+ * 
+ */
+
+
+
+
+
+
 ###############################
 # General flow
 ###############################
@@ -36,7 +55,7 @@
 
 
 
-
+    
 #---------------------------
 # search in google title per 
 #---------------------------
