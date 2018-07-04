@@ -1,29 +1,11 @@
 <?php 
 
-/*
 
 /**
  * --------------------------------------------------------------------------
- * API
+ * Scrap 
  * --------------------------------------------------------------------------
- * 
- *  # Docs 
- * http://gw.api.alibaba.com/dev/doc/intl/sys_description.htm?ns=aliexpress.open
- * 
- * 
- *  # Limitations
- * JSON Custom Search API provides 100 search queries per day for free. If you need more, you may sign up for billing in the API Console. Additional requests cost $5 per 1000 queries, up to 10k queries per day. 
- * 
- * 
- *  # Sample query
- * 
- */
 
-
-/**
- * --------------------------------------------------------------------------
- * Scrap
- * --------------------------------------------------------------------------
  * 
  *  # category :
  *  https://www.aliexpress.com/wholesale?catId=70803001&initiative_id=AS_20180625101631&SearchText=router
@@ -50,6 +32,8 @@
  * --------------------------------------------------------------------------
  *
  * TODO: check items uploads dates to count orders per date
+ * 
+ * 
  * 
  */
 

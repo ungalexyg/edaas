@@ -1,0 +1,14 @@
+
+
+Processes
+
+
+
+# Locator
+Locat "Prospect Items" from given "Prospects Channels" & store them in "Propects Q" for forther handling by the Watcher.
+
+# Watcher
+The Watcher whatching the prospect items, tracking, comparing & mark their performance.
+
+# Realizer
+The Realizer collect, organise & transform the data into api stactured records.

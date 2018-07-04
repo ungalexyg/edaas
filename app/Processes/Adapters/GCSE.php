@@ -4,6 +4,16 @@ use GuzzleHttp\Client as HttpClient;
 
 /**
  * --------------------------------------------------------------------------
+ *  Resources
+ * --------------------------------------------------------------------------
+ * Google shopping insights
+ * https://shopping.thinkwithgoogle.com/
+ * 
+ */
+
+
+/**
+ * --------------------------------------------------------------------------
  *  API
  * --------------------------------------------------------------------------
  *
@@ -30,6 +40,8 @@ use GuzzleHttp\Client as HttpClient;
  * --------------------------------------------------------------------------
  * 
  * TODO: check how to make the CSE private
+ * 
+ * TODO: try to run query in G-CSE based on given image url/base64 
  * 
  */
 
