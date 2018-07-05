@@ -11,15 +11,9 @@
 |
 */
 
-Route::get('/info', function () {
-    echo phpinfo(); die;
-
-    return view('welcome');
-});
-
+Route::get('/search', 'DevController@search');
 
 Route::get('/mongo', 'DevController@mongo');
 
-Route::get('/collect', 'DevController@collect');
+Route::get('/embed', 'DevController@embed');
 
-Route::get('/images', 'DevController@gimages');

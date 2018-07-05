@@ -4,13 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Test;
 use Illuminate\Http\Request;
-use App\Lib\Collector\Core\Embed;
-use App\Lib\Collector\Adapters\GCSE;
+use App\Lib\Embed\Embed;
+use App\Processes\Locator;
+
 
 class DevController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
+     * Test GCSE
+     */
+    public function search()
+    {
+        app(Locator::class)->search("Baby Groot Flowerpot");
+        //app(GCSE::class)->search("Sunglasses");
+        //die("\n END");
+    }
+
+
+
+
+
+    /**
+     * Test mongo
      *
      * @return \Illuminate\Http\Response
      */
@@ -23,12 +39,13 @@ class DevController extends Controller
     }
 
 
+
     /**
-     * Fetch site
+     * Test embed lib
      *
      * @return \Illuminate\Http\Response
      */
-    public function collect()
+    public function embed()
     {
         
         //Load any url:
@@ -83,81 +100,5 @@ class DevController extends Controller
         }
 
 
-    }
-
-
-    public function gimages()
-    {
-       app(GCSE::class)->search("Baby Groot Flowerpot");
-       //app(GCSE::class)->search("Sunglasses");
-       //die("\n END");
-    }
-
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Test  $test
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Test $test)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Test  $test
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Test $test)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Test  $test
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Test $test)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Test  $test
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Test $test)
-    {
-        //
-    }
+    }    
 }

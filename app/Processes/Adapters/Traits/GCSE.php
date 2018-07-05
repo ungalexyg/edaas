@@ -1,5 +1,7 @@
 <?php
-namespace App\Lib\Collector\Adapters;
+
+namespace App\Processes\Adapters\Traits;
+
 use GuzzleHttp\Client as HttpClient;
 
 /**
@@ -8,7 +10,7 @@ use GuzzleHttp\Client as HttpClient;
  * --------------------------------------------------------------------------
  * Google shopping insights
  * https://shopping.thinkwithgoogle.com/
- * 
+ *  
  */
 
 
@@ -16,7 +18,9 @@ use GuzzleHttp\Client as HttpClient;
  * --------------------------------------------------------------------------
  *  API
  * --------------------------------------------------------------------------
- *
+ * G-CSE Console
+ * https://cse.google.com/cse/all
+ * 
  * Google Custom Search API docs
  * https://developers.google.com/custom-search/json-api/v1/overview
  * 
@@ -27,8 +31,14 @@ use GuzzleHttp\Client as HttpClient;
  * Limitations
  * JSON Custom Search API provides 100 search queries per day for free. If you need more, you may sign up for billing in the API Console. Additional requests cost $5 per 1000 queries, up to 10k queries per day. 
  * 
- * Sample query
+ * Sample query - CSE 
  * https://www.googleapis.com/customsearch/v1?q={searchTerms}&num={count?}&start={startIndex?}&lr={language?}&safe={safe?}&cx={cx?}&cref={cref?}&sort={sort?}&filter={filter?}&gl={gl?}&cr={cr?}&googlehost={googleHost?}&c2coff={disableCnTwTranslation?}&hq={hq?}&hl={hl?}&siteSearch={siteSearch?}&siteSearchFilter={siteSearchFilter?}&exactTerms={exactTerms?}&excludeTerms={excludeTerms?}&linkSite={linkSite?}&orTerms={orTerms?}&relatedSite={relatedSite?}&dateRestrict={dateRestrict?}&lowRange={lowRange?}&highRange={highRange?}&searchType={searchType}&fileType={fileType?}&rights={rights?}&imgSize={imgSize?}&imgType={imgType?}&imgColorType={imgColorType?}&imgDominantColor={imgDominantColor?}&alt=json
+ * 
+ * Sample query - search images by key in site 
+ * https://www.google.co.uk/search?q=site:virgin.com+cable&tbm=isch 
+ * 
+ * Sample query - reverse search by images
+ * http://images.google.com/searchbyimage?image_url=<your image url here>
  * 
  */
 
@@ -40,9 +50,10 @@ use GuzzleHttp\Client as HttpClient;
  * --------------------------------------------------------------------------
  * 
  * TODO: check how to make the CSE private
+ *  
  * 
- * TODO: try to run query in G-CSE based on given image url/base64 
- * 
+ * DONE: heck how to reverse search by image
+ * - http://images.google.com/searchbyimage?image_url=<your image url here>
  */
 
 
@@ -52,14 +63,31 @@ use GuzzleHttp\Client as HttpClient;
 /**
  * Google Custom Search Engine
  */
-class GCSE {
+trait GCSE {
+
+	
+	/**
+	 * GCSE API key
+	 */		
+	protected $api_key = 'AIzaSyDsEebc8QomUfAoXhcMLZNTtBPVISPRlgU'; 
+
+	
+	/**
+	 * GCSE private CX key unique per pre configed custom search
+	 */	
+	protected $cx = '018124074902099226352:xk_fnj8ra5k';
+
+	
+	/**
+	 * GCSE endpoint
+	 */	
+	protected $cse_endpoint = 'https://www.googleapis.com/customsearch/v1';
 
 
-	private $api_key = 'AIzaSyDsEebc8QomUfAoXhcMLZNTtBPVISPRlgU'; // JSON Custom Search API 
-
-	private $endpoint = 'https://www.googleapis.com/customsearch/v1';
-
-	private $cx = '018124074902099226352:xk_fnj8ra5k';
+	/**
+	 * Revenrse image search endpoint
+	 */
+	protected $img_search_endpoint = 'http://images.google.com/searchbyimage?image_url=';	
 	
 
 	/**
@@ -75,9 +103,10 @@ class GCSE {
 			'dateRestrict' 	=> 'd[1]', // requests results from the specified number of past dayes/weeks/years. d[] | m[] | y[] 
 			'start' 		=> 1, // generic: res['queries']['nextPage'][0]['startIndex'] , default is 1			
 			'num'			=> 10, // Valid values are integers between 1 and 10, inclusive.
+			//'searchType'	=> 'image' // [NOT WORING] Specifies the search type: image.  If unspecified, results are limited to webpages. 
 		]);
 
-		$url = $this->endpoint . '?' .$qs;
+		$url = $this->cse_endpoint . '?' .$qs;
 
 		//dd($url);
 

@@ -1,6 +1,7 @@
-
 <?php 
+namespace App\Processes;
 
+use App\Processes\Adapters\Traits\GCSE;
 
 
 /**
@@ -19,6 +20,8 @@
  * Locate prospect items 
  */ 
 class Locator {
+
+	use GCSE;
 
 
 	/**
