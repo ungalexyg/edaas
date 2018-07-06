@@ -13,6 +13,8 @@
 
 Route::get('/search', 'DevController@search');
 
+Route::get('/search-img', 'DevController@imageSearch');
+
 Route::get('/mongo', 'DevController@mongo');
 
 Route::get('/embed', 'DevController@embed');

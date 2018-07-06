@@ -16,11 +16,20 @@ class DevController extends Controller
      */
     public function search()
     {
-        app(Locator::class)->search("Baby Groot Flowerpot");
+        app(Locator::class)->gcseSearch("Baby Groot Flowerpot");
         //app(GCSE::class)->search("Sunglasses");
         //die("\n END");
     }
 
+    /**
+     * Test GCSE
+     */
+    public function imageSearch()
+    {
+        app(Locator::class)->gcseImageSearch("https://ae01.alicdn.com/kf/HTB1RrfMjCYTBKNjSZKbq6xJ8pXai/T-Shirt-Women-Summer-Short-Sleeve-V-Neck-t-shirt-Female-Cactus-Funny-Letter-Print-T.jpg");
+       
+        //die("\n END");
+    }
 
 
 

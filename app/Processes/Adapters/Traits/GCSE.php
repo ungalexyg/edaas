@@ -2,7 +2,9 @@
 
 namespace App\Processes\Adapters\Traits;
 
-use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Client as Guzzle;
+use Goutte\Client as Goutte;
+
 
 /**
  * --------------------------------------------------------------------------
@@ -87,18 +89,21 @@ trait GCSE {
 	/**
 	 * Revenrse image search endpoint
 	 */
-	protected $img_search_endpoint = 'http://images.google.com/searchbyimage?image_url=';	
+	protected $cse_img_endpoint = 'http://images.google.com/searchbyimage?image_url=';	
 	
 
 	/**
 	 * Search
+	 * 
+	 * @param $query
+	 * @return mixed
 	 */
-	public function search($query)
+	public function gcseSearch($query)
 	{
 		$qs = http_build_query([
 			'key' 			=> $this->api_key,
-			'q' 			=> $query,
 			'cx' 			=> $this->cx,
+			'q' 			=> $query,
 			'exactTerms' 	=> $query, // Identifies a phrase that all documents in the search results must contain
 			'dateRestrict' 	=> 'd[1]', // requests results from the specified number of past dayes/weeks/years. d[] | m[] | y[] 
 			'start' 		=> 1, // generic: res['queries']['nextPage'][0]['startIndex'] , default is 1			
@@ -112,7 +117,7 @@ trait GCSE {
 
 		//$url = 'https://www.google.co.il/search?q=site%3Amyshopify.com%2Fcollections%2Fsunglasses&oq=site%3Amyshopify.com%2Fcollections%2Fsunglasses&aqs=chrome..69i57j69i58j69i59.700j0j9&sourceid=chrome&ie=UTF-8';		
 
-		$res = app(HttpClient::class)->get($url);
+		$res = app(Guzzle::class)->get($url);
 
 		//echo '<pre>';	
 		//echo $res->getStatusCode(); // 200
@@ -123,6 +128,56 @@ trait GCSE {
 	}
 
 
+
+	/**
+	 * Search by image (reverse search)
+	 * 
+	 * @param $img_url
+	 * @return mixed
+	 */
+	public function gcseImageSearch($img_url)
+	{
+		$url = $this->cse_img_endpoint . $img_url;
+
+		/*  ------------------------------------------------------ 
+		# Working option only with Guzzle
+
+		$res = app(Guzzle::class)->get($url, [
+			'allow_redirects' => false  // required to catch middle redirect
+		]);
+
+		//echo $res->getStatusCode(); 
+		//echo $res->getHeaderLine('content-type'); 
+		//echo $res->getRedirectCount();
+		echo $res->getBody();	 		
+
+		/* ------------------------------------------------------ */
+
+
+
+
+		/*  ------------------------------------------------------
+		# Sample interaction Guzzle + Goutte 
+		
+
+
+		$goutte = new Goutte();		
+		$guzzle = new Guzzle([
+			'timeout' => 60,
+			'allow_redirects' => false
+		]);
+		$goutte->setClient($guzzle);
+
+		$crawler = $goutte->request('GET', $url);
+
+		$crawler->filter('a')->each(function ($node) {
+			echo  $node->text()."\n";
+		});
+	
+		/* ------------------------------------------------------ */
+		
+
+	}	
 
 
 }
