@@ -6,6 +6,7 @@ use GuzzleHttp\Client as Guzzle;
 use Goutte\Client as Goutte;
 
 
+
 /**
  * --------------------------------------------------------------------------
  *  Resources
@@ -59,6 +60,19 @@ use Goutte\Client as Goutte;
  */
 
 
+
+ /*
+
+images redirects
+
+ Array
+(
+    [O:36:"Symfony\Component\BrowserKit\Request":7:{s:6:"*uri";s:193:"http://images.google.com/searchbyimage?image_url=https://ae01.alicdn.com/kf/HTB1RrfMjCYTBKNjSZKbq6xJ8pXai/T-Shirt-Women-Summer-Short-Sleeve-V-Neck-t-shirt-Female-Cactus-Funny-Letter-Print-T.jpg";s:9:"*method";s:3:"GET";s:13:"*parameters";a:0:{}s:8:"*files";a:0:{}s:10:"*cookies";a:0:{}s:9:"*server";a:3:{s:15:"HTTP_USER_AGENT";s:18:"Symfony BrowserKit";s:9:"HTTP_HOST";s:17:"images.google.com";s:5:"HTTPS";b:0;}s:10:"*content";N;}] => 1
+    [O:36:"Symfony\Component\BrowserKit\Request":7:{s:6:"*uri";s:375:"http://images.google.com/search?tbs=sbi:AMhZZivsxjxD_1cMMugnlSrn-28PBhd6nOo0ALBSr1N4ezB-kHf709_1H0NacZqDszY0Iy03oKoLE8QbovLZgBmZ4NSdY-pi9UsTSYyCjC3tKDIwhsfxdmelDYyoJUcLxql5BxQTqr0er488z61xFukqPFLT8ABS6SOUc-ZjMgLN-fFlxrEh1i5SWD7TvwwS1KajP4O7Vi10w-Ft2ZU8pAbHANMHUeKSEznBrKusA46jeau2koJ-6WpxwEsz2eBAr_1F4xGQVq4lB50kaxC7mj3yD3jFvnzvzIf8a5KVx6ZoaEyZQo0529QdLizg89FNyxOf2TFmgXDtFd4";s:9:"*method";s:3:"GET";s:13:"*parameters";a:0:{}s:8:"*files";a:0:{}s:10:"*cookies";a:0:{}s:9:"*server";a:4:{s:15:"HTTP_USER_AGENT";s:18:"Symfony BrowserKit";s:9:"HTTP_HOST";s:17:"images.google.com";s:5:"HTTPS";b:0;s:12:"HTTP_REFERER";s:193:"http://images.google.com/searchbyimage?image_url=https://ae01.alicdn.com/kf/HTB1RrfMjCYTBKNjSZKbq6xJ8pXai/T-Shirt-Women-Summer-Short-Sleeve-V-Neck-t-shirt-Female-Cactus-Funny-Letter-Print-T.jpg";}s:10:"*content";N;}] => 1
+    [O:36:"Symfony\Component\BrowserKit\Request":7:{s:6:"*uri";s:374:"http://images.google.com/webhp?tbs=sbi:AMhZZivsxjxD_1cMMugnlSrn-28PBhd6nOo0ALBSr1N4ezB-kHf709_1H0NacZqDszY0Iy03oKoLE8QbovLZgBmZ4NSdY-pi9UsTSYyCjC3tKDIwhsfxdmelDYyoJUcLxql5BxQTqr0er488z61xFukqPFLT8ABS6SOUc-ZjMgLN-fFlxrEh1i5SWD7TvwwS1KajP4O7Vi10w-Ft2ZU8pAbHANMHUeKSEznBrKusA46jeau2koJ-6WpxwEsz2eBAr_1F4xGQVq4lB50kaxC7mj3yD3jFvnzvzIf8a5KVx6ZoaEyZQo0529QdLizg89FNyxOf2TFmgXDtFd4";s:9:"*method";s:3:"GET";s:13:"*parameters";a:0:{}s:8:"*files";a:0:{}s:10:"*cookies";a:2:{s:6:"1P_JAR";s:13:"2018-07-07-13";s:3:"NID";s:132:"134=5OnE5EXJwQNh0VZR52_WkXwlv5jCIEc2eM5ptP-wppfEjmZ-i9Cuqyd5XeHEIDmyIqaDcJnb0ii52jc6fq6KhBzxBfbwedaI6VkuQukbkU0EKpFnnQPwHNIPXa3DfBTb";}s:9:"*server";a:4:{s:15:"HTTP_USER_AGENT";s:18:"Symfony BrowserKit";s:9:"HTTP_HOST";s:17:"images.google.com";s:5:"HTTPS";b:0;s:12:"HTTP_REFERER";s:375:"http://images.google.com/search?tbs=sbi:AMhZZivsxjxD_1cMMugnlSrn-28PBhd6nOo0ALBSr1N4ezB-kHf709_1H0NacZqDszY0Iy03oKoLE8QbovLZgBmZ4NSdY-pi9UsTSYyCjC3tKDIwhsfxdmelDYyoJUcLxql5BxQTqr0er488z61xFukqPFLT8ABS6SOUc-ZjMgLN-fFlxrEh1i5SWD7TvwwS1KajP4O7Vi10w-Ft2ZU8pAbHANMHUeKSEznBrKusA46jeau2koJ-6WpxwEsz2eBAr_1F4xGQVq4lB50kaxC7mj3yD3jFvnzvzIf8a5KVx6ZoaEyZQo0529QdLizg89FNyxOf2TFmgXDtFd4";}s:10:"*content";N;}] => 1
+)
+ 
+ */
 
 
 
@@ -142,10 +156,14 @@ trait GCSE {
 		/*  ------------------------------------------------------ 
 		# Working option only with Guzzle
 
-		$res = app(Guzzle::class)->get($url, [
-			'allow_redirects' => false  // required to catch middle redirect
+		$guzzle = new Guzzle([
+			'allow_redirects' => false  // disable redirct to catch middle page with images url
 		]);
 
+		//$c = $guzzle->getConfig();
+		$res = $guzzle->get($url);
+		
+		
 		//echo $res->getStatusCode(); 
 		//echo $res->getHeaderLine('content-type'); 
 		//echo $res->getRedirectCount();
@@ -156,25 +174,91 @@ trait GCSE {
 
 
 
-		/*  ------------------------------------------------------
+		/*  ------------------------------------------------------ */
 		# Sample interaction Guzzle + Goutte 
 		
 
+	/*################################################
+
+	// TODO:
+
+	// 1) clone 
+		Symfony\Component\BrowserKit\Client (clone only the clint class in that dir)		
+		to
+		App\Lib\Vendors\BrowserKit\Client (custom, for flexibilty)
+
+
+	// 2) clone 
+		Goutte\Client
+		to
+		App\Lib\Vendors\Goutte\Client (custom, for flexibilty)
+
+	* App\Lib\Vendors\ (for vendors extends)
+
+
+	// 3) get the redirect property to catch google images redirects
+
+	
+
+
+		the middle one is the currect url : 
 
 		$goutte = new Goutte();		
 		$guzzle = new Guzzle([
 			'timeout' => 60,
 			'allow_redirects' => false
 		]);
-		$goutte->setClient($guzzle);
-
+		$goutte->setClient($guzzle);		
 		$crawler = $goutte->request('GET', $url);
+		// echo '<pre>';
+		// print_r($goutte->redirects);
 
-		$crawler->filter('a')->each(function ($node) {
-			echo  $node->text()."\n";
-		});
+	Array
+	(
+		[O:36:"Symfony\Component\BrowserKit\Request":7:{s:6:"*uri";s:193:"http://images.google.com/searchbyimage?image_url=https://ae01.alicdn.com/kf/HTB1RrfMjCYTBKNjSZKbq6xJ8pXai/T-Shirt-Women-Summer-Short-Sleeve-V-Neck-t-shirt-Female-Cactus-Funny-Letter-Print-T.jpg";s:9:"*method";s:3:"GET";s:13:"*parameters";a:0:{}s:8:"*files";a:0:{}s:10:"*cookies";a:0:{}s:9:"*server";a:3:{s:15:"HTTP_USER_AGENT";s:18:"Symfony BrowserKit";s:9:"HTTP_HOST";s:17:"images.google.com";s:5:"HTTPS";b:0;}s:10:"*content";N;}] => 1
+		[O:36:"Symfony\Component\BrowserKit\Request":7:{s:6:"*uri";s:375:"http://images.google.com/search?tbs=sbi:AMhZZivsxjxD_1cMMugnlSrn-28PBhd6nOo0ALBSr1N4ezB-kHf709_1H0NacZqDszY0Iy03oKoLE8QbovLZgBmZ4NSdY-pi9UsTSYyCjC3tKDIwhsfxdmelDYyoJUcLxql5BxQTqr0er488z61xFukqPFLT8ABS6SOUc-ZjMgLN-fFlxrEh1i5SWD7TvwwS1KajP4O7Vi10w-Ft2ZU8pAbHANMHUeKSEznBrKusA46jeau2koJ-6WpxwEsz2eBAr_1F4xGQVq4lB50kaxC7mj3yD3jFvnzvzIf8a5KVx6ZoaEyZQo0529QdLizg89FNyxOf2TFmgXDtFd4";s:9:"*method";s:3:"GET";s:13:"*parameters";a:0:{}s:8:"*files";a:0:{}s:10:"*cookies";a:0:{}s:9:"*server";a:4:{s:15:"HTTP_USER_AGENT";s:18:"Symfony BrowserKit";s:9:"HTTP_HOST";s:17:"images.google.com";s:5:"HTTPS";b:0;s:12:"HTTP_REFERER";s:193:"http://images.google.com/searchbyimage?image_url=https://ae01.alicdn.com/kf/HTB1RrfMjCYTBKNjSZKbq6xJ8pXai/T-Shirt-Women-Summer-Short-Sleeve-V-Neck-t-shirt-Female-Cactus-Funny-Letter-Print-T.jpg";}s:10:"*content";N;}] => 1
+		[O:36:"Symfony\Component\BrowserKit\Request":7:{s:6:"*uri";s:374:"http://images.google.com/webhp?tbs=sbi:AMhZZivsxjxD_1cMMugnlSrn-28PBhd6nOo0ALBSr1N4ezB-kHf709_1H0NacZqDszY0Iy03oKoLE8QbovLZgBmZ4NSdY-pi9UsTSYyCjC3tKDIwhsfxdmelDYyoJUcLxql5BxQTqr0er488z61xFukqPFLT8ABS6SOUc-ZjMgLN-fFlxrEh1i5SWD7TvwwS1KajP4O7Vi10w-Ft2ZU8pAbHANMHUeKSEznBrKusA46jeau2koJ-6WpxwEsz2eBAr_1F4xGQVq4lB50kaxC7mj3yD3jFvnzvzIf8a5KVx6ZoaEyZQo0529QdLizg89FNyxOf2TFmgXDtFd4";s:9:"*method";s:3:"GET";s:13:"*parameters";a:0:{}s:8:"*files";a:0:{}s:10:"*cookies";a:2:{s:6:"1P_JAR";s:13:"2018-07-07-13";s:3:"NID";s:132:"134=5OnE5EXJwQNh0VZR52_WkXwlv5jCIEc2eM5ptP-wppfEjmZ-i9Cuqyd5XeHEIDmyIqaDcJnb0ii52jc6fq6KhBzxBfbwedaI6VkuQukbkU0EKpFnnQPwHNIPXa3DfBTb";}s:9:"*server";a:4:{s:15:"HTTP_USER_AGENT";s:18:"Symfony BrowserKit";s:9:"HTTP_HOST";s:17:"images.google.com";s:5:"HTTPS";b:0;s:12:"HTTP_REFERER";s:375:"http://images.google.com/search?tbs=sbi:AMhZZivsxjxD_1cMMugnlSrn-28PBhd6nOo0ALBSr1N4ezB-kHf709_1H0NacZqDszY0Iy03oKoLE8QbovLZgBmZ4NSdY-pi9UsTSYyCjC3tKDIwhsfxdmelDYyoJUcLxql5BxQTqr0er488z61xFukqPFLT8ABS6SOUc-ZjMgLN-fFlxrEh1i5SWD7TvwwS1KajP4O7Vi10w-Ft2ZU8pAbHANMHUeKSEznBrKusA46jeau2koJ-6WpxwEsz2eBAr_1F4xGQVq4lB50kaxC7mj3yD3jFvnzvzIf8a5KVx6ZoaEyZQo0529QdLizg89FNyxOf2TFmgXDtFd4";}s:10:"*content";N;}] => 1
+	)
+
+	################################################*/
+
+		
+	$goutte = new Goutte();		
+	$guzzle = new Guzzle([
+		'timeout' => 60,
+		'allow_redirects' => false
+	]);
+	$goutte->setClient($guzzle);		
+	$crawler = $goutte->request('GET', $url);
+	// echo '<pre>';
+	// print_r($goutte->redirects);
+	
 	
 		/* ------------------------------------------------------ */
+		
+
+		
+			/* ------------------------------------------------------ 
+			# reflections options to access parent private prop
+
+			# 1) reflection option 
+			// $sweetsThief = \Closure::bind(function (Goutte $goutte) {
+			// 	return $goutte->redirects;
+			// }, null, 'Goutte\Client');
+			// $v = $sweetsThief($goutte);
+
+
+			# 2) reflection option 
+			// $goutte = new Goutte();
+			// $sweetsThief = new \ReflectionProperty('Goutte\Client', 'redirects');
+			// $sweetsThief->setAccessible(true);		
+			// $v = $sweetsThief->getValue($goutte);		
+			/* ------------------------------------------------------ */
+		
+
+
+
+		
 		
 
 	}	
