@@ -17,15 +17,15 @@ use App\Processes\Adapters\Traits\GCSE;
 
 
 /**
- * Locate prospect items 
+ * Scanner prospect items 
  */ 
-class Locator {
+class Scanner {
 
 	use GCSE;
 
 
 	/**
-	 * Locate Prospect Items
+	 * Scan Prospect Items
 	 * 
 	 * - visit each category in Ali
 	 * - grab products by newest with orders count 
@@ -33,7 +33,7 @@ class Locator {
 	 * - run the process every 4 hours to compare changes per item
 	 * - products with X orders increased will be stored as 'Prospects' for forther treatment  
 	 */
-    public function locateProspects()
+    public function ScanProspects()
     {
 		
     }
