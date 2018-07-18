@@ -5,8 +5,8 @@ namespace App\Processes\Adapters\Traits;
 // use GuzzleHttp\Client as Guzzle;
 // use Goutte\Client as Goutte;
 
-use App\Lib\Vendor\Goutte\GoutteExtension as Goutte;
-use App\Lib\Vendor\Guzzle\GuzzleExtension as Guzzle;
+use App\Lib\Vendor\Goutte\GoutteExtension as Spider;
+use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
 
 
 
@@ -112,6 +112,12 @@ trait GCSE {
 	
 
 	/**
+	 * Revenrse image search endpoint
+	 */
+	protected $cse_google_endpoint = 'https://www.google.com/search';		
+
+
+	/**
 	 * Search
 	 * 
 	 * @param $query
@@ -136,7 +142,7 @@ trait GCSE {
 
 		//$url = 'https://www.google.co.il/search?q=site%3Amyshopify.com%2Fcollections%2Fsunglasses&oq=site%3Amyshopify.com%2Fcollections%2Fsunglasses&aqs=chrome..69i57j69i58j69i59.700j0j9&sourceid=chrome&ie=UTF-8';		
 
-		$res = app(Guzzle::class)->get($url);
+		$res = app(Web::class)->get($url);
 
 		//echo '<pre>';	
 		//echo $res->getStatusCode(); // 200
@@ -159,45 +165,29 @@ trait GCSE {
 	{
 		$url = $this->cse_img_endpoint . $img_url;
 		
-		/*  ------------------------------------------------------ 
-		# Working option only with Guzzle
-		$guzzle = new Guzzle([
-			'allow_redirects' => false  // disable redirct to catch middle page with images url
-		]);
-		$res = $guzzle->get($url);
-		//$c = $guzzle->getConfig();
-		//echo $res->getStatusCode(); 
-		//echo $res->getHeaderLine('content-type'); 
-		//echo $res->getRedirectCount();
-		//echo $res->getBody();	 		
-		/* ------------------------------------------------------ */
-
-
-		/*  ------------------------------------------------------ */
-		# Sample interaction Guzzle + Goutte 
-		
-		// TODO: check image search by site
-
-		$goutte = new Goutte();		
-		$guzzle = new Guzzle([
+		$spider = new Spider();		
+		$web = new Web([
 			'timeout' => 60,
 			'allow_redirects' => false
 		]);
-		$goutte->setClient($guzzle);
-		$crawler = $goutte->request('GET', $url);
-		dd($goutte->getRedirects());	
-		// $crawler->filter('a')->each(function ($node) {
-		// 	echo  $node->text()."\n";
-		// });
+		$spider->setClient($web);
 
-		// Array
-		// (
-		// 	[O:36:"Symfony\Component\BrowserKit\Request":7:{s:6:"*uri";s:193:"http://images.google.com/searchbyimage?image_url=https://ae01.alicdn.com/kf/HTB1RrfMjCYTBKNjSZKbq6xJ8pXai/T-Shirt-Women-Summer-Short-Sleeve-V-Neck-t-shirt-Female-Cactus-Funny-Letter-Print-T.jpg";s:9:"*method";s:3:"GET";s:13:"*parameters";a:0:{}s:8:"*files";a:0:{}s:10:"*cookies";a:0:{}s:9:"*server";a:3:{s:15:"HTTP_USER_AGENT";s:18:"Symfony BrowserKit";s:9:"HTTP_HOST";s:17:"images.google.com";s:5:"HTTPS";b:0;}s:10:"*content";N;}] => 1
-		// 	[O:36:"Symfony\Component\BrowserKit\Request":7:{s:6:"*uri";s:375:"http://images.google.com/search?tbs=sbi:AMhZZivsxjxD_1cMMugnlSrn-28PBhd6nOo0ALBSr1N4ezB-kHf709_1H0NacZqDszY0Iy03oKoLE8QbovLZgBmZ4NSdY-pi9UsTSYyCjC3tKDIwhsfxdmelDYyoJUcLxql5BxQTqr0er488z61xFukqPFLT8ABS6SOUc-ZjMgLN-fFlxrEh1i5SWD7TvwwS1KajP4O7Vi10w-Ft2ZU8pAbHANMHUeKSEznBrKusA46jeau2koJ-6WpxwEsz2eBAr_1F4xGQVq4lB50kaxC7mj3yD3jFvnzvzIf8a5KVx6ZoaEyZQo0529QdLizg89FNyxOf2TFmgXDtFd4";s:9:"*method";s:3:"GET";s:13:"*parameters";a:0:{}s:8:"*files";a:0:{}s:10:"*cookies";a:0:{}s:9:"*server";a:4:{s:15:"HTTP_USER_AGENT";s:18:"Symfony BrowserKit";s:9:"HTTP_HOST";s:17:"images.google.com";s:5:"HTTPS";b:0;s:12:"HTTP_REFERER";s:193:"http://images.google.com/searchbyimage?image_url=https://ae01.alicdn.com/kf/HTB1RrfMjCYTBKNjSZKbq6xJ8pXai/T-Shirt-Women-Summer-Short-Sleeve-V-Neck-t-shirt-Female-Cactus-Funny-Letter-Print-T.jpg";}s:10:"*content";N;}] => 1
-		// 	[O:36:"Symfony\Component\BrowserKit\Request":7:{s:6:"*uri";s:374:"http://images.google.com/webhp?tbs=sbi:AMhZZivsxjxD_1cMMugnlSrn-28PBhd6nOo0ALBSr1N4ezB-kHf709_1H0NacZqDszY0Iy03oKoLE8QbovLZgBmZ4NSdY-pi9UsTSYyCjC3tKDIwhsfxdmelDYyoJUcLxql5BxQTqr0er488z61xFukqPFLT8ABS6SOUc-ZjMgLN-fFlxrEh1i5SWD7TvwwS1KajP4O7Vi10w-Ft2ZU8pAbHANMHUeKSEznBrKusA46jeau2koJ-6WpxwEsz2eBAr_1F4xGQVq4lB50kaxC7mj3yD3jFvnzvzIf8a5KVx6ZoaEyZQo0529QdLizg89FNyxOf2TFmgXDtFd4";s:9:"*method";s:3:"GET";s:13:"*parameters";a:0:{}s:8:"*files";a:0:{}s:10:"*cookies";a:2:{s:6:"1P_JAR";s:13:"2018-07-07-13";s:3:"NID";s:132:"134=5OnE5EXJwQNh0VZR52_WkXwlv5jCIEc2eM5ptP-wppfEjmZ-i9Cuqyd5XeHEIDmyIqaDcJnb0ii52jc6fq6KhBzxBfbwedaI6VkuQukbkU0EKpFnnQPwHNIPXa3DfBTb";}s:9:"*server";a:4:{s:15:"HTTP_USER_AGENT";s:18:"Symfony BrowserKit";s:9:"HTTP_HOST";s:17:"images.google.com";s:5:"HTTPS";b:0;s:12:"HTTP_REFERER";s:375:"http://images.google.com/search?tbs=sbi:AMhZZivsxjxD_1cMMugnlSrn-28PBhd6nOo0ALBSr1N4ezB-kHf709_1H0NacZqDszY0Iy03oKoLE8QbovLZgBmZ4NSdY-pi9UsTSYyCjC3tKDIwhsfxdmelDYyoJUcLxql5BxQTqr0er488z61xFukqPFLT8ABS6SOUc-ZjMgLN-fFlxrEh1i5SWD7TvwwS1KajP4O7Vi10w-Ft2ZU8pAbHANMHUeKSEznBrKusA46jeau2koJ-6WpxwEsz2eBAr_1F4xGQVq4lB50kaxC7mj3yD3jFvnzvzIf8a5KVx6ZoaEyZQo0529QdLizg89FNyxOf2TFmgXDtFd4";}s:10:"*content";N;}] => 1
-		// )
-		/* ------------------------------------------------------ */
+		$crawler = $spider->request('GET', $url);
 		
+		$url_search_img = $spider->getRedirectsUris()[1];
+		
+		$orig = 'https://www.google.com/search?tbs=sbi:AMhZZisMfbxL076v0yE7ikku4YUZQjaoXWMludkTSRwD41hwFCQ7d976tTZ5KIzdHRz3i9PKI_1rS7PKIxGtk0R0GZMbO7ab5F3-y-7H3-OT4xP6f6peZh5I9Y7UWiuWriHCcPGnstODOc6YoxzC3RTX1UeIYDjKMXhWwYRyg9wZqxOtLgJUOZxydfEWwMFwbiqKXsMlzu8OeqVBPChs5Z1sKfn5pUVDNZcWfDMQcpgHBR_1yAyuXAESmnJbk77dsyD7oD_1M6uisvt4c0rlwVhG16oSIUhLs1L9jjxVGVq5lvzeKu8MQABlG2t714IUgZCJ5WYURpJ8enu_1zh28arZPcvIsBxKhQHrFQ&gws_rd=ssl';			
+				
+		$url_search = $this->cse_google_endpoint . '?' . parse_url($url_search_img, PHP_URL_QUERY);
+
+		echo '<pre>';
+		echo $url_search_img;
+		echo '<hr />';
+		echo $url_search;
+		echo '<hr />';
+		echo $orig;
+		die;
+
 
 	}	
 

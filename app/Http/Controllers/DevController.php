@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Test;
 use Illuminate\Http\Request;
 use App\Lib\Embed\Embed;
-use App\Processes\Locator;
+use App\Processes\Scanner;
 
 
 class DevController extends Controller
@@ -16,7 +16,7 @@ class DevController extends Controller
      */
     public function search()
     {
-        app(Locator::class)->gcseSearch("Baby Groot Flowerpot");
+        app(Scanner::class)->gcseSearch("Baby Groot Flowerpot");
         //app(GCSE::class)->search("Sunglasses");
         //die("\n END");
     }
@@ -26,7 +26,7 @@ class DevController extends Controller
      */
     public function imageSearch()
     {
-        app(Locator::class)->gcseImageSearch("https://ae01.alicdn.com/kf/HTB1RrfMjCYTBKNjSZKbq6xJ8pXai/T-Shirt-Women-Summer-Short-Sleeve-V-Neck-t-shirt-Female-Cactus-Funny-Letter-Print-T.jpg");
+        app(Scanner::class)->gcseImageSearch("https://ae01.alicdn.com/kf/HTB1RrfMjCYTBKNjSZKbq6xJ8pXai/T-Shirt-Women-Summer-Short-Sleeve-V-Neck-t-shirt-Female-Cactus-Funny-Letter-Print-T.jpg");
        
         //die("\n END");
     }

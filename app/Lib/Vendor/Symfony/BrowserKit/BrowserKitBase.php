@@ -378,7 +378,11 @@ trait BrowserKitBase
         die;
         /* /DBG ---------------------- */
 
-        if ($this->followRedirects && $this->redirect) {
+        if ($this->followRedirects && $this->redirect) 
+        {
+            // $curr = $this->history->current()->uri;
+            // dd($curr);
+
             $this->redirects[serialize($this->history->current())] = true;
             return $this->crawler = $this->followRedirect();
         }
