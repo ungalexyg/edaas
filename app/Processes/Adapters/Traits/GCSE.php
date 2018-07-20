@@ -8,6 +8,7 @@ namespace App\Processes\Adapters\Traits;
 use App\Lib\Vendor\Goutte\GoutteExtension as Spider;
 use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
 
+use Symfony\Component\DomCrawler\Crawler;
 
 
 /**
@@ -16,6 +17,8 @@ use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
  * --------------------------------------------------------------------------
  * Google shopping insights
  * https://shopping.thinkwithgoogle.com/
+ * 
+ * https://stackoverflow.com/questions/28391442/unable-to-scrape-google
  *  
  */
 
@@ -86,6 +89,8 @@ images redirects
  */
 trait GCSE {
 
+	use GReverseImageHelpers, CrawlerHelpers;
+
 	
 	/**
 	 * GCSE API key
@@ -108,13 +113,150 @@ trait GCSE {
 	/**
 	 * Revenrse image search endpoint
 	 */
-	protected $cse_img_endpoint = 'http://images.google.com/searchbyimage?image_url=';	
+	protected $cse_img_endpoint = 'http://images.google.com/searchbyimage';	
 	
 
 	/**
 	 * Revenrse image search endpoint
 	 */
 	protected $cse_google_endpoint = 'https://www.google.com/search';		
+
+
+	/**
+	 * Search by image (reverse search)
+	 *   
+	 * 
+	 * @param $img_url
+	 * @return mixed
+	 */
+	public function gcseImageSearch($img_url)
+	{
+
+
+		/* --------------------------------- */
+
+		
+		$pic_url = 'http://kaizern.com/blog/beautiful-landscapes-1.jpg';
+
+		$dom = new GReverseImageCustom($pic_url);
+		
+		
+		die;
+
+		/* --------------------------------- */
+		
+		$web 						= new Web(['timeout' => 60, 'allow_redirects' => true]);
+		$spider 					= new Spider();		
+		$spider->setClient($web);
+
+
+
+
+		#### round 1
+
+		$url_search_img 			= $this->cse_img_endpoint . '?' . http_build_query(['image_url' => $img_url, 'gws_rd'=>'ssl']);
+
+		$spider->followRedirects(true);
+		$spider->setHeader('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36');		
+		$crawler 					= $spider->request('GET', $url_search_img);
+
+		//die($crawler->html());
+
+		$nodeValues = $crawler->filter('body a')->each(function ($node, $i) {
+			return ['href' => $node->attr('href'), 'text' => $node->text()];
+		});		
+		echo '<pre>';
+		print_r($nodeValues);
+		die;
+
+		$catched_redirects 			= $spider->getRedirectsUris();
+		
+		$found_query 				= parse_url($catched_redirects[1], PHP_URL_QUERY);
+
+		$generated_url_search_img_results 	= $this->cse_google_endpoint . '?' . $found_query;
+
+		#### round 2
+
+		$spider->request('GET', $generated_url_search_img_results);
+
+		$this->redirects_uris = null; //reset the redirects
+
+		$catched_redirects2 	 = $spider->getRedirectsUris(); //set & get again
+
+		
+
+
+		
+
+
+		//echo $res->getBody(); die;
+
+		### Current
+
+		echo '<pre>';
+
+		echo '<h1>Current</h1>';
+
+		echo '<hr />$url_search_img : <br/><br/>';
+		echo $url_search_img;
+
+		echo '<hr />$catched_redirects 1: <br/><br/>';
+		print_r($catched_redirects);
+		
+		echo '<hr />$catched_redirects 2: <br/><br/>';
+		print_r($catched_redirects2);		
+
+		echo '<hr />curr $found_query : <br/><br/>';
+		echo $found_query;			
+
+
+		echo '<hr />curr $generated_url_search_img_results : <br/><br/>';
+		echo $generated_url_search_img_results;				
+
+		
+		### History
+
+		echo '<h1>History</h1>';
+
+		echo '<hr />$generated_search_img_results_urls : <br/><br/>';
+		$generated_search_img_results_urls = [
+			'https://www.google.com/search?tbs=sbi:AMhZZivMD3wnHikH-opZIU1xDeJxRUpjHf1_1HDIIEAxxsv5akuXQb0X43ew1B-KRiCM6CfGzaovYy-VPwsI75SujkEcAw0FxS9zBfdSXWz9rdPAFUbo7B21n335sCQfGVasJLhmLGJqqH6ByBeaKZGp8JJRo0iyD7_1FcqynWpkqGsaw6LwoIOp2ihcxiB1rq3tXOWkFFgbPG8EaGbHZ55jNfvrBQIXKN5GkTLdP2HcbwMcr97up2u2De23pTZMmBhhfjOO7kIjV7FUlhXYzyjYLAnQ5ioPpb6Skob7Gzcx64uHzltsnKrhq68Z7qPo_1n1hQ7v1RSpPvdX1i466Y4eL1k6HVax-I6vw&gws_rd=ssl'
+			,
+			'https://www.google.com/search?tbs=sbi:AMhZZivMD3wnHikH-opZIU1xDeJxRUpjHf1_1HDIIEAxxsv5akuXQb0X43ew1B-KRiCM6CfGzaovYy-VPwsI75SujkEcAw0FxS9zBfdSXWz9rdPAFUbo7B21n335sCQfGVasJLhmLGJqqH6ByBeaKZGp8JJRo0iyD7_1FcqynWpkqGsaw6LwoIOp2ihcxiB1rq3tXOWkFFgbPG8EaGbHZ55jNfvrBQIXKN5GkTLdP2HcbwMcr97up2u2De23pTZMmBhhfjOO7kIjV7FUlhXYzyjYLAnQ5ioPpb6Skob7Gzcx64uHzltsnKrhq68Z7qPo_1n1hQ7v1RSpPvdX1i466Y4eL1k6HVax-I6vw&gws_rd=ssl'
+			,
+			'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
+			,
+			'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
+			,
+			'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
+			,
+			'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
+		];
+		print_r($generated_search_img_results_urls);
+
+		echo '<hr />$actual_ruslts_urls  : <br/><br/>';
+		$actual_search_img_results_urls = [
+			'https://www.google.com/search?tbs=sbi:AMhZZivMD3wnHikH-opZIU1xDeJxRUpjHf1_1HDIIEAxxsv5akuXQb0X43ew1B-KRiCM6CfGzaovYy-VPwsI75SujkEcAw0FxS9zBfdSXWz9rdPAFUbo7B21n335sCQfGVasJLhmLGJqqH6ByBeaKZGp8JJRo0iyD7_1FcqynWpkqGsaw6LwoIOp2ihcxiB1rq3tXOWkFFgbPG8EaGbHZ55jNfvrBQIXKN5GkTLdP2HcbwMcr97up2u2De23pTZMmBhhfjOO7kIjV7FUlhXYzyjYLAnQ5ioPpb6Skob7Gzcx64uHzltsnKrhq68Z7qPo_1n1hQ7v1RSpPvdX1i466Y4eL1k6HVax-I6vw&gws_rd=ssl'
+			,
+			'https://www.google.com/search?tbs=sbi:AMhZZivMD3wnHikH-opZIU1xDeJxRUpjHf1_1HDIIEAxxsv5akuXQb0X43ew1B-KRiCM6CfGzaovYy-VPwsI75SujkEcAw0FxS9zBfdSXWz9rdPAFUbo7B21n335sCQfGVasJLhmLGJqqH6ByBeaKZGp8JJRo0iyD7_1FcqynWpkqGsaw6LwoIOp2ihcxiB1rq3tXOWkFFgbPG8EaGbHZ55jNfvrBQIXKN5GkTLdP2HcbwMcr97up2u2De23pTZMmBhhfjOO7kIjV7FUlhXYzyjYLAnQ5ioPpb6Skob7Gzcx64uHzltsnKrhq68Z7qPo_1n1hQ7v1RSpPvdX1i466Y4eL1k6HVax-I6vw&gws_rd=ssl'
+			,
+			'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
+			,
+			'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
+			,
+			'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
+			,
+			'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
+		];		
+		print_r($actual_search_img_results_urls);
+
+		
+
+		die;
+
+
+	}	
+
 
 
 	/**
@@ -152,44 +294,6 @@ trait GCSE {
 		//die;	
 	}
 
-
-
-	/**
-	 * Search by image (reverse search)
-	 * 
-	 * 
-	 * @param $img_url
-	 * @return mixed
-	 */
-	public function gcseImageSearch($img_url)
-	{
-		$url = $this->cse_img_endpoint . $img_url;
-		
-		$spider = new Spider();		
-		$web = new Web([
-			'timeout' => 60,
-			'allow_redirects' => false
-		]);
-		$spider->setClient($web);
-
-		$crawler = $spider->request('GET', $url);
-		
-		$url_search_img = $spider->getRedirectsUris()[1];
-		
-		$orig = 'https://www.google.com/search?tbs=sbi:AMhZZisMfbxL076v0yE7ikku4YUZQjaoXWMludkTSRwD41hwFCQ7d976tTZ5KIzdHRz3i9PKI_1rS7PKIxGtk0R0GZMbO7ab5F3-y-7H3-OT4xP6f6peZh5I9Y7UWiuWriHCcPGnstODOc6YoxzC3RTX1UeIYDjKMXhWwYRyg9wZqxOtLgJUOZxydfEWwMFwbiqKXsMlzu8OeqVBPChs5Z1sKfn5pUVDNZcWfDMQcpgHBR_1yAyuXAESmnJbk77dsyD7oD_1M6uisvt4c0rlwVhG16oSIUhLs1L9jjxVGVq5lvzeKu8MQABlG2t714IUgZCJ5WYURpJ8enu_1zh28arZPcvIsBxKhQHrFQ&gws_rd=ssl';			
-				
-		$url_search = $this->cse_google_endpoint . '?' . parse_url($url_search_img, PHP_URL_QUERY);
-
-		echo '<pre>';
-		echo $url_search_img;
-		echo '<hr />';
-		echo $url_search;
-		echo '<hr />';
-		echo $orig;
-		die;
-
-
-	}	
 
 
 }
