@@ -133,17 +133,15 @@ trait GCSE {
 	{
 
 
-		/* --------------------------------- */
-
-		
+		/* working custom curl --------------------------------- */
 		$pic_url = 'http://kaizern.com/blog/beautiful-landscapes-1.jpg';
-
 		$dom = new GReverseImageCustom($pic_url);
-		
-		
 		die;
-
 		/* --------------------------------- */
+		
+
+
+
 		
 		$web 						= new Web(['timeout' => 60, 'allow_redirects' => true]);
 		$spider 					= new Spider();		

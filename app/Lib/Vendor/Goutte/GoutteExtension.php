@@ -17,14 +17,6 @@ use App\Lib\Vendor\Symfony\BrowserKit\BrowserKitExtension; // @extension
 class GoutteExtension extends BrowserKitExtension
 {
     /**
-     * Crawler 
-     * 
-     * @var  
-     */
-    public $crawler;
-
-
-    /**
      * Use vendor's contents as base for extension
      */
     use GoutteBase;
