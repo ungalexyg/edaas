@@ -33,21 +33,19 @@ class GReverseImageCustom
 
             $full_url = $this->compose_url($image_url);
 
-            dd($full_url);
+            //dd($full_url);
 
 
             $html = $this->open_url($full_url);
 
             //var_dump($html); die; //WORKING - reverse image search links are here 
 
-            $body_dom = $this->get_tag_content_as_dom($html);
+            // $body_dom = $this->get_tag_content_as_dom($html);
             
             $crawler = new Crawler($html);
-
-            $links = $crawler->filter('body a')->each(function ($node, $i) {
+            $links = $crawler->filter('body h3.r > a')->each(function ($node, $i) {
                 return ['href' => $node->attr('href'), 'text' => $node->text()];
             });	  
-            
             echo '<pre>'; print_r($links); die;
 
 

@@ -7,8 +7,8 @@ namespace App\Processes\Adapters\Traits;
 
 use App\Lib\Vendor\Goutte\GoutteExtension as Spider;
 use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
+use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
 
-use Symfony\Component\DomCrawler\Crawler;
 
 
 /**
@@ -133,120 +133,131 @@ trait GCSE {
 	{
 
 
-		/* working custom curl --------------------------------- */
-		$pic_url = 'http://kaizern.com/blog/beautiful-landscapes-1.jpg';
-		$dom = new GReverseImageCustom($pic_url);
+		/* working custom curl --------------------------------- 
+		$img_url = 'http://kaizern.com/blog/beautiful-landscapes-1.jpg';
+		$dom = new GReverseImageCustom($img_url);
 		die;
 		/* --------------------------------- */
 		
 
+		$url_search_img = $this->cse_img_endpoint . '?' . http_build_query(['image_url' => $img_url]);
 
 
 		
 		$web 						= new Web(['timeout' => 60, 'allow_redirects' => true]);
 		$spider 					= new Spider();		
-		$spider->setClient($web);
+		//$spider->setClient($web);
 
+		// $crawler = $spider->request('GET', $url_search_img,[
+		// 	'curl' => [
+		// 		CURLOPT_URL		=> $url_search_img,
+		// 		CURLOPT_HEADER => 0,
+		// 		CURLOPT_RETURNTRANSFER => 1,
+		// 		CURLOPT_REFERER => 'http://localhost',
+		// 		CURLOPT_SSL_VERIFYPEER => false,
+		// 		CURLOPT_FOLLOWLOCATION => true,
+		// 		CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11',
+		// 	]
+		// ]);
 
-
-
-		#### round 1
-
-		$url_search_img 			= $this->cse_img_endpoint . '?' . http_build_query(['image_url' => $img_url, 'gws_rd'=>'ssl']);
-
-		$spider->followRedirects(true);
-		$spider->setHeader('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36');		
-		$crawler 					= $spider->request('GET', $url_search_img);
-
-		//die($crawler->html());
-
-		$nodeValues = $crawler->filter('body a')->each(function ($node, $i) {
+		$html = $this->curl_request($url_search_img);
+		$crawler = new Crawler($html);
+		$links = $crawler->filter('body h3.r > a')->each(function ($node, $i) {
 			return ['href' => $node->attr('href'), 'text' => $node->text()];
-		});		
-		echo '<pre>';
-		print_r($nodeValues);
-		die;
+		});	  
+		echo '<pre>'; print_r($links); die;		
 
-		$catched_redirects 			= $spider->getRedirectsUris();
+		// #### round 1
+
+		// $url_search_img 			= $this->cse_img_endpoint . '?' . http_build_query(['image_url' => $img_url, 'gws_rd'=>'ssl']);
+		// $spider->followRedirects(true);
+		// $spider->setHeader('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36');		
+		// $crawler 					= $spider->request('GET', $url_search_img);
+
+		// //die($crawler->html());
+
+		// $nodeValues = $crawler->filter('body a')->each(function ($node, $i) {
+		// 	return ['href' => $node->attr('href'), 'text' => $node->text()];
+		// });		
+		// echo '<pre>';
+		// print_r($nodeValues);
+		// die;
+
+		// $catched_redirects 			= $spider->getRedirectsUris();
 		
-		$found_query 				= parse_url($catched_redirects[1], PHP_URL_QUERY);
+		// $found_query 				= parse_url($catched_redirects[1], PHP_URL_QUERY);
 
-		$generated_url_search_img_results 	= $this->cse_google_endpoint . '?' . $found_query;
+		// $generated_url_search_img_results 	= $this->cse_google_endpoint . '?' . $found_query;
 
-		#### round 2
+		// #### round 2
 
-		$spider->request('GET', $generated_url_search_img_results);
+		// $spider->request('GET', $generated_url_search_img_results);
 
-		$this->redirects_uris = null; //reset the redirects
+		// $this->redirects_uris = null; //reset the redirects
 
-		$catched_redirects2 	 = $spider->getRedirectsUris(); //set & get again
+		// $catched_redirects2 	 = $spider->getRedirectsUris(); //set & get again
+
+	
+		// //echo $res->getBody(); die;
+
+		// ### Current
+
+		// echo '<pre>';
+
+		// echo '<h1>Current</h1>';
+
+		// echo '<hr />$url_search_img : <br/><br/>';
+		// echo $url_search_img;
+
+		// echo '<hr />$catched_redirects 1: <br/><br/>';
+		// print_r($catched_redirects);
+		
+		// echo '<hr />$catched_redirects 2: <br/><br/>';
+		// print_r($catched_redirects2);		
+
+		// echo '<hr />curr $found_query : <br/><br/>';
+		// echo $found_query;			
+
+
+		// echo '<hr />curr $generated_url_search_img_results : <br/><br/>';
+		// echo $generated_url_search_img_results;				
 
 		
+		// ### History
 
+		// echo '<h1>History</h1>';
 
-		
+		// echo '<hr />$generated_search_img_results_urls : <br/><br/>';
+		// $generated_search_img_results_urls = [
+		// 	'https://www.google.com/search?tbs=sbi:AMhZZivMD3wnHikH-opZIU1xDeJxRUpjHf1_1HDIIEAxxsv5akuXQb0X43ew1B-KRiCM6CfGzaovYy-VPwsI75SujkEcAw0FxS9zBfdSXWz9rdPAFUbo7B21n335sCQfGVasJLhmLGJqqH6ByBeaKZGp8JJRo0iyD7_1FcqynWpkqGsaw6LwoIOp2ihcxiB1rq3tXOWkFFgbPG8EaGbHZ55jNfvrBQIXKN5GkTLdP2HcbwMcr97up2u2De23pTZMmBhhfjOO7kIjV7FUlhXYzyjYLAnQ5ioPpb6Skob7Gzcx64uHzltsnKrhq68Z7qPo_1n1hQ7v1RSpPvdX1i466Y4eL1k6HVax-I6vw&gws_rd=ssl'
+		// 	,
+		// 	'https://www.google.com/search?tbs=sbi:AMhZZivMD3wnHikH-opZIU1xDeJxRUpjHf1_1HDIIEAxxsv5akuXQb0X43ew1B-KRiCM6CfGzaovYy-VPwsI75SujkEcAw0FxS9zBfdSXWz9rdPAFUbo7B21n335sCQfGVasJLhmLGJqqH6ByBeaKZGp8JJRo0iyD7_1FcqynWpkqGsaw6LwoIOp2ihcxiB1rq3tXOWkFFgbPG8EaGbHZ55jNfvrBQIXKN5GkTLdP2HcbwMcr97up2u2De23pTZMmBhhfjOO7kIjV7FUlhXYzyjYLAnQ5ioPpb6Skob7Gzcx64uHzltsnKrhq68Z7qPo_1n1hQ7v1RSpPvdX1i466Y4eL1k6HVax-I6vw&gws_rd=ssl'
+		// 	,
+		// 	'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
+		// 	,
+		// 	'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
+		// 	,
+		// 	'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
+		// 	,
+		// 	'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
+		// ];
+		// print_r($generated_search_img_results_urls);
 
-
-		//echo $res->getBody(); die;
-
-		### Current
-
-		echo '<pre>';
-
-		echo '<h1>Current</h1>';
-
-		echo '<hr />$url_search_img : <br/><br/>';
-		echo $url_search_img;
-
-		echo '<hr />$catched_redirects 1: <br/><br/>';
-		print_r($catched_redirects);
-		
-		echo '<hr />$catched_redirects 2: <br/><br/>';
-		print_r($catched_redirects2);		
-
-		echo '<hr />curr $found_query : <br/><br/>';
-		echo $found_query;			
-
-
-		echo '<hr />curr $generated_url_search_img_results : <br/><br/>';
-		echo $generated_url_search_img_results;				
-
-		
-		### History
-
-		echo '<h1>History</h1>';
-
-		echo '<hr />$generated_search_img_results_urls : <br/><br/>';
-		$generated_search_img_results_urls = [
-			'https://www.google.com/search?tbs=sbi:AMhZZivMD3wnHikH-opZIU1xDeJxRUpjHf1_1HDIIEAxxsv5akuXQb0X43ew1B-KRiCM6CfGzaovYy-VPwsI75SujkEcAw0FxS9zBfdSXWz9rdPAFUbo7B21n335sCQfGVasJLhmLGJqqH6ByBeaKZGp8JJRo0iyD7_1FcqynWpkqGsaw6LwoIOp2ihcxiB1rq3tXOWkFFgbPG8EaGbHZ55jNfvrBQIXKN5GkTLdP2HcbwMcr97up2u2De23pTZMmBhhfjOO7kIjV7FUlhXYzyjYLAnQ5ioPpb6Skob7Gzcx64uHzltsnKrhq68Z7qPo_1n1hQ7v1RSpPvdX1i466Y4eL1k6HVax-I6vw&gws_rd=ssl'
-			,
-			'https://www.google.com/search?tbs=sbi:AMhZZivMD3wnHikH-opZIU1xDeJxRUpjHf1_1HDIIEAxxsv5akuXQb0X43ew1B-KRiCM6CfGzaovYy-VPwsI75SujkEcAw0FxS9zBfdSXWz9rdPAFUbo7B21n335sCQfGVasJLhmLGJqqH6ByBeaKZGp8JJRo0iyD7_1FcqynWpkqGsaw6LwoIOp2ihcxiB1rq3tXOWkFFgbPG8EaGbHZ55jNfvrBQIXKN5GkTLdP2HcbwMcr97up2u2De23pTZMmBhhfjOO7kIjV7FUlhXYzyjYLAnQ5ioPpb6Skob7Gzcx64uHzltsnKrhq68Z7qPo_1n1hQ7v1RSpPvdX1i466Y4eL1k6HVax-I6vw&gws_rd=ssl'
-			,
-			'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
-			,
-			'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
-			,
-			'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
-			,
-			'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
-		];
-		print_r($generated_search_img_results_urls);
-
-		echo '<hr />$actual_ruslts_urls  : <br/><br/>';
-		$actual_search_img_results_urls = [
-			'https://www.google.com/search?tbs=sbi:AMhZZivMD3wnHikH-opZIU1xDeJxRUpjHf1_1HDIIEAxxsv5akuXQb0X43ew1B-KRiCM6CfGzaovYy-VPwsI75SujkEcAw0FxS9zBfdSXWz9rdPAFUbo7B21n335sCQfGVasJLhmLGJqqH6ByBeaKZGp8JJRo0iyD7_1FcqynWpkqGsaw6LwoIOp2ihcxiB1rq3tXOWkFFgbPG8EaGbHZ55jNfvrBQIXKN5GkTLdP2HcbwMcr97up2u2De23pTZMmBhhfjOO7kIjV7FUlhXYzyjYLAnQ5ioPpb6Skob7Gzcx64uHzltsnKrhq68Z7qPo_1n1hQ7v1RSpPvdX1i466Y4eL1k6HVax-I6vw&gws_rd=ssl'
-			,
-			'https://www.google.com/search?tbs=sbi:AMhZZivMD3wnHikH-opZIU1xDeJxRUpjHf1_1HDIIEAxxsv5akuXQb0X43ew1B-KRiCM6CfGzaovYy-VPwsI75SujkEcAw0FxS9zBfdSXWz9rdPAFUbo7B21n335sCQfGVasJLhmLGJqqH6ByBeaKZGp8JJRo0iyD7_1FcqynWpkqGsaw6LwoIOp2ihcxiB1rq3tXOWkFFgbPG8EaGbHZ55jNfvrBQIXKN5GkTLdP2HcbwMcr97up2u2De23pTZMmBhhfjOO7kIjV7FUlhXYzyjYLAnQ5ioPpb6Skob7Gzcx64uHzltsnKrhq68Z7qPo_1n1hQ7v1RSpPvdX1i466Y4eL1k6HVax-I6vw&gws_rd=ssl'
-			,
-			'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
-			,
-			'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
-			,
-			'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
-			,
-			'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
-		];		
-		print_r($actual_search_img_results_urls);
+		// echo '<hr />$actual_ruslts_urls  : <br/><br/>';
+		// $actual_search_img_results_urls = [
+		// 	'https://www.google.com/search?tbs=sbi:AMhZZivMD3wnHikH-opZIU1xDeJxRUpjHf1_1HDIIEAxxsv5akuXQb0X43ew1B-KRiCM6CfGzaovYy-VPwsI75SujkEcAw0FxS9zBfdSXWz9rdPAFUbo7B21n335sCQfGVasJLhmLGJqqH6ByBeaKZGp8JJRo0iyD7_1FcqynWpkqGsaw6LwoIOp2ihcxiB1rq3tXOWkFFgbPG8EaGbHZ55jNfvrBQIXKN5GkTLdP2HcbwMcr97up2u2De23pTZMmBhhfjOO7kIjV7FUlhXYzyjYLAnQ5ioPpb6Skob7Gzcx64uHzltsnKrhq68Z7qPo_1n1hQ7v1RSpPvdX1i466Y4eL1k6HVax-I6vw&gws_rd=ssl'
+		// 	,
+		// 	'https://www.google.com/search?tbs=sbi:AMhZZivMD3wnHikH-opZIU1xDeJxRUpjHf1_1HDIIEAxxsv5akuXQb0X43ew1B-KRiCM6CfGzaovYy-VPwsI75SujkEcAw0FxS9zBfdSXWz9rdPAFUbo7B21n335sCQfGVasJLhmLGJqqH6ByBeaKZGp8JJRo0iyD7_1FcqynWpkqGsaw6LwoIOp2ihcxiB1rq3tXOWkFFgbPG8EaGbHZ55jNfvrBQIXKN5GkTLdP2HcbwMcr97up2u2De23pTZMmBhhfjOO7kIjV7FUlhXYzyjYLAnQ5ioPpb6Skob7Gzcx64uHzltsnKrhq68Z7qPo_1n1hQ7v1RSpPvdX1i466Y4eL1k6HVax-I6vw&gws_rd=ssl'
+		// 	,
+		// 	'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
+		// 	,
+		// 	'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
+		// 	,
+		// 	'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
+		// 	,
+		// 	'https://www.google.com/search?tbs=sbi:AMhZZiuOUFavXP8VILg6KcvNOOfIPnIsUQdr--zFp1j3iMKfY8Utby0OFLvCbjweE85gWxIC-cUa7kc1lRebcHnzVUtp9Q22vXFEQ1HxOe6lgI-dAZaPdBcF4uXuuVFbdUFOeNP6Bwj_1I83lmquEOkETjq-GztsDk6ZgrpWM9_1brvrXgN7xM5_1PbobYK-RYP6afnA7fNWZEZw_1myB9y1Tmu9Cv5Ewe2o5WGvRhULISaB5EGweXWwHuhAge8qUxPkXDXvDCEuxQg4t0Bf70UVjtBRbREU9oGmw_1IAqQtfHYud6TGZviTmfkdRXW0gTSaWvktAOHvy09jkaHFFV9kTuwfwihuy9_1_1Xlw&gws_rd=ssl'
+		// ];		
+		// print_r($actual_search_img_results_urls);
 
 		
 
@@ -291,6 +302,46 @@ trait GCSE {
 
 		//die;	
 	}
+
+
+
+	#####################################
+	# Helpers
+	#####################################
+
+
+
+    protected function curl_request($url)
+    {
+        $curl = curl_init();
+		
+		
+		// curl_setopt($curl, CURLOPT_URL, $url);
+        // curl_setopt($curl, CURLOPT_HEADER, 0);
+        // curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        // curl_setopt($curl, CURLOPT_REFERER, 'http://localhost');
+        // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        // curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11");
+		// curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+		
+
+		curl_setopt_array($curl,[
+			CURLOPT_URL 			=> $url,
+			CURLOPT_HEADER 			=> 0,
+			CURLOPT_RETURNTRANSFER 	=> 1,
+			CURLOPT_SSL_VERIFYPEER 	=> false,
+			CURLOPT_FOLLOWLOCATION 	=> true,
+			CURLOPT_REFERER 		=> 'http://localhost',
+			CURLOPT_USERAGENT 		=> 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11',			
+		]);		
+
+        $content = utf8_decode(curl_exec($curl));
+        curl_close($curl);
+		return $content;
+		
+
+    }		
+
 
 
 
