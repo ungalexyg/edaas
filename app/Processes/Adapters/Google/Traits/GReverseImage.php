@@ -51,11 +51,16 @@ trait GReverseImage {
 	 *   
 	 * 
 	 * @param string $img_src_url // the image src url to prerform reverse search with
+	 * @param array $query // other query params
 	 * @return mixed
 	 */
-	public function grisSearch($img_src_url)
+	public function grisSearch($img_src_url, $query=[])
 	{		
-		$html		= $this->grisCurlRequest($img_src_url);
+		$query['image_url'] = $img_src_url;
+
+		$search_url = $this->gris_endpoint . '?' . http_build_query($query);
+
+		$html		= $this->grisCurlRequest($search_url);
 		
 		$crawler 	= new Crawler($html);
 		
@@ -73,14 +78,13 @@ trait GReverseImage {
 	/**
 	 * Google reverse image search request
 	 * 
-	 * @param string $img_src_url // the image src url to prerform reverse search with
+	 * @param string $url 
 	 */
-    protected function grisCurlRequest($img_src_url)
-    {
-		$search_url = $this->gris_endpoint . '?' . http_build_query(['image_url' => $img_src_url]);
+    protected function grisCurlRequest($url)
+    {		
 		$curl = curl_init();
 		curl_setopt_array($curl,[
-			CURLOPT_URL 			=> $search_url,
+			CURLOPT_URL 			=> $url,
 			CURLOPT_HEADER 			=> 0,
 			CURLOPT_RETURNTRANSFER 	=> 1,
 			CURLOPT_SSL_VERIFYPEER 	=> false,

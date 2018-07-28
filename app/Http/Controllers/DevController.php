@@ -28,7 +28,12 @@ class DevController extends Controller
     {
         $img_src_url = "https://ae01.alicdn.com/kf/HTB1RrfMjCYTBKNjSZKbq6xJ8pXai/T-Shirt-Women-Summer-Short-Sleeve-V-Neck-t-shirt-Female-Cactus-Funny-Letter-Print-T.jpg";
 
-        $results = app(Scanner::class)->grisSearch($img_src_url);
+        // add extra query params
+        $query = [
+			'q' => 'site:bellelily.com', // optional, get results for that image only in specific site
+        ];
+        
+        $results = app(Scanner::class)->grisSearch($img_src_url, $query);
         
         dd($results);
     }
