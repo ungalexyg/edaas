@@ -11,11 +11,11 @@
 |
 */
 
-Route::get('/info', function () {
-    echo phpinfo(); die;
+Route::get('/search', 'DevController@search');
 
-    return view('welcome');
-});
+Route::get('/search-img', 'DevController@imageSearch');
 
+Route::get('/mongo', 'DevController@mongo');
 
-Route::get('/mongo', 'TestController@index');
+Route::get('/embed', 'DevController@embed');
+
