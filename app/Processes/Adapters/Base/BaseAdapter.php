@@ -17,7 +17,7 @@ namespace App\Processes\Adapters\Base;
      * 
      * @return mixed
 	 */        
-    abstract public function ScanProspects(); 
+    //abstract public function ScanProspects(); 
 
  }
 

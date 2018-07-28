@@ -11,20 +11,20 @@ namespace App\Processes\Adapters\Base;
  */
  interface IAdapter {
 
-	/**
-	 * Locate initial prospect items
-     * 
-     * @return mixed
-	 */    
-    public function LocateProspects(); 
+	// /**
+	//  * Locate initial prospect items
+    //  * 
+    //  * @return mixed
+	//  */    
+    // public function LocateProspects(); 
 
 
-	/**
-	 * Watch prospect items performance
-     * 
-     * @return mixed
-	 */    
-    public function WatchProspects();     
+	// /**
+	//  * Watch prospect items performance
+    //  * 
+    //  * @return mixed
+	//  */    
+    // public function WatchProspects();     
 
  }
 

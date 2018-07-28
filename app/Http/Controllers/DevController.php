@@ -6,7 +6,7 @@ use App\Test;
 use Illuminate\Http\Request;
 use App\Lib\Embed\Embed;
 use App\Processes\Scanner;
-
+use App\Processes\Adapters\Google\GoogleAdapter;
 
 class DevController extends Controller
 {
@@ -16,7 +16,7 @@ class DevController extends Controller
      */
     public function search()
     {
-        $res = app(Scanner::class)->gcseSearch("Baby Groot Flowerpot");
+        $res = app(GoogleAdapter::class)->gcseSearch("Baby Groot Flowerpot");
         
         echo $res->getBody();
     }
@@ -30,10 +30,10 @@ class DevController extends Controller
 
         // add extra query params
         $query = [
-			'q' => 'site:bellelily.com', // optional, get results for that image only in specific site
+			//'q' => 'site:bellelily.com', // optional, get results for that image only in specific site
         ];
         
-        $results = app(Scanner::class)->grisSearch($img_src_url, $query);
+        $results = app(GoogleAdapter::class)->grisSearch($img_src_url, $query);
         
         dd($results);
     }

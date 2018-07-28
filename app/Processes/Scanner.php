@@ -1,8 +1,8 @@
 <?php 
 namespace App\Processes;
 
-use App\Processes\Adapters\Google\Traits\GCustomSearch;
-use App\Processes\Adapters\Google\Traits\GReverseImage;
+
+use App\Processes\Adapters\Google\GoogleAdapter;
 
 
 /**
@@ -19,11 +19,7 @@ use App\Processes\Adapters\Google\Traits\GReverseImage;
  */ 
 class Scanner {
 
-	/**
-	 * Use google custom search
-	 * Use google reverse image search
-	 */
-	use GCustomSearch, GReverseImage;
+
 
 
 	/**
