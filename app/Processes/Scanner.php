@@ -1,19 +1,17 @@
 <?php 
 namespace App\Processes;
 
-use App\Processes\Adapters\Traits\GCSE;
+use App\Processes\Adapters\Google\Traits\GCustomSearch;
+use App\Processes\Adapters\Google\Traits\GReverseImage;
 
 
 /**
  * --------------------------------------------------------------------------
- *  TODO:
+ *  
  * --------------------------------------------------------------------------
  * 
- * DONE: check how to find the search query (products titles)
- * see $this->locateProspects()
  * 
  */
-
 
 
 /**
@@ -21,7 +19,11 @@ use App\Processes\Adapters\Traits\GCSE;
  */ 
 class Scanner {
 
-	use GCSE;
+	/**
+	 * Use google custom search
+	 * Use google reverse image search
+	 */
+	use GCustomSearch, GReverseImage;
 
 
 	/**

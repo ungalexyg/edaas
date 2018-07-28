@@ -10,7 +10,7 @@
 
 /**
  * --------------------------------------------------------------------------
- *  Locator
+ *  Scanner
  * --------------------------------------------------------------------------
  * 
  * Locat "Prospect Items" from given "Prospects Channels" & store them in "Propects Q" for forther handling by the Watcher.
