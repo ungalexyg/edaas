@@ -25,9 +25,6 @@ use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
  *  TODO:
  * --------------------------------------------------------------------------
  * 
- * TODO: check image search by site
- *  
- * 
  */
 
 

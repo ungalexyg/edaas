@@ -210,8 +210,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        //'Moloquent' => Moloquent\Eloquent\Model::class,
-        'Moloquent'       => Jenssegers\Mongodb\Eloquent\Model::class,
+
+        //'Moloquent'       => Jenssegers\Mongodb\Eloquent\Model::class, // working mongo 
     ],
 
 ];

@@ -1,18 +1,6 @@
 <?php
 
-$mongodb = [
-    'driver'   => 'mongodb',
-    'host'     => env('MONGODB_HOST', 'localhost'),
-    'port'     => 27017, //env('MONGODB_PORT', 27017),
-    'database' => env('MONGODB_DATABASE'),
-    'username' => env('MONGODB_USERNAME'),
-    'password' => env('MONGODB_PASSWORD'),
-    'use_mongo_id' => false,
-    'options' => [
-        'db' => 'admin', // Sets the authentication database required by mongo 3
-        //['replicaSet' => 'replicaSetName'], // Connect to multiple servers or replica sets
-    ]
-];
+
 
 //dd($mongodb);
 
@@ -31,8 +19,8 @@ return [
     |
     */
 
-    //'default' => env('DB_CONNECTION', 'mysql'),
-    'default' => env('DB_CONNECTION', 'mongodb'),
+    'default' => env('DB_CONNECTION', 'mysql'),
+    //'default' => env('DB_CONNECTION', 'mongodb'),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,37 +42,19 @@ return [
 
     'connections' => [
 
-        'mongodb' => $mongodb,        
-        
-        // 'mongodb' => [
-        //     'driver'   => 'mongodb',
-        //     'host'     => 'localhost', //env('DB_HOST', 'localhost'),
-        //     //'host'     => ['server1', 'server2'], // multi server replica
-        //     'port'     => 27017, //env('DB_PORT', 27017),
-        //     'database' => 'test', //env('DB_DATABASE', 'test'),
-        //     'username' => 'mdbusername', //env('DB_USERNAME', ''),
-        //     'password' => 'mdbpass', //env('DB_PASSWORD', ''),
-        //     'options'  => [
-        //         // 'replicaSet' => 'replicaSetName', // multi server replica
-        //         'database' => 'admin' // sets the authentication database required by mongo 3
-        //     ]
-        // ],
-
-
-        // 'mongodb' => [
-        //     'driver' => 'mongodb',
-        //     //'host' => [env('MONGODB_SERVER01'), env('MONGODB_SERVER02'), env('MONGODB_SERVER03')],
-
-        //     'host' => env('MONGODB_HOST', '127.0.0.1'),
-        //     'port' => env('MONGODB_PORT', 27017),
-        //     'database' => env('MONGODB_DATABASE', 'test'),
-        //     'username' => env('MONGODB_USERNAME', 'mdbusername'),
-        //     'password' => env('MONGODB_PASSWORD', 'mdbpass'),
-        //     'options' => [
-        //         'database' => env('MONGODB_DATABASE', 'test'),//不加导致auth fail
-        //         //'replicaSet' => env('MONGODB_REPLICASET')//'yunpanrs'
-        //     ]
-        // ],
+        'mongodb' => [
+            'driver'   => 'mongodb',
+            'host'     => env('MONGODB_HOST', 'localhost'),
+            'port'     => 27017, //env('MONGODB_PORT', 27017),
+            'database' => env('MONGODB_DATABASE'),
+            'username' => env('MONGODB_USERNAME'),
+            'password' => env('MONGODB_PASSWORD'),
+            'use_mongo_id' => false,
+            'options' => [
+                'db' => 'admin', // Sets the authentication database required by mongo 3
+                //['replicaSet' => 'replicaSetName'], // Connect to multiple servers or replica sets
+            ]
+        ],        
 
         'mysql' => [
             'driver' => 'mysql',

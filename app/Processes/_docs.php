@@ -37,10 +37,10 @@
 
  /**
  * --------------------------------------------------------------------------
- *  Realizer
+ *  Keeper
  * --------------------------------------------------------------------------
  * 
- * The Realizer collect, organise & transform the data into api stactured records.
+ * The Keeper collect, organise & transform the data into api stactured records.
  * 
  */ 
 
