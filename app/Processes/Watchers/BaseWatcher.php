@@ -12,6 +12,7 @@
 
 namespace App\Processes\Watchers;
 
+use App\Processes\Base\BaseProcess;
 
 /**
  * Base Watcher
@@ -19,10 +20,27 @@ namespace App\Processes\Watchers;
 abstract class BaseWatcher extends BaseProcess implements IWatcher {
 
 
-    /**
-     * Compare if record has changes 
-     */
-    abstract public function compare();
+	/**
+	 * Start a process
+	 * 
+	 * @return mixed
+	 */
+	public function start() 
+	{   
+		return $this->watch();
+	}
+
+
+    // /**
+    //  * Compare if record has changes 
+    //  */
+    // abstract public function compare();
+
+
+    // /**
+    //  * Compare if record has changes 
+    //  */
+    // abstract public function compare();    
 
 }
 

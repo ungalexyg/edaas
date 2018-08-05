@@ -23,11 +23,25 @@ use App\Processes\Base\BaseProcess;
 abstract class BaseScanner extends BaseProcess implements IScanner {
 
 
-    /**
-     * Compare if record has changes 
-     */
-    abstract public function scan();    
 
+	/**
+	 * Start a process
+	 * 
+	 * @return mixed
+	 */
+	public function start() 
+	{
+		return $this->scan();
+	}
+
+
+    // /**
+    //  * Compare if record has changes 
+    //  */
+    // public function scan() 
+    // {
+    //     return $this;
+    // }    
 
 }
 

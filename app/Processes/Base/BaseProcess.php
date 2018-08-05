@@ -11,11 +11,15 @@
 namespace App\Processes\Base;
 use App\Lib\Enums\Process;
 use App\Exceptions\ProcessException;
+use App\Processes\Scanners\IScanner;
+use App\Processes\Keepers\IKeeper;
+use App\Processes\Watchers\IWatcher;
+
 
 /**
  * Base Process 
  */ 
-abstract class BaseProcess implements IProcess {
+class BaseProcess implements IProcess {
 
 
 	/**
@@ -64,9 +68,14 @@ abstract class BaseProcess implements IProcess {
 	 * @param string $process
 	 * @return self
 	 */
-	public function __construct($process) 
+	public function __construct($process=null) 
 	{
-		return $this->setProcess($process);
+		if($process) 
+		{
+			return $this->setProcess($process);
+		}
+
+		return $this;
 	} 
 
 
@@ -77,13 +86,13 @@ abstract class BaseProcess implements IProcess {
 	 * @throws ProcessException
 	 * @return self
 	 */	
-	protected function setProcess($process) 
+	public function setProcess($process) 
 	{	
 		if(!in_array($process, Process::getConstants())) throw new ProcessException(ProcessException::PROCESS_UNDEFINED);
-		
+	
 		$this->process = $process;
 
-		return $this->setScanner()->setKeeper()->setWatcher();
+		return $this->setScanner()->setKeeper()->setWatcher();		
 	}		
 
 
@@ -93,11 +102,11 @@ abstract class BaseProcess implements IProcess {
 	 * @throws ProcessException
 	 * @return self
 	 */	
-	protected function setScanner() 
+	private function setScanner() 
 	{	
 		$class = 'App\Processes\\Scanners\\' . ucwords($this->process) . 'Scanner';
 
-		if (!class_exists($class))  throw new ProcessException(ProcessException::PROCESS_SCANNER_UNDEFINED);
+		if (!class_exists($class))  throw new ProcessException(ProcessException::PROCESS_UNDEFINED_SCANNER);
 
 		$this->scanner = new $class();
 
@@ -111,11 +120,11 @@ abstract class BaseProcess implements IProcess {
 	 * @throws ProcessException
 	 * @return self
 	 */	
-	protected function setKeeper() 
+	private function setKeeper() 
 	{			
-		$class = 'App\Processes\\Keeprs\\' . ucwords($this->process) . 'Keepr';
+		$class = 'App\Processes\\Keepers\\' . ucwords($this->process) . 'Keeper';
 
-		if (!class_exists($class))  throw new ProcessException(ProcessException::PROCESS_KEEPR_UNDEFINED);
+		if (!class_exists($class))  throw new ProcessException(ProcessException::PROCESS_UNDEFINED_KEEPER);
 
 		$this->keeper = new $class();		
 
@@ -129,16 +138,42 @@ abstract class BaseProcess implements IProcess {
 	 * @throws ProcessException
 	 * @return self
 	 */	
-	protected function setWatcher() 
+	private function setWatcher() 
 	{			
 		$class = 'App\Processes\\Watchers\\' . ucwords($this->process) . 'Watcher';
+		
+		if (!class_exists($class))  throw new ProcessException(ProcessException::PROCESS_UNDEFINED_WATCHER);
 
-		if (!class_exists($class))  throw new ProcessException(ProcessException::PROCESS_WTAHCER_UNDEFINED);
-
-		$this->keeper = new $class();	
+		$this->watcher = new $class();	
 		
 		return $this;		
 	}		
+
+
+	/**
+	 * Get scanner
+	 */
+	public function scanner() 
+	{
+		return $this->scanner;
+	}
+
+	/**
+	 * Get scanner
+	 */
+	public function keeper() 
+	{
+		return $this->keeper;
+	}		
+
+
+	/**
+	 * Get scanner
+	 */
+	public function watcher() 
+	{
+		return $this->watcher;
+	}	
 
 
 	/**
@@ -148,8 +183,7 @@ abstract class BaseProcess implements IProcess {
 	 */
 	public function start() 
 	{
-
-		return $this;
+		throw new ProcessException(ProcessException::PROCESS_UNDEFINED_START);
 	}
 
 
@@ -160,10 +194,8 @@ abstract class BaseProcess implements IProcess {
 	 */	
 	public function stop() 
 	{
-
-		return $this;
+		throw new ProcessException(ProcessException::PROCESS_UNDEFINED_STOP);
 	}
-
 
 }
 

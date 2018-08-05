@@ -10,8 +10,8 @@
  * This is the last point of the process which deals with data collection before insertion.
  */ 
 
-namespace App\Processes;
-use App\Lib\Processes\Base\BaseProcess; 
+namespace App\Processes\Keepers;
+use App\Processes\Base\BaseProcess; 
 
 /**
  * Base Keeper
@@ -19,10 +19,15 @@ use App\Lib\Processes\Base\BaseProcess;
 abstract class BaseKeeper extends BaseProcess implements IKeeper {
 
 
-    /**
-     * Keep records
-     */
-    abstract public function keep();    
+	/**
+	 * Start a process
+	 * 
+	 * @return mixed
+	 */
+	public function start() 
+	{
+		return $this->keep();
+	}
 
 }
 

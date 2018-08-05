@@ -13,11 +13,13 @@ class ProcessException extends Exception
 {
 
     const PROCESS_UNDEFINED             = 'Trying to set undefined process';
-    const PROCESS_SCANNER_UNDEFINED     = 'Can\'t set process with undefined scanner';
-    const PROCESS_KEEPER_UNDEFINED      = 'Can\'t set process with undefined keeper';
-    const PROCESS_WATCHER_UNDEFINED     = 'Can\'t set process with undefined watcher';
+    const PROCESS_UNDEFINED_SCANNER     = 'Can\'t set process with undefined scanner';
+    const PROCESS_UNDEFINED_KEEPER      = 'Can\'t set process with undefined keeper';
+    const PROCESS_UNDEFINED_WATCHER     = 'Can\'t set process with undefined watcher';
+    const PROCESS_UNDEFINED_START       = 'Undefined process starter';
+    const PROCESS_UNDEFINED_STOP        = 'Undefined process stopper';
 
-
+    
     /**
      * Report the exception.
      *

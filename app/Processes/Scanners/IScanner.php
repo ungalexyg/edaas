@@ -8,7 +8,7 @@ use App\Processes\Base\IProcess;
  * Interface Scanner
  */ 
 interface IScanner extends IProcess {
-
+	
 	/**
 	 * Scan destenation 
 	 */

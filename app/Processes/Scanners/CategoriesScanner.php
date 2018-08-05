@@ -13,7 +13,7 @@ class CategoriesScanner extends BaseScanner {
      */
     public function scan() 
     {
-        dd("scanig ...");
+        echo "Scaning ...";
     }
 
 }
