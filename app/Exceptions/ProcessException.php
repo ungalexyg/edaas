@@ -9,7 +9,7 @@ use Exception;
  * Process Exception
  * Handle exceptions generated in App\Processes\Base
  */
-class ProcessException extends Exception
+class ProcessorException extends Exception
 {
 
     const PROCESS_UNDEFINED             = 'Trying to set undefined process';
@@ -39,7 +39,7 @@ class ProcessException extends Exception
     // public function render($request)
     // {
             // implement custom output, IF needed
-    // }
+    // } 
 }
 
 

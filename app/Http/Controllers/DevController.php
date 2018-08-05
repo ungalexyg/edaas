@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lib\Enums\Process;
 use Illuminate\Http\Request;
-use App\Processes\Base\BaseProcess;
+use App\Processes\Base\Processor;
 
 
 
@@ -19,7 +19,7 @@ class DevController extends Controller
     public function categories() 
     {
         // working on Ali get categories process
-        $process = new BaseProcess(Process::CATEGORIES);
+        $process = new Processor(Process::CATEGORIES);
 
         $process->scanner()->start();
         
@@ -28,8 +28,7 @@ class DevController extends Controller
         $process->watcher()->start();
 
 
-        
-
+    
     }
 
 

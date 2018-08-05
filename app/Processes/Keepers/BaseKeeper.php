@@ -11,12 +11,12 @@
  */ 
 
 namespace App\Processes\Keepers;
-use App\Processes\Base\BaseProcess; 
+use App\Processes\Base\Processor; 
 
 /**
  * Base Keeper
  */ 
-abstract class BaseKeeper extends BaseProcess implements IKeeper {
+abstract class BaseKeeper extends Processor implements IKeeper {
 
 
 	/**

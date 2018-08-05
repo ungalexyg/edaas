@@ -1,13 +1,13 @@
 <?php 
 namespace App\Processes\Scanners;
 
-use App\Processes\Base\IProcess;
+use App\Processes\Base\IProcessor;
 
 
 /**
  * Interface Scanner
  */ 
-interface IScanner extends IProcess {
+interface IScanner extends IProcessor {
 	
 	/**
 	 * Scan destenation 

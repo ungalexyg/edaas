@@ -5,7 +5,7 @@ namespace App\Processes\Base;
 /**
  * Process Interface 
  */ 
-interface IProcess {
+interface IProcessor {
 
 	/**
 	 * Start a process

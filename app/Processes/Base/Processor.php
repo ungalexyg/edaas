@@ -10,7 +10,7 @@
 
 namespace App\Processes\Base;
 use App\Lib\Enums\Process;
-use App\Exceptions\ProcessException;
+use App\Exceptions\ProcessorException;
 use App\Processes\Scanners\IScanner;
 use App\Processes\Keepers\IKeeper;
 use App\Processes\Watchers\IWatcher;
@@ -19,7 +19,7 @@ use App\Processes\Watchers\IWatcher;
 /**
  * Base Process 
  */ 
-class BaseProcess implements IProcess {
+class Processor implements IProcessor {
 
 
 	/**
@@ -83,12 +83,12 @@ class BaseProcess implements IProcess {
 	 * Set Process
 	 * 
 	 * @param string $process
-	 * @throws ProcessException
+	 * @throws ProcessorException
 	 * @return self
 	 */	
 	public function setProcess($process) 
 	{	
-		if(!in_array($process, Process::getConstants())) throw new ProcessException(ProcessException::PROCESS_UNDEFINED);
+		if(!in_array($process, Process::getConstants())) throw new ProcessorException(ProcessorException::PROCESS_UNDEFINED);
 	
 		$this->process = $process;
 
@@ -99,14 +99,14 @@ class BaseProcess implements IProcess {
 	/**
 	 * Set Scanner
 	 * 
-	 * @throws ProcessException
+	 * @throws ProcessorException
 	 * @return self
 	 */	
 	private function setScanner() 
 	{	
 		$class = 'App\Processes\\Scanners\\' . ucwords($this->process) . 'Scanner';
 
-		if (!class_exists($class))  throw new ProcessException(ProcessException::PROCESS_UNDEFINED_SCANNER);
+		if (!class_exists($class))  throw new ProcessorException(ProcessorException::PROCESS_UNDEFINED_SCANNER);
 
 		$this->scanner = new $class();
 
@@ -117,14 +117,14 @@ class BaseProcess implements IProcess {
 	/**
 	 * Set Keeper
 	 * 
-	 * @throws ProcessException
+	 * @throws ProcessorException
 	 * @return self
 	 */	
 	private function setKeeper() 
 	{			
 		$class = 'App\Processes\\Keepers\\' . ucwords($this->process) . 'Keeper';
 
-		if (!class_exists($class))  throw new ProcessException(ProcessException::PROCESS_UNDEFINED_KEEPER);
+		if (!class_exists($class))  throw new ProcessorException(ProcessorException::PROCESS_UNDEFINED_KEEPER);
 
 		$this->keeper = new $class();		
 
@@ -135,14 +135,14 @@ class BaseProcess implements IProcess {
 	/**
 	 * Set Watcher
 	 * 
-	 * @throws ProcessException
+	 * @throws ProcessorException
 	 * @return self
 	 */	
 	private function setWatcher() 
 	{			
 		$class = 'App\Processes\\Watchers\\' . ucwords($this->process) . 'Watcher';
 		
-		if (!class_exists($class))  throw new ProcessException(ProcessException::PROCESS_UNDEFINED_WATCHER);
+		if (!class_exists($class))  throw new ProcessorException(ProcessorException::PROCESS_UNDEFINED_WATCHER);
 
 		$this->watcher = new $class();	
 		
@@ -183,7 +183,7 @@ class BaseProcess implements IProcess {
 	 */
 	public function start() 
 	{
-		throw new ProcessException(ProcessException::PROCESS_UNDEFINED_START);
+		throw new ProcessorException(ProcessorException::PROCESS_UNDEFINED_START);
 	}
 
 
@@ -194,7 +194,7 @@ class BaseProcess implements IProcess {
 	 */	
 	public function stop() 
 	{
-		throw new ProcessException(ProcessException::PROCESS_UNDEFINED_STOP);
+		throw new ProcessorException(ProcessorException::PROCESS_UNDEFINED_STOP);
 	}
 
 }

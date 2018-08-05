@@ -1,13 +1,13 @@
 <?php 
 namespace App\Processes\Keepers;
 
-use App\Processes\Base\IProcess;
+use App\Processes\Base\IProcessor;
 
 
 /**
  * Keeper Interface
  */ 
-interface IKeeper extends IProcess {
+interface IKeeper extends IProcessor {
 
 	/**
 	 * Keep process data

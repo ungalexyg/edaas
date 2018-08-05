@@ -12,12 +12,12 @@
 
 namespace App\Processes\Watchers;
 
-use App\Processes\Base\BaseProcess;
+use App\Processes\Base\Processor;
 
 /**
  * Base Watcher
  */ 
-abstract class BaseWatcher extends BaseProcess implements IWatcher {
+abstract class BaseWatcher extends Processor implements IWatcher {
 
 
 	/**

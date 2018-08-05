@@ -14,13 +14,13 @@
 
 namespace App\Processes\Scanners;
 
-use App\Processes\Base\BaseProcess;
+use App\Processes\Base\Processor;
 
 
 /**
  * Base Scanner
  */ 
-abstract class BaseScanner extends BaseProcess implements IScanner {
+abstract class BaseScanner extends Processor implements IScanner {
 
 
 
