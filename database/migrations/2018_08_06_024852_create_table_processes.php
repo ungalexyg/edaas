@@ -21,8 +21,9 @@ class CreateTableProcesses extends Migration
             Schema::create($this->table, function (Blueprint $table) 
             {
                 $table->increments('id');
-                $table->string('name');
-                $table->string('description');
+                $table->string('name', 255)->nullable()->comment('General usage');
+                $table->string('description')->nullable()->comment('General usage');
+                $table->string('key', 255)->unique()->comment('System usage, must be snake_case'); 
                 
             });
         }

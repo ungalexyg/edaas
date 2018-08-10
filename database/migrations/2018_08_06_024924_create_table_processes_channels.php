@@ -24,15 +24,12 @@ class CreateTableProcessesChannels extends Migration
             Schema::create($this->table, function (Blueprint $table) 
             {
                 $table->increments('id');
-                
                 $table->unsignedInteger('process_id');
-                $table->foreign('process_id')->references('id')->on('processes')->onDelete('cascade');
+                $table->unsignedInteger('channel_id');                                
+                $table->dateTime('last_flight')->nullable()->comment('Last activity time');
                 
-                $table->unsignedInteger('channel_id');                
+                $table->foreign('process_id')->references('id')->on('processes')->onDelete('cascade');
                 $table->foreign('channel_id')->references('id')->on('channels')->onDelete('cascade');
-
-                $table->timestamps();
-                                
             });
         }
 

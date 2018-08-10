@@ -7,7 +7,10 @@ namespace App\Lib\Enums;
  */ 
 class Channel extends BaseEnum {
 
-    const ALIEXPRESS = 'aliexpress';
+    const ALIEXPRESS    = 'aliexpress';
+    const AMAZON        = 'amazon';
+    const EBAY          = 'ebay';
+    
 }
 
 

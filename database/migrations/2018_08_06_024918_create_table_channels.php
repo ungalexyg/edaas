@@ -25,10 +25,10 @@ class CreateTableChannels extends Migration
             Schema::create($this->table, function (Blueprint $table) 
             {
                 $table->increments('id');
-                $table->string('key');
-                $table->string('domain');
-                $table->string('description');
-
+                $table->string('domain', 255)->unique();
+                $table->string('name', 255)->comment('General usage');
+                $table->string('description')->nullable()->comment('General usage');
+                $table->string('key', 255)->unique()->comment('System usage, must be snake_case'); 
             });
         }
 

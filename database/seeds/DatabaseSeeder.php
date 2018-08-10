@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Seeder;
 
+use ChanneslSeeder;
+use ProcessesSeeder;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $this->call([
+            ChanneslSeeder::class,
+            ProcessesSeeder::class,
+            ProcessesChannelsSeeder::class
+        ]);
     }
 }
