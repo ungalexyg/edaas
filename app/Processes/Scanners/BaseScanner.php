@@ -15,13 +15,20 @@
 namespace App\Processes\Scanners;
 
 use App\Processes\Base\Processor;
+use App\Exceptions\ScannerException;
 
 
 /**
  * Base Scanner
  */ 
-abstract class BaseScanner extends Processor implements IScanner {
+abstract class BaseScanner implements IScanner {
 
+	/**
+	 * Scanner bag
+	 * 
+	 * @var array
+	 */
+	protected $bag=[];
 
 
 	/**
@@ -35,14 +42,32 @@ abstract class BaseScanner extends Processor implements IScanner {
 	}
 
 
-    // /**
-    //  * Compare if record has changes 
-    //  */
-    // public function scan() 
-    // {
-    //     return $this;
-    // }    
+	/**
+	 * Stop a process
+	 * 
+	 * @return mixed
+	 */	
+	public function stop() 
+	{
+		throw new ScannerException(ScannerException::METHOD_NOT_IMPLEMENTED);
+	}
 
+
+	/**
+	 * Get process status data
+	 * 
+	 * @return mixed
+	 */	
+	public function status() 
+	{
+		throw new ScannerException(ScannerException::METHOD_NOT_IMPLEMENTED);
+	}
+
+
+	/**
+	 * Scan destenation 
+	 */
+	abstract public function scan();	
 }
 
 

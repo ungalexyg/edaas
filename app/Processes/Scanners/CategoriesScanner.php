@@ -13,7 +13,17 @@ class CategoriesScanner extends BaseScanner {
      */
     public function scan() 
     {
-        echo "Scaning ...";
+        // channels
+
+        //  processes
+
+
+
+        echo "Scaning .....";
+
+        $this->bag['scanned'] = 'value'; 
+
+        return $this;
     }
 
 }

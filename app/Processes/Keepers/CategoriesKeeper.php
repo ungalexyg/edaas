@@ -14,6 +14,10 @@ class CategoriesKeeper extends BaseKeeper {
     public function keep() 
     {
         echo "Keeping ...";
+
+        //$this->bag['keeped'] = $this->bag['scanned'];
+
+        return $this;
     }
 
 }

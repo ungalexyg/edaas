@@ -14,6 +14,12 @@ class CategoriesWatcher extends BaseWatcher {
     public function watch() 
     {
         echo "Watching ...";
+        
+        //$this->bag['watched'] = $this->bag['keeped'];
+
+        $this->compare();
+
+        return $this;
     }
 
 
@@ -23,6 +29,10 @@ class CategoriesWatcher extends BaseWatcher {
     public function compare() 
     {
         echo "Comparing ...";
+
+        //$this->bag['compared'] = $this->bag['keeped'];
+
+        return $this;
     }    
 
 }

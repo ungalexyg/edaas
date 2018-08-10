@@ -1,25 +1,23 @@
 <?php 
 /**
  * --------------------------------------------------------------------------
- *  Base Process 
+ *  Processor 
  * --------------------------------------------------------------------------
  * 
- * The base of all process types bases.
- * Setting global properties to activiate the relevant process. 
+ * Set process entities and perform process operations
  */ 
 
 namespace App\Processes\Base;
+use App\Lib\Enums\Channel;
 use App\Lib\Enums\Process;
 use App\Exceptions\ProcessorException;
-use App\Processes\Scanners\IScanner;
-use App\Processes\Keepers\IKeeper;
-use App\Processes\Watchers\IWatcher;
+
 
 
 /**
- * Base Process 
+ * Processor 
  */ 
-class Processor implements IProcessor {
+class Processor  {
 
 
 	/**
@@ -27,52 +25,53 @@ class Processor implements IProcessor {
 	 * 
 	 * @var string
 	 */
-	protected $process;
+	private $process;
 
+
+	/**
+	 * The current channel
+	 * 
+	 * @var string
+	 */
+	private $channel;	
+	
 
 	/**
 	 * Scanner instance
 	 * 
-	 * @var BaseScanner
+	 * @var IScanner
 	 */
-	protected $scanner;	
+	private $scanner;	
 
 
 	/**
 	 * Keepr instance
 	 * 
-	 * @var BaseKeeper
+	 * @var IKeeper
 	 */
-	protected $keeper;	
+	private $keeper;	
 
 
 	/**
 	 * Watcher instance
 	 * 
-	 * @var BaseWatcher
+	 * @var IWatcher
 	 */
-	protected $watcher;	
-
-
-	/**
-	 * Process bag
-	 * 
-	 * @var array
-	 */
-	protected $bag=[];
+	private $watcher;	
 
 
 	/**
 	 * Process construct
 	 * 
 	 * @param string $process
+	 * @param string $channel
 	 * @return self
 	 */
-	public function __construct($process=null) 
+	public function __construct($process=null, $channel=null) 
 	{
-		if($process) 
+		if($process && $channel) 
 		{
-			return $this->setProcess($process);
+			return $this->load($process, $channel);
 		}
 
 		return $this;
@@ -80,20 +79,71 @@ class Processor implements IProcessor {
 
 
 	/**
-	 * Set Process
+	 * Load Process
 	 * 
 	 * @param string $process
+	 * @param string $channel
 	 * @throws ProcessorException
 	 * @return self
 	 */	
-	public function setProcess($process) 
+	private function load($process, $channel) 
 	{	
-		if(!in_array($process, Process::getConstants())) throw new ProcessorException(ProcessorException::PROCESS_UNDEFINED);
-	
-		$this->process = $process;
+		
 
-		return $this->setScanner()->setKeeper()->setWatcher();		
+		return $this
+					->setProcess($process)
+						->setChannel($channel)
+							->confirm()
+								->setScanner()
+									->setKeeper()
+										->setWatcher();		
 	}		
+
+
+
+	/**
+	 * Set process
+	 * 
+	 * @param string $process
+	 * @return self
+	 */	
+	private function setProcess($process) 
+	{
+		if(!in_array($process, Process::getConstants())) throw new ProcessorException(ProcessorException::PROCESSOR_PROCESS_UNDEFINED);
+			
+		$this->process = $process;
+		
+		return $this;
+	}
+
+
+	/**
+	 * Set channel
+	 * 
+	 * @param string $channel
+	 * @return self
+	 */	
+	private function setChannel($channel) 
+	{
+		if(!in_array($channel, Channel::getConstants())) throw new ProcessorException(ProcessorException::PROCESSOR_CHANNEL_UNDEFINED);
+				
+		$this->channel = $channel;		
+
+		return $this;
+	}	
+
+
+	/**
+	 * Confirm process channel setup
+	 * 
+	 * @return self
+	 */
+	private function confirm() 
+	{
+		// many to many check  if process allowed in channel
+		return $this;
+	}	
+
 
 
 	/**
@@ -106,7 +156,7 @@ class Processor implements IProcessor {
 	{	
 		$class = 'App\Processes\\Scanners\\' . ucwords($this->process) . 'Scanner';
 
-		if (!class_exists($class))  throw new ProcessorException(ProcessorException::PROCESS_UNDEFINED_SCANNER);
+		if (!class_exists($class))  throw new ProcessorException(ProcessorException::PROCESSOR_SCANNER_UNDEFINED);
 
 		$this->scanner = new $class();
 
@@ -124,7 +174,7 @@ class Processor implements IProcessor {
 	{			
 		$class = 'App\Processes\\Keepers\\' . ucwords($this->process) . 'Keeper';
 
-		if (!class_exists($class))  throw new ProcessorException(ProcessorException::PROCESS_UNDEFINED_KEEPER);
+		if (!class_exists($class))  throw new ProcessorException(ProcessorException::PROCESSOR_KEEPER_UNDEFINED);
 
 		$this->keeper = new $class();		
 
@@ -142,7 +192,7 @@ class Processor implements IProcessor {
 	{			
 		$class = 'App\Processes\\Watchers\\' . ucwords($this->process) . 'Watcher';
 		
-		if (!class_exists($class))  throw new ProcessorException(ProcessorException::PROCESS_UNDEFINED_WATCHER);
+		if (!class_exists($class))  throw new ProcessorException(ProcessorException::PROCESSOR_WATCHER_UNDEFINED);
 
 		$this->watcher = new $class();	
 		
@@ -150,52 +200,44 @@ class Processor implements IProcessor {
 	}		
 
 
-	/**
-	 * Get scanner
-	 */
-	public function scanner() 
-	{
-		return $this->scanner;
-	}
+	public function process() 
+	{			
+		$this->scanner->start();
+		$this->keeper->start();
+		$this->watcher->start();	
+		
+		//dd($this->bag);
 
-	/**
-	 * Get scanner
-	 */
-	public function keeper() 
-	{
-		return $this->keeper;
-	}		
-
-
-	/**
-	 * Get scanner
-	 */
-	public function watcher() 
-	{
-		return $this->watcher;
 	}	
 
 
-	/**
-	 * Start a process
-	 * 
-	 * @return mixed
-	 */
-	public function start() 
-	{
-		throw new ProcessorException(ProcessorException::PROCESS_UNDEFINED_START);
-	}
+	// /**
+	//  * Get Scanner
+	//  */
+	// protected function scanner() 
+	// {
+	// 	return $this->scanner;
+	// }
+
+	// /**
+	//  * Get Keeper
+	//  */
+	// protected function keeper() 
+	// {	
+	// 	return $this->keeper;
+	// }		
 
 
-	/**
-	 * Stop a process
-	 * 
-	 * @return mixed
-	 */	
-	public function stop() 
-	{
-		throw new ProcessorException(ProcessorException::PROCESS_UNDEFINED_STOP);
-	}
+	// /**
+	//  * Get Watcher
+	//  */
+	// protected function watcher() 
+	// {
+	// 	return $this->watcher;
+	// }	
+
+
+
 
 }
 

@@ -18,6 +18,12 @@ interface IProcessor {
 	 */	
 	public function stop();
 
+
+	/**
+	 * Get process status data
+	 */	
+	public function status();	
+
 }
 
 
