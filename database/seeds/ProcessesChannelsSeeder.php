@@ -2,8 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Models\Process;
-use App\Models\Channel;
+use App\Processes\Base\ProcessorSetter;
 
 
 class ProcessesChannelsSeeder extends Seeder
@@ -17,7 +16,7 @@ class ProcessesChannelsSeeder extends Seeder
      */
     public function run()
     {
-        //
+         (new ProcessorSetter)->processesChannels();   
     }
 }
 
