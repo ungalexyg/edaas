@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ChannelsSeeder::class,
             ProcessesSeeder::class,
-            ProcessesChannelsSeeder::class
+            ChannelsProcessesSeeder::class
         ]);
     }
 }

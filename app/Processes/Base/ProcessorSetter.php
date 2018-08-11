@@ -18,14 +18,14 @@ use App\Models\Process;
  */ 
 class ProcessorSetter  {
 
-	
+
 	/**
-	 * Set the channels foreach process
+	 * Set channels processes
 	 * 
 	 * @throws ProcessorSetterException
 	 * @return void
 	 */
-	public function processesChannels() 
+	public function channelsProcesses() 
 	{
         $seeds = config('processes.processes_channels');
 

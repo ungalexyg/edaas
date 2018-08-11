@@ -6,9 +6,7 @@ use App\Models\Channel;
 
 class ChannelsSeeder extends Seeder
 {
-
-
-
+    
     /**
      * Run the database seeds.
      *

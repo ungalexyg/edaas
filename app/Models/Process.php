@@ -41,7 +41,7 @@ class Process extends BaseModel
      */
     public function channnels()
     {
-        return $this->belongsToMany(Channel::class, 'processes_channels', 'process_id', 'channel_id');
+        return $this->belongsToMany(Channel::class, 'channels_processes', 'process_id', 'channel_id');
     }    
 
 }

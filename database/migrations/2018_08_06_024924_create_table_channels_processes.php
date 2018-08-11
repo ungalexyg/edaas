@@ -4,12 +4,12 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableProcessesChannels extends Migration
+class CreateTableChannelsProcesses extends Migration
 {
     /**
      * Migration table
      */
-    protected $table = 'processes_channels';
+    protected $table = 'channels_processes';
 
     
     /**

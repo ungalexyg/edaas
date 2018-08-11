@@ -6,6 +6,7 @@ use App\Models\Process;
 
 class ProcessesSeeder extends Seeder
 {
+    
     /**
      * Run the database seeds.
      *
