@@ -26,7 +26,7 @@ class CreateTableChannels extends Migration
             {
                 $table->increments('id');
                 $table->string('domain', 255)->unique();
-                $table->string('name', 255)->comment('General usage');
+                $table->string('name', 255)->nullable()->comment('General usage');
                 $table->string('description')->nullable()->comment('General usage');
                 $table->string('key', 255)->unique()->comment('System usage, must be snake_case'); 
             });

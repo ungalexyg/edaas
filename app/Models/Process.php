@@ -21,11 +21,27 @@ class Process extends BaseModel
 
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    //protected $fillable = ['name', 'description', 'key'];    
+    
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = []; // if $guarded is empty, all the cols are $fillable
+
+
+    /**
      * Get the channels that attached to the process
      */
     public function channnels()
     {
-        return $this->belongsToMany(Channel::class, 'processes_channels', 'channel_id', 'process_id');
+        return $this->belongsToMany(Channel::class, 'processes_channels', 'process_id', 'channel_id');
     }    
 
 }

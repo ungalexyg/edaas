@@ -6,21 +6,6 @@ use App\Models\Process;
 
 class ProcessesSeeder extends Seeder
 {
-
-    protected $seed = [
-        [
-            'name'          => 'Categories',
-            'description'   => 'Scan categories in channel',
-            'key'           => 'categories',
-        ],
-        [
-            'name'          => 'Items',
-            'description'   => 'Scan items in channel',
-            'key'           => 'items',
-        ],
-    ];
-
-
     /**
      * Run the database seeds.
      *
@@ -28,13 +13,11 @@ class ProcessesSeeder extends Seeder
      */
     public function run()
     {
-        foreach($this->seed as $key => $record) 
+        $seeds = config('processes.processes');
+
+        foreach($seeds as  $key => $seed) 
         {
-            $process = new Process;
-            $process->name = $record['name'] ?? null;
-            $process->description = $record['description'] ?? null;
-            $process->key = $record['key'];
-            $process->save();
+            $process = Process::updateOrCreate(['key' => $key], $seed);
         }
     }
 }

@@ -7,8 +7,6 @@ use App\Processes\Base\ProcessorSetter;
 
 class ProcessesChannelsSeeder extends Seeder
 {
-
-
     /**
      * Run the database seeds.
      *
@@ -16,7 +14,7 @@ class ProcessesChannelsSeeder extends Seeder
      */
     public function run()
     {
-         (new ProcessorSetter)->processesChannels();   
+        (new ProcessorSetter)->processesChannels(); 
     }
 }
 
