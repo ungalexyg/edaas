@@ -10,19 +10,25 @@ interface IProcessor {
 	/**
 	 * Start a process
 	 */
-	public function start();
+	public function process();
 
 
 	/**
-	 * Stop a process
+	 * Get process status data
 	 */	
-	public function stop();
+	public function start();	
 
 
 	/**
 	 * Get process status data
 	 */	
 	public function status();	
+
+
+	/**
+	 * Adapter getter
+	 */	
+	public function adapter(); 
 
 }
 

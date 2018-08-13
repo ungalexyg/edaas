@@ -16,7 +16,7 @@ namespace App\Processes\Scanners;
 
 use App\Processes\Base\Processor;
 use App\Exceptions\ScannerException;
-
+use App\Processes\Base\Traits\HasProcessKit;
 
 /**
  * Base Scanner
@@ -24,11 +24,9 @@ use App\Exceptions\ScannerException;
 abstract class BaseScanner implements IScanner {
 
 	/**
-	 * Scanner bag
-	 * 
-	 * @var array
+	 * Use process kit
 	 */
-	protected $bag=[];
+	use HasProcessKit;
 
 
 	/**
@@ -36,20 +34,9 @@ abstract class BaseScanner implements IScanner {
 	 * 
 	 * @return mixed
 	 */
-	public function start() 
+	public function process() 
 	{
 		return $this->scan();
-	}
-
-
-	/**
-	 * Stop a process
-	 * 
-	 * @return mixed
-	 */	
-	public function stop() 
-	{
-		throw new ScannerException(ScannerException::METHOD_NOT_IMPLEMENTED);
 	}
 
 
@@ -63,11 +50,6 @@ abstract class BaseScanner implements IScanner {
 		throw new ScannerException(ScannerException::METHOD_NOT_IMPLEMENTED);
 	}
 
-
-	/**
-	 * Scan destenation 
-	 */
-	abstract public function scan();	
 }
 
 

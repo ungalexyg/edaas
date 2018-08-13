@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Lib\Enums\Process;
 use App\Lib\Enums\Channel;
+use App\Lib\Enums\Process;
 use Illuminate\Http\Request;
 use App\Processes\Base\Processor;
+use App\Processes\Scanners\CategoriesScanner;
 
 
 
@@ -19,15 +20,12 @@ class DevController extends Controller
 
     public function categories() 
     {
-        // working on Ali get categories process
-        $process = (new Processor(Process::CATEGORIES, Channel::ALIEXPRESS))->process();
-
-        // $process->scanner()->start();
         
-        //$process->keeper()->start();
-        
-        //$process->watcher()->start();
+        //(new Processor(Process::CATEGORIES))->process();
 
+        //(new CategoriesScanner)->process();
+
+        (new Processor)->run(Process::CATEGORIES);
 
     
     }

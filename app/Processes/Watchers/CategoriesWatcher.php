@@ -1,12 +1,36 @@
 <?php 
 namespace App\Processes\Watchers;
 
+use App\Lib\Enums\Process;
+
 
 /**
  * Categories Watcher
  */ 
 class CategoriesWatcher extends BaseWatcher {
 
+    public $prop = 'CategoriesWatcher';
+
+
+	/**
+	 * Watcher construct
+	 * 
+	 * @return self
+	 */
+	public function __construct() 
+	{
+        var_dump(__METHOD__); echo '<br />';
+
+        parent::__construct();
+
+        if(!$this->process) 
+        {
+            $this->setProcess(Process::CATEGORIES);
+        }
+
+		return $this;
+    } 
+    
 
     /**
      * Watch prospects 
@@ -15,9 +39,9 @@ class CategoriesWatcher extends BaseWatcher {
     {
         echo "Watching ...";
         
-        //$this->bag['watched'] = $this->bag['keeped'];
+        $this->bag['watched'] = $this->bag['keeped'];
 
-        $this->compare();
+        //$this->compare();
 
         return $this;
     }

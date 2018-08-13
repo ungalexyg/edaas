@@ -4,20 +4,17 @@ namespace App\Processes\Adapters\Base;
 
 
 /**
- * --------------------------------------------------------------------------
- *  TODO:
- * --------------------------------------------------------------------------
- * 
+ * Base Adapter
  */
  abstract class BaseAdapter implements IAdapter {
 
 
 	/**
-	 * Scan Prospect Items in given channel
+	 * Fetch adapter's targets
      * 
      * @return mixed
 	 */        
-    //abstract public function ScanProspects(); 
+    abstract public function fetch(); 
 
  }
 

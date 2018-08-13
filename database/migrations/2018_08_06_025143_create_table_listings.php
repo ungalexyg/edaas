@@ -26,11 +26,14 @@ class CreateTableListings extends Migration
                 $table->increments('id');
                 $table->string('title', 255);
                 $table->string('description');
+                $table->unsignedInteger('channel_id');
+                $table->unsignedInteger('item_id');
                 $table->timestamps();
+
+                $table->foreign('channel_id')->references('id')->on('channels')->onDelete('cascade');
+                $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');                
             });
         }
-
-
     }
 
     /**

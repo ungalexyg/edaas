@@ -11,20 +11,21 @@
  */ 
 
 namespace App\Processes\Keepers;
-use App\Processes\Base\Processor; 
+
+use App\Processes\Base\Processor;
 use App\Exceptions\KeeperException;
+use App\Processes\Base\Traits\HasProcessKit;
 
 /**
  * Base Keeper
  */ 
 abstract class BaseKeeper implements IKeeper {
 
+
 	/**
-	 * Scanner bag
-	 * 
-	 * @var array
+	 * Use process kit
 	 */
-	protected $bag=[];
+	use HasProcessKit;
 
 
 	/**
@@ -32,9 +33,9 @@ abstract class BaseKeeper implements IKeeper {
 	 * 
 	 * @return mixed
 	 */
-	public function start() 
+	public function process() 
 	{
-		return $this->keep();
+		return $this->takeKit()->keep();
 	}
 
 

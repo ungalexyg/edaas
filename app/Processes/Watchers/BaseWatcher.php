@@ -19,10 +19,16 @@ namespace App\Processes\Watchers;
 
 use App\Processes\Base\Processor;
 
+
 /**
  * Base Watcher
  */ 
-abstract class BaseWatcher implements IWatcher {
+abstract class BaseWatcher extends Processor implements IWatcher {
+
+	/**
+	 * Use process kit
+	 */
+	use HasProcessKit;
 
 
 	/**
@@ -30,7 +36,7 @@ abstract class BaseWatcher implements IWatcher {
 	 * 
 	 * @return mixed
 	 */
-	public function start() 
+	public function process() 
 	{   
 		return $this->watch();
 	}

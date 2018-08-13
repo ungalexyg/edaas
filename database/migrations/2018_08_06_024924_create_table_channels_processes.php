@@ -24,8 +24,8 @@ class CreateTableChannelsProcesses extends Migration
             Schema::create($this->table, function (Blueprint $table) 
             {
                 $table->increments('id');
-                $table->unsignedInteger('channel_id')->nullable();                                
-                $table->unsignedInteger('process_id')->nullable();
+                $table->unsignedInteger('channel_id');                                
+                $table->unsignedInteger('process_id');
                 $table->dateTime('last_flight')->nullable()->comment('Last activity time');
                 
                 $table->foreign('channel_id')->references('id')->on('channels')->onDelete('cascade');
