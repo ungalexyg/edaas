@@ -7,6 +7,12 @@ namespace App\Processes\Keepers;
  */ 
 interface IKeeper {
 
+    /**
+     * Handle process action
+     */
+	public function handle();
+
+
 	/**
 	 * Keep process data
 	 */

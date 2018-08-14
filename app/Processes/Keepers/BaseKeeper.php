@@ -10,11 +10,11 @@
  * This is the last point of the process which deals with data collection before insertion.
  */ 
 
+
 namespace App\Processes\Keepers;
 
-use App\Processes\Base\Processor;
-use App\Exceptions\KeeperException;
-use App\Processes\Base\Traits\HasProcessKit;
+use App\Processes\Traits\HasProcess;
+
 
 /**
  * Base Keeper
@@ -23,42 +23,15 @@ abstract class BaseKeeper implements IKeeper {
 
 
 	/**
-	 * Use process kit
+	 * Use process traits
 	 */
-	use HasProcessKit;
+	use HasProcess;
 
 
-	/**
-	 * Start a process
-	 * 
-	 * @return mixed
-	 */
-	public function process() 
-	{
-		return $this->takeKit()->keep();
-	}
-
-
-	/**
-	 * Stop a process
-	 * 
-	 * @return mixed
-	 */	
-	public function stop() 
-	{
-		throw new KeeperException(KeeperException::METHOD_NOT_IMPLEMENTED);
-	}
-
-
-	/**
-	 * Get process status data
-	 * 
-	 * @return mixed
-	 */	
-	public function status() 
-	{
-		throw new KeeperException(KeeperException::METHOD_NOT_IMPLEMENTED);
-	}
+    /**
+     * Handle process action
+     */
+	abstract public function handle();
 
 
 	/**

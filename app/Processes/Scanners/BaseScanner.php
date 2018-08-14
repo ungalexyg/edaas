@@ -4,7 +4,7 @@
  *  Scanner
  * --------------------------------------------------------------------------
  * 
- * Locat raw data & "Prospect Items" from given "Prospects Channels", 
+ * Locate raw data & "Prospect Items" from given "Prospects Channels", 
  * then pass them to the Keeper for forther handling and storage.
  * 
  * Prospects Channels :
@@ -14,9 +14,8 @@
 
 namespace App\Processes\Scanners;
 
-use App\Processes\Base\Processor;
-use App\Exceptions\ScannerException;
-use App\Processes\Base\Traits\HasProcessKit;
+//use App\Exceptions\ScannerException;
+use App\Processes\Traits\HasProcess;
 
 /**
  * Base Scanner
@@ -24,31 +23,21 @@ use App\Processes\Base\Traits\HasProcessKit;
 abstract class BaseScanner implements IScanner {
 
 	/**
-	 * Use process kit
+	 * Use process traits
 	 */
-	use HasProcessKit;
+	use HasProcess;
 
 
-	/**
-	 * Start a process
-	 * 
-	 * @return mixed
-	 */
-	public function process() 
-	{
-		return $this->scan();
-	}
+    /**
+     * Handle process action
+     */
+	abstract public function handle();
 
 
-	/**
-	 * Get process status data
-	 * 
-	 * @return mixed
-	 */	
-	public function status() 
-	{
-		throw new ScannerException(ScannerException::METHOD_NOT_IMPLEMENTED);
-	}
+    /**
+     * Perform scaning process
+     */
+	abstract public function scan();
 
 }
 

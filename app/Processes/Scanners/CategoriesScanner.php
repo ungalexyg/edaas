@@ -7,29 +7,19 @@ use App\Lib\Enums\Process;
  */ 
 class CategoriesScanner extends BaseScanner {
 
-    public $prop = 'CategoriesScanner';
-
-
-	/**
-	 * Scanner construct
-	 * 
-	 * @return self
-	 */
-	public function __construct() 
-	{var_dump(__METHOD__); echo '<br />';
-        parent::__construct();
-
-        if(!$this->process) 
-        {
-            $this->setProcess(Process::CATEGORIES);
-        }
-
-		return $this;
-	} 	
 
 
     /**
-     * Scan process 
+     * Handle process action
+     */
+    public function handle() 
+    {
+        $this->scan();
+    }
+
+
+    /**
+     * Perform scaning process
      */
     public function scan() 
     {
@@ -39,7 +29,7 @@ class CategoriesScanner extends BaseScanner {
 
         echo "Scaning .....";
 
-        $this->bag['scanned'] = 'value'; 
+        $this->processor->bag['scanned'] = 'value'; 
 
         // return $this;
     }

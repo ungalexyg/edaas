@@ -7,9 +7,16 @@ namespace App\Processes\Scanners;
  */ 
 interface IScanner {
 	
-	/**
-	 * Scan destenation 
-	 */
+
+    /**
+     * Handle process action
+     */
+	public function handle();
+
+
+    /**
+     * Perform scaning process
+     */
 	public function scan();
 }
 

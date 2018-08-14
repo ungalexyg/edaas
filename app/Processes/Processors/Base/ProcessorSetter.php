@@ -1,20 +1,16 @@
 <?php 
-/**
- * --------------------------------------------------------------------------
- *  Processor Setter 
- * --------------------------------------------------------------------------
- * 
- * Handle Processor logistics.
- */ 
 
-namespace App\Processes\Base;
+namespace App\Processes\Processors\Base;
 
 use App\Exceptions\ProcessorSetterException;
 use App\Models\Channel;
 use App\Models\Process;
 
+
 /**
  * Processor Setter
+ * 
+ * Handle Processor logistics.
  */ 
 class ProcessorSetter  {
 

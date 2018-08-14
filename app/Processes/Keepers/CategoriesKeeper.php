@@ -10,22 +10,14 @@ class CategoriesKeeper extends BaseKeeper {
 
     public $prop = 'CategoriesKeeper';
 
-	/**
-	 * Scanner construct
-	 * 
-	 * @return self
-	 */
-	public function __construct() 
-	{var_dump(__METHOD__); echo '<br />';
-        parent::__construct();
-
-        if(!$this->process) 
-        {
-            $this->setProcess(Process::CATEGORIES);
-        }
-
-		return $this;
-    } 
+    
+    /**
+     * Handle process action
+     */
+    public function handle() 
+    {
+        $this->keep();
+    }
 
 
     /**
@@ -34,6 +26,8 @@ class CategoriesKeeper extends BaseKeeper {
     public function keep() 
     {
         echo "Keeping ...";
+
+       
 
         $this->bag['keeped'] = $this->bag['scanned'];
         // [

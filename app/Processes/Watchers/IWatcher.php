@@ -7,16 +7,18 @@ namespace App\Processes\Watchers;
  */ 
 interface IWatcher {
 
+    
     /**
-     * Compare if record has changes 
+     * Handle process action
      */
-	public function compare();
-	
+	public function handle();
+
 
     /**
      * Watch prospects
      */
     public function watch();	
+
 }
 
 

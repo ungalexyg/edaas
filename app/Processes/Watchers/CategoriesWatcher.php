@@ -13,24 +13,15 @@ class CategoriesWatcher extends BaseWatcher {
 
 
 	/**
-	 * Watcher construct
+	 * Handle process action
 	 * 
-	 * @return self
+	 * @return mixed
 	 */
-	public function __construct() 
-	{
-        var_dump(__METHOD__); echo '<br />';
+	public function handle() 
+	{   
+		return $this->watch();
+	}
 
-        parent::__construct();
-
-        if(!$this->process) 
-        {
-            $this->setProcess(Process::CATEGORIES);
-        }
-
-		return $this;
-    } 
-    
 
     /**
      * Watch prospects 
@@ -42,22 +33,10 @@ class CategoriesWatcher extends BaseWatcher {
         $this->bag['watched'] = $this->bag['keeped'];
 
         //$this->compare();
-
+        
         return $this;
     }
-
-
-    /**
-     * Compare prospects 
-     */
-    public function compare() 
-    {
-        echo "Comparing ...";
-
-        //$this->bag['compared'] = $this->bag['keeped'];
-
-        return $this;
-    }    
+   
 
 }
 

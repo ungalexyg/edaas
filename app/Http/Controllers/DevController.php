@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Lib\Enums\Channel;
 use App\Lib\Enums\Process;
 use Illuminate\Http\Request;
-use App\Processes\Base\Processor;
-use App\Processes\Scanners\CategoriesScanner;
+use App\Processes\Processors\Base\BaseProcessor as Processor;
+
 
 
 

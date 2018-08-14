@@ -17,63 +17,31 @@
 
 namespace App\Processes\Watchers;
 
-use App\Processes\Base\Processor;
+use App\Processes\Traits\HasProcess;
 
 
 /**
  * Base Watcher
  */ 
-abstract class BaseWatcher extends Processor implements IWatcher {
+abstract class BaseWatcher implements IWatcher {
 
 	/**
-	 * Use process kit
+	 * Use process traits
 	 */
-	use HasProcessKit;
-
-
-	/**
-	 * Start a process
-	 * 
-	 * @return mixed
-	 */
-	public function process() 
-	{   
-		return $this->watch();
-	}
-
-	/**
-	 * Stop a process
-	 * 
-	 * @return mixed
-	 */	
-	public function stop() 
-	{
-		throw new WatcherException(WatcherException::METHOD_NOT_IMPLEMENTED);
-	}
-
-
-	/**
-	 * Get process status data
-	 * 
-	 * @return mixed
-	 */	
-	public function status() 
-	{
-		throw new WatcherException(WatcherException::METHOD_NOT_IMPLEMENTED);
-	}
+	use HasProcess;
 
 
     /**
-     * Compare if record has changes 
+     * Handle process action
      */
-	abstract public function compare();
+	abstract public function handle();
+
+
+	/**
+	 * Watch prospects
+	 */
+	abstract public function watch();		
 	
-
-    /**
-     * Watch prospects
-     */
-    abstract public function watch();		
-
 }
 
 

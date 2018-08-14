@@ -7,7 +7,7 @@
  * Embed Keeper instance to the using class
  */ 
 
-namespace App\Processes\Base\Traits;
+namespace App\Processes\Traits;
 // use App\Lib\Enums\Channel;
 // use App\Lib\Enums\Process;
 use App\Exceptions\ProcessorException;
@@ -36,11 +36,13 @@ trait HasKeeper {
 	 */	
 	protected function loadKeeper() 
 	{			
-		$keeper = 'App\Processes\\Keepers\\' . ucwords($this->process) . 'Keeper';
+		$keeper = 'App\Processes\Keepers\\' . ucwords($this->process) . 'Keeper';
 
 		if (!class_exists($keeper))  throw new ProcessorException(ProcessorException::PROCESSOR_KEEPER_UNDEFINED);
 
 		$this->keeper = new $keeper();		
+
+		$this->keeper->setProcessor($this)->takeKit();
 
 		return $this;
 	}		    
