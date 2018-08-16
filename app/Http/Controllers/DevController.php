@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Lib\Enums\Process;
+use App\Lib\Enums\Processes;
 use Illuminate\Http\Request;
 use App\Processes\Processors\Base\BaseProcessor as Processor;
 
@@ -24,7 +24,7 @@ class DevController extends Controller
 
         //(new CategoriesScanner)->process();
 
-        (new Processor)->run(Process::CATEGORIES);
+        (new Processor)->run(Processes::CATEGORIES);
 
     
     }

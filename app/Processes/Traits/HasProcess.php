@@ -61,11 +61,11 @@ trait HasProcess {
 	
 
 	/**
-	 * Reference to take the 'process kit' properties from the processor
+	 * Pull the process properties from the processor
 	 * 
 	 * @return self
 	 */
-	public function takeKit() 
+	public function pull() 
 	{
 		$this->process 	= &$this->processor->process 	?? null;
 		$this->channel 	= &$this->processor->channel 	?? null;
@@ -76,11 +76,11 @@ trait HasProcess {
 	
 	
 	/**
-	 * Reference to give the 'process kit' properties to the processor
+	 * Push the process properties to the processor
 	 * 
 	 * @return self
 	 */
-	public function giveKit() 
+	public function push() 
 	{
 		$this->processor->process 	= &$this->process 	?? null;
 		$this->processor->channel 	= &$this->channel 	?? null;

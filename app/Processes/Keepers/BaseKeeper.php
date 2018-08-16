@@ -30,12 +30,16 @@ abstract class BaseKeeper implements IKeeper {
 
     /**
      * Handle process action
+	 * 
+	 * @return self
      */
 	abstract public function handle();
 
 
 	/**
 	 * Keep process data
+	 * 
+	 * @return self
 	 */
 	abstract public function keep();	
 }

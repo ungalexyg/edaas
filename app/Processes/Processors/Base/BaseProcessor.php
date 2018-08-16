@@ -10,8 +10,8 @@
 
 namespace App\Processes\Processors\Base;
 
-use App\Lib\Enums\Channel;
-use App\Lib\Enums\Process;
+use App\Lib\Enums\Channels;
+use App\Lib\Enums\Processes;
 use App\Processes\Traits\HasProcess;
 use App\Exceptions\ProcessorException;
 
@@ -50,13 +50,13 @@ class BaseProcessor  {
 	/**
 	 * Set process
 	 * 
-	 * @param string $process
+	 * @param string Processes::$process 
 	 * @throws ProcessorException
 	 * @return self
 	 */	
 	private function setProcess($process) 
 	{
-		if(!in_array($process, Process::getConstants())) throw new ProcessorException(ProcessorException::PROCESSOR_PROCESS_UNDEFINED);
+		if(!in_array($process, Processes::getConstants())) throw new ProcessorException(ProcessorException::PROCESSOR_PROCESS_UNDEFINED);
 		
 		$this->process = $process;
 		
@@ -67,13 +67,13 @@ class BaseProcessor  {
 	/**
 	 * Set channel
 	 * 
-	 * @param string $channel
+	 * @param string Channels::$channel 
 	 * @throws ProcessorException
 	 * @return self
 	 */	
 	private function setChannel($channel) 
 	{
-		if(!in_array($channel, Channel::getConstants())) throw new ProcessorException(ProcessorException::PROCESSOR_CHANNEL_UNDEFINED);
+		if(!in_array($channel, Channels::getConstants())) throw new ProcessorException(ProcessorException::PROCESSOR_CHANNEL_UNDEFINED);
 				
 		$this->channel = $channel;		
 
@@ -97,7 +97,7 @@ class BaseProcessor  {
 
 		$processor = new $processor();
 
-		$this->setProcessor($processor)->giveKit();		
+		$this->setProcessor($processor)->push();		
 
 		$this->processor->load();
 

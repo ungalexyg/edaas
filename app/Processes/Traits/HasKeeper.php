@@ -42,7 +42,7 @@ trait HasKeeper {
 
 		$this->keeper = new $keeper();		
 
-		$this->keeper->setProcessor($this)->takeKit();
+		$this->keeper->setProcessor($this);
 
 		return $this;
 	}		    

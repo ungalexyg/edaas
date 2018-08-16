@@ -33,12 +33,16 @@ abstract class BaseWatcher implements IWatcher {
 
     /**
      * Handle process action
+	 * 
+	 * @return self
      */
 	abstract public function handle();
 
 
 	/**
 	 * Watch prospects
+	 * 
+	 * @return self
 	 */
 	abstract public function watch();		
 	

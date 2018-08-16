@@ -12,7 +12,7 @@ use App\Models\Process;
  * 
  * Handle Processor logistics.
  */ 
-class ProcessorSetter  {
+class ProcessesSetter  {
 
 
 	/**

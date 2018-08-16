@@ -39,9 +39,9 @@ class Process extends BaseModel
     /**
      * Get the channels that attached to the process
      */
-    public function channnels()
+    public function channels()
     {
-        return $this->belongsToMany(Channel::class, 'channels_processes', 'process_id', 'channel_id');
+        return $this->belongsToMany(Channel::class, 'channels_processes', 'process_id', 'channel_id')->withPivot('last_activity');
     }    
 
 }

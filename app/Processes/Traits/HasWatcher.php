@@ -42,7 +42,7 @@ trait HasWatcher {
 
 		$this->watcher = new $watcher();		
 
-		$this->watcher->setProcessor($this)->takeKit();
+		$this->watcher->setProcessor($this);
 
 		return $this;
 	}		    

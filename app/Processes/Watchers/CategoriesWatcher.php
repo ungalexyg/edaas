@@ -15,16 +15,20 @@ class CategoriesWatcher extends BaseWatcher {
 	/**
 	 * Handle process action
 	 * 
-	 * @return mixed
+	 * @return self
 	 */
 	public function handle() 
 	{   
-		return $this->watch();
+        $this->watch();
+        
+        return $this;
 	}
 
 
     /**
      * Watch prospects 
+     * 
+     * @return self
      */
     public function watch() 
     {

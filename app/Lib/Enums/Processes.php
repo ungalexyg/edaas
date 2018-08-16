@@ -3,9 +3,9 @@
 namespace App\Lib\Enums;
 
 /**
- * Process Enum
+ * Processes Enum
  */ 
-class Process extends BaseEnum {
+class Processes extends BaseEnum {
 
     const CATEGORIES = 'categories';
     const ITEMS = 'items';

@@ -11,8 +11,8 @@
 | and should be added to the relevant enum
 |
 */
-use App\Lib\Enums\Process;
-use App\Lib\Enums\Channel;
+use App\Lib\Enums\Processes;
+use App\Lib\Enums\Channels;
 
 
 return [
@@ -23,11 +23,11 @@ return [
      */    
     'processes' => [
 
-        Process::ITEMS => [
+        Processes::ITEMS => [
             'name'          => 'Items',
             'description'   => 'Scan items in channel',      
         ],
-        Process::CATEGORIES => [
+        Processes::CATEGORIES => [
             'name'          => 'Categories',
             'description'   => 'Scan categories in channel',       
         ]
@@ -39,17 +39,17 @@ return [
      */
     'channels' => [
 
-        Channel::ALIEXPRESS => [
+        Channels::ALIEXPRESS => [
             'domain'        => 'aliexpress.com',
             'name'          => 'Aliexpress',
             'description'   => 'The Aliexpress marketplace',            
         ],
-        Channel::AMAZON     => [
+        Channels::AMAZON     => [
             'domain'        => 'amazon.com',
             'name'          => 'Amazon',
             'description'   => 'The Amazon marketplace',            
         ],
-        Channel::EBAY       => [
+        Channels::EBAY       => [
             'domain'        => 'ebay.com',
             'name'          => 'Ebay',
             'description'   => 'The Ebay marketplace',            
@@ -62,17 +62,17 @@ return [
      */
     'processes_channels' => [
 
-        Channel::ALIEXPRESS => [
-            Process::ITEMS,
-            Process::CATEGORIES,           
+        Channels::ALIEXPRESS => [
+            Processes::ITEMS,
+            Processes::CATEGORIES,           
         ],
-        Channel::AMAZON     => [
-            Process::ITEMS,
-            Process::CATEGORIES,          
+        Channels::AMAZON     => [
+            Processes::ITEMS,
+            Processes::CATEGORIES,          
         ],
-        Channel::EBAY       => [
-            Process::ITEMS,
-            Process::CATEGORIES,
+        Channels::EBAY       => [
+            Processes::ITEMS,
+            Processes::CATEGORIES,
         ]  
     ]
 ];

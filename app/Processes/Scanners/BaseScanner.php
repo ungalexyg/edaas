@@ -30,12 +30,16 @@ abstract class BaseScanner implements IScanner {
 
     /**
      * Handle process action
+	 * 
+	 * @return self
      */
 	abstract public function handle();
 
 
     /**
      * Perform scaning process
+	 * 
+	 * @return self
      */
 	abstract public function scan();
 

@@ -42,7 +42,7 @@ trait HasScanner {
 
         $this->scanner = new $scanner();			
 
-		$this->scanner->setProcessor($this)->takeKit();
+		$this->scanner->setProcessor($this);
 
         return $this;
 	}	    

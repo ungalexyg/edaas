@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Processes\Base\ProcessorSetter;
+use App\Processes\Processors\Base\ProcessesSetter;
+
 
 
 class ChannelsProcessesSeeder extends Seeder
@@ -14,7 +15,7 @@ class ChannelsProcessesSeeder extends Seeder
      */
     public function run()
     {
-        (new ProcessorSetter)->channelsProcesses(); 
+        (new ProcessesSetter)->channelsProcesses(); 
     }
 }
 
