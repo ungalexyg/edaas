@@ -4,7 +4,6 @@ namespace App\Processes\Scanners;
 use App\Models\Channel;
 use App\Models\Process;
 use App\Lib\Enums\Processes;
-use Illuminate\Support\Carbon;
 
 
 /**
@@ -18,56 +17,32 @@ class CategoriesScanner extends BaseScanner {
      * Handle process action
      * 
      * TODO:
-     * 1) get the channels
-     * 2) check which should run in terms of timing
+     * 1) get the channels //DONE
+     * 2) check which should run in terms of timing // DONE
      * 3) perform scan on the next in line
      * 4) pass data to keeper
+     * 5) NOTE : make sure to work with relevant seed 
+     * 6) handle given channel case
      * 
      * @return self
      */
     public function handle() 
     {
-        //dd($this->process);
-    
-        $this->config['min_age'];
-        $this->config['max_channels'];
+        if($this->channel) 
+        {
+            $scanned = $this->loadAdapter($this->channel)->adapter->fetch();
+        }
+        else 
+        {
+            $process = Process::matureChannels($this->process)->first(); // first() means to process, which should be single result for $this->process anyway
 
-        $process = Process::with('channels')->where('key', $this->process)->first();
+            foreach($process->channels as $channel) 
+            {    
+                $scanned = $this->loadAdapter($channel->key)->adapter->fetch();
+            }            
+        }
         
-        # select order by channels_processes.last_process
-
-        //dd($process); 
-
-        // foreach($process->channels as $channel) 
-        // {
-        //     var_dump($channel->pivot->last_activity);
-
-        //     if($channel->last_activity) 
-        //     {
-        //         Carbon::now()->subDays(1)->format('Y-m-d');
-        //     }
-        // }
-        
-
-        $this->scan();
-
-        return $this;
-    }
-
-
-    /**
-     * Perform scaning process
-     * 
-     * @return self
-     */
-    public function scan() 
-    {
-
-        // $this->bag = $this->adapter()->fetch();
-
-        echo "Scaning .....";
-
-        $this->processor->bag['scanned'] = 'value1'; 
+        $this->bag['scanned'][] = $scanned;
 
         return $this;
     }

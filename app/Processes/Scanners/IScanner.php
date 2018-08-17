@@ -17,14 +17,14 @@ interface IScanner extends IProcess {
      */
 	public function handle();
 
-
+    
     /**
-     * Perform scaning process
+     * Load adapter
      * 
+     * @param string $channel
      * @return self
      */
-    public function scan();
-    
+	public function loadAdapter($channel);
     
 }
 

@@ -82,7 +82,7 @@ class Process extends BaseModel
         $limit_channels = $config['limit_channels'] ?? 1; 
         
         $datetime = Carbon::now()->subMinutes($min_age)->toDateTimeString();
-
+        
         $query->with(['channels' => function($q) use ($datetime, $limit_channels){
 
             $q->wherePivot(static::LAST_PROCESS,'<=', $datetime)

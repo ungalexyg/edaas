@@ -7,7 +7,7 @@
 | Set the channels for each process
 |
 | @note: 
-| after 1st seed the key fields can be update only manually in db
+| after 1st seed in production the key fields can be updated only manually in db
 | and should be added to the relevant enum
 |
 */
@@ -39,11 +39,6 @@ return [
      */
     'channels' => [
 
-        Channels::ALIEXPRESS => [
-            'domain'        => 'aliexpress.com',
-            'name'          => 'Aliexpress',
-            'description'   => 'The Aliexpress marketplace',            
-        ],
         Channels::AMAZON     => [
             'domain'        => 'amazon.com',
             'name'          => 'Amazon',
@@ -53,7 +48,12 @@ return [
             'domain'        => 'ebay.com',
             'name'          => 'Ebay',
             'description'   => 'The Ebay marketplace',            
-        ]  
+        ],
+        Channels::ALIEXPRESS => [
+            'domain'        => 'aliexpress.com',
+            'name'          => 'Aliexpress',
+            'description'   => 'The Aliexpress marketplace',            
+        ]          
     ],
 
 
@@ -68,11 +68,11 @@ return [
         ],
         Channels::AMAZON     => [
             Processes::ITEMS,
-            Processes::CATEGORIES,          
+            //Processes::CATEGORIES,          
         ],
         Channels::EBAY       => [
             Processes::ITEMS,
-            Processes::CATEGORIES,
+            //Processes::CATEGORIES,
         ]  
     ],
 

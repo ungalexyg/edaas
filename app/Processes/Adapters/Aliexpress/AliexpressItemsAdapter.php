@@ -2,7 +2,18 @@
 
 namespace App\Processes\Adapters\Aliexpress;
 
-use App\Processes\Adapters\Base\BaseAdapter;
+
+/**
+ * --------------------------------------------------------------------------
+ *  Aliexpress.com Adapter
+ * --------------------------------------------------------------------------
+ * Handle Aliexpress categories operations
+ * 
+ * All categories page :
+ * https://www.aliexpress.com/all-wholesale-products.html?spm=2114.11010108.22.1.650c649bElLsCz
+ * 
+ */
+
 
 /**
  * --------------------------------------------------------------------------
@@ -16,19 +27,21 @@ use App\Processes\Adapters\Base\BaseAdapter;
  */
 
 
-/**
- * Aliexpress Adapter
- * 
- * Handle Aliexpress operations
- */
- abstract class AliexpressAdapter extends BaseAdapter {
+ /**
+  * Aliexpress Items Adapter
+  */
+ class AliexpressItemsAdapter extends BaseAdapter {
+
 
 	/**
 	 * Fetch targets
 	 * 
      * @return mixed
 	 */        
-    abstract public function fetch(); 
+    public function fetch() 
+    {
+        
+    }
 
  }
 
