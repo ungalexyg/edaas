@@ -43,7 +43,7 @@ class CategoriesProcessor implements IProcessor {
 		$this->keeper->pull()->handle()->push();
 		$this->watcher->pull()->handle()->push();
 		
-		echo '<pre>'; print_r($this->bag);
+		echo '<pre><hr />'; print_r($this->bag);
 	}
 }
 

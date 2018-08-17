@@ -15,7 +15,6 @@ use App\Exceptions\ProcessorSetterException;
  */ 
 class ProcessesSetter  {
 
-
 	/**
 	 * Set channels processes
 	 * 

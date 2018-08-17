@@ -8,8 +8,8 @@
  */ 
 
 namespace App\Processes\Traits;
-// use App\Lib\Enums\Channel;
-// use App\Lib\Enums\Process;
+// use App\Enums\Channel;
+// use App\Enums\Process;
 use App\Exceptions\ProcessException;
 
 

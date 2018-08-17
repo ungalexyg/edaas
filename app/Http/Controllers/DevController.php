@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Lib\Enums\Processes;
+use App\Enums\Processes;
 use Illuminate\Http\Request;
 use App\Processes\Processors\Base\BaseProcessor as Processor;
 

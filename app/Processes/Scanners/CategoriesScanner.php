@@ -3,7 +3,7 @@ namespace App\Processes\Scanners;
 
 use App\Models\Channel;
 use App\Models\Process;
-use App\Lib\Enums\Processes;
+use App\Enums\Processes;
 
 
 /**

@@ -8,7 +8,6 @@ namespace App\Processes\Processors\Base;
  */ 
 interface IProcessor extends IProcess {
 
-	
 	/**
 	 * Load processor dependencies
 	 * 

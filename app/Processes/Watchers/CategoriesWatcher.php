@@ -1,16 +1,13 @@
 <?php 
 namespace App\Processes\Watchers;
 
-use App\Lib\Enums\Process;
+use App\Enums\Process;
 
 
 /**
  * Categories Watcher
  */ 
 class CategoriesWatcher extends BaseWatcher {
-
-    public $prop = 'CategoriesWatcher';
-
 
 	/**
 	 * Handle process action
@@ -40,8 +37,7 @@ class CategoriesWatcher extends BaseWatcher {
         
         return $this;
     }
-   
-
+    
 }
 
 

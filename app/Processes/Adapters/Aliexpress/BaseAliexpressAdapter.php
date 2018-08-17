@@ -2,6 +2,7 @@
 
 namespace App\Processes\Adapters\Aliexpress;
 
+use App\Enums\Channels;
 use App\Processes\Adapters\Base\BaseAdapter;
 
 /**
@@ -17,11 +18,25 @@ use App\Processes\Adapters\Base\BaseAdapter;
 
 
 /**
- * Aliexpress Adapter
- * 
- * Handle Aliexpress operations
+ * Base Aliexpress Adapter
  */
- abstract class AliexpressAdapter extends BaseAdapter {
+ abstract class BaseAliexpressAdapter extends BaseAdapter {
+
+	/**
+	 * Channel adapter key
+	 * 
+	 * @var string
+	 */
+	protected $key = Channels::ALIEXPRESS;
+
+
+	/**
+	 * Channel adapter primary domain
+	 * 
+	 * @var string
+	 */	
+	protected $domain = 'aliexpress.com';
+
 
 	/**
 	 * Fetch targets

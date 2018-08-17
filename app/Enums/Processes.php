@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Lib\Enums;
+namespace App\Enums;
 
 /**
  * Processes Enum

@@ -9,7 +9,6 @@ use App\Processes\Processors\Base\IProcess;
  */ 
 interface IWatcher extends IProcess {
 
-    
     /**
      * Handle process action
      * 

@@ -30,7 +30,7 @@ namespace App\Processes\Adapters\Aliexpress;
  /**
   * Aliexpress Items Adapter
   */
- class AliexpressItemsAdapter extends BaseAdapter {
+ class AliexpressItemsAdapter extends BaseAliexpressAdapter {
 
 
 	/**

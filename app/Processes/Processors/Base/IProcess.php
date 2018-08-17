@@ -8,7 +8,6 @@ namespace App\Processes\Processors\Base;
  */ 
 interface IProcess {
 
-	
 	/**
 	 * Pull common process properties from the processor
 	 * 
@@ -26,8 +25,7 @@ interface IProcess {
 	 * @return self
 	 */
 	public function push($properties=[]); 
-
-	
+		
 }
 
 

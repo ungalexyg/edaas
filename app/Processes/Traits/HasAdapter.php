@@ -35,6 +35,8 @@ trait HasAdapter {
 
 		$this->adapter = new $adapter();		
 
+		$this->adapter->setUrl();
+
 		return $this;
 	}		    
 }

@@ -10,8 +10,8 @@
 
 namespace App\Processes\Processors\Base;
 
-use App\Lib\Enums\Channels;
-use App\Lib\Enums\Processes;
+use App\Enums\Channels;
+use App\Enums\Processes;
 use App\Processes\Traits\HasProcess;
 use App\Exceptions\ProcessException;
 
@@ -20,7 +20,6 @@ use App\Exceptions\ProcessException;
  * Base Processor 
  */ 
 class BaseProcessor  {
-
 
 	/**
 	 * Processes traits

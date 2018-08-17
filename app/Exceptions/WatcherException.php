@@ -7,7 +7,7 @@ use Exception;
 /**
  * Watcher Exception
  */
-class WatcherException extends Exception
+class WatcherException extends BaseException
 {
     //
 }

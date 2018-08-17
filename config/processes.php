@@ -11,8 +11,8 @@
 | and should be added to the relevant enum
 |
 */
-use App\Lib\Enums\Processes;
-use App\Lib\Enums\Channels;
+use App\Enums\Processes;
+use App\Enums\Channels;
 
 
 return [

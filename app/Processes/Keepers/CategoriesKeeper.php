@@ -1,6 +1,6 @@
 <?php 
 namespace App\Processes\Keepers;
-use App\Lib\Enums\Process;
+use App\Enums\Process;
 
 /**
  * Categories Keeper

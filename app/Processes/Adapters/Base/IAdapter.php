@@ -13,7 +13,16 @@ namespace App\Processes\Adapters\Base;
      * 
      * @return mixed
 	 */    
-    public function fetch(); 
+    public function fetch();
+    
+    
+	/**
+	 * Set URL
+     * 
+     * @param string|null $url
+     * @return self
+	 */  
+    public function setUrl($url=null) ; 
 
  }
 
