@@ -85,13 +85,13 @@ return [
         Processes::ITEMS => [
         ],
         Processes::CATEGORIES => [
-            // what should be the minimum age of a process by HOURS in order to run it ?
+            // what should be the minimum age of a process in order to run it by MINUTES ?
             // the age of the process checked by : channels_processes.last_process.            
-            // if several process are 'mature' enough, the processor will start to run from the oldest
-            'min_age' => 24, 
+            // if several processes are 'mature' enough, the processor will start to run from the oldest
+            'min_age' => (60*24), // 24 hours in minutes, 
 
-            // how many from the 'mature' processes should be handled in each process ?            
-            'max_channels' => 1, 
+            // how many from the 'mature' process_channels should be processed in each process ?            
+            'limit_channels' => 2, 
         ] 
     ],
 
