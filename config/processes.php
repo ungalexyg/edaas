@@ -60,7 +60,7 @@ return [
     /**
      * Enable processes for each channel
      */
-    'processes_channels' => [
+    'channels_processes' => [
 
         Channels::ALIEXPRESS => [
             Processes::ITEMS,
@@ -74,5 +74,25 @@ return [
             Processes::ITEMS,
             Processes::CATEGORIES,
         ]  
-    ]
+    ],
+
+
+    /**
+     * Processes settings
+     */
+    'settings' => [
+
+        Processes::ITEMS => [
+        ],
+        Processes::CATEGORIES => [
+            // what should be the minimum age of a process by HOURS in order to run it ?
+            // the age of the process checked by : channels_processes.last_process.            
+            // if several process are 'mature' enough, the processor will start to run from the oldest
+            'min_age' => 24, 
+
+            // how many from the 'mature' processes should be handled in each process ?            
+            'max_channels' => 1, 
+        ] 
+    ],
+
 ];

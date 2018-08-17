@@ -17,7 +17,6 @@ use App\Processes\Processors\Base\IProcessor;
  */ 
 class CategoriesProcessor implements IProcessor {
 
-
 	/**
 	 * Processes traits
 	 */
@@ -36,7 +35,7 @@ class CategoriesProcessor implements IProcessor {
 
 
 	/**
-	 * Perform the process
+	 * Manage the process
 	 */
 	public function process() 
 	{
@@ -46,7 +45,6 @@ class CategoriesProcessor implements IProcessor {
 		
 		echo '<pre>'; print_r($this->bag);
 	}
-
 }
 
 

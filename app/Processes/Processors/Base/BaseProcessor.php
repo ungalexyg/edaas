@@ -36,7 +36,11 @@ class BaseProcessor  {
 	 */
 	public function run($process, $channel=null) 
 	{
-		$this->setProcess($process)->setChannel($channel)->loadProcessor();
+		$this
+			->setProcess($process)
+				->setChannel($channel)
+					->setConfig()
+						->loadProcessor();
 				
 		$this->processor->process();
 	}
@@ -92,12 +96,25 @@ class BaseProcessor  {
 
 		$processor = new $processor();
 
-		$this->setProcessor($processor)->push(['process', 'channel']);		
+		$this->setProcessor($processor)->push(['process', 'channel', 'config']);		
 
 		$this->processor->load();
 
 		return $this;
 	}
+
+
+	/**
+	 * Set process config
+	 * 
+	 * @return self
+	 */
+	private function setConfig() 
+	{
+		$this->config = config('processes.settings.' . $this->process) ?? [];
+
+		return $this;
+	} 	
 
 }
 

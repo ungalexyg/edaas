@@ -42,7 +42,7 @@ class Channel extends BaseModel
      */
     public function processes()
     {
-        return $this->belongsToMany(Process::class, 'channels_processes', 'channel_id', 'process_id')->withPivot('last_activity');
+        return $this->belongsToMany(Process::class, 'channels_processes', 'channel_id', 'process_id')->withPivot('last_process');
     }    
 
 }

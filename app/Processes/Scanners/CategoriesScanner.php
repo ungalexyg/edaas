@@ -1,9 +1,10 @@
 <?php 
 namespace App\Processes\Scanners;
 
-use App\Lib\Enums\Processes;
 use App\Models\Channel;
 use App\Models\Process;
+use App\Lib\Enums\Processes;
+use Illuminate\Support\Carbon;
 
 
 /**
@@ -11,7 +12,7 @@ use App\Models\Process;
  */ 
 class CategoriesScanner extends BaseScanner {
 
-
+    
 
     /**
      * Handle process action
@@ -28,19 +29,24 @@ class CategoriesScanner extends BaseScanner {
     {
         //dd($this->process);
     
+        $this->config['min_age'];
+        $this->config['max_channels'];
+
         $process = Process::with('channels')->where('key', $this->process)->first();
         
+        # select order by channels_processes.last_process
+
         //dd($process); 
 
-        foreach($process->channels as $channel) 
-        {
-            var_dump($channel->pivot->last_activity);
+        // foreach($process->channels as $channel) 
+        // {
+        //     var_dump($channel->pivot->last_activity);
 
-            if($channel->last_activity) 
-            {
-
-            }
-        }
+        //     if($channel->last_activity) 
+        //     {
+        //         Carbon::now()->subDays(1)->format('Y-m-d');
+        //     }
+        // }
         
 
         $this->scan();

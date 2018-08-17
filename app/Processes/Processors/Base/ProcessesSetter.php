@@ -23,7 +23,7 @@ class ProcessesSetter  {
 	 */
 	public function channelsProcesses() 
 	{
-        $seeds = config('processes.processes_channels');
+        $seeds = config('processes.channels_processes');
 
         foreach($seeds as $channel_key => $config_processes) 
         {

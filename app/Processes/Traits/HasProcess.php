@@ -46,6 +46,14 @@ trait HasProcess {
 
 
 	/**
+	 * Process config
+	 * 
+	 * @var array
+	 */
+	public $config=[];	
+
+
+	/**
 	 * Default common process properties 
 	 * 
 	 * @var array
@@ -115,5 +123,5 @@ trait HasProcess {
 
 		return $this;
 	} 
-			
+	
 }
