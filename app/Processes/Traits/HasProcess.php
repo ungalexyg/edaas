@@ -58,7 +58,7 @@ trait HasProcess {
 	 * 
 	 * @var array
 	 */
-	protected $properties = ['process', 'channel', 'bag'];
+	protected $properties = ['process', 'channel', 'config', 'bag'];
 
 
 	/**
