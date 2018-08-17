@@ -10,7 +10,7 @@
 namespace App\Processes\Traits;
 // use App\Lib\Enums\Channel;
 // use App\Lib\Enums\Process;
-use App\Exceptions\ProcessorException;
+use App\Exceptions\ProcessException;
 
 
 
@@ -31,14 +31,14 @@ trait HasWatcher {
 	/**
 	 * Load Watcher
 	 * 
-	 * @throws ProcessorException
+	 * @throws ProcessException
 	 * @return self
 	 */	
 	protected function loadWatcher() 
 	{			
 		$watcher = 'App\Processes\Watchers\\' . ucwords($this->process) . 'Watcher';
 	
-		if (!class_exists($watcher))  throw new ProcessorException(ProcessorException::PROCESSOR_WATCHER_UNDEFINED);
+		if (!class_exists($watcher))  throw new ProcessException(ProcessException::UNDEFINED_WATCHER);
 
 		$this->watcher = new $watcher();		
 

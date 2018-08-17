@@ -22,6 +22,7 @@ use App\Processes\Traits\HasProcess;
  */ 
 abstract class BaseScanner implements IScanner {
 
+	
 	/**
 	 * Use process traits
 	 */

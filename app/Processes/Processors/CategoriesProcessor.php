@@ -2,7 +2,7 @@
 
 namespace App\Processes\Processors;
 
-//use App\Exceptions\ProcessorException;
+//use App\Exceptions\ProcessException;
 use App\Processes\Traits\HasKeeper;
 use App\Processes\Traits\HasProcess;
 use App\Processes\Traits\HasScanner;

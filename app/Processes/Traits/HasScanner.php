@@ -10,7 +10,7 @@
 namespace App\Processes\Traits;
 // use App\Lib\Enums\Channel;
 // use App\Lib\Enums\Process;
-use App\Exceptions\ProcessorException;
+use App\Exceptions\ProcessException;
 
 
 
@@ -31,14 +31,14 @@ trait HasScanner {
 	/**
 	 * Load Scanner
 	 * 
-	 * @throws ProcessorException
+	 * @throws ProcessException
 	 * @return self
 	 */	
 	protected function loadScanner() 
 	{	
         $scanner = 'App\Processes\Scanners\\' . ucwords($this->process) . 'Scanner';
 
-        if (!class_exists($scanner))  throw new ProcessorException(ProcessorException::PROCESSOR_SCANNER_UNDEFINED);
+        if (!class_exists($scanner))  throw new ProcessException(ProcessException::UNDEFINED_SCANNER);
 
         $this->scanner = new $scanner();			
 

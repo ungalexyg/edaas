@@ -8,7 +8,7 @@ use Exception;
 /**
  * Process Exception
  */
-class ProcessorException extends BaseException
+class ProcessException extends BaseException
 {
     const UNDEFINED_PROCESS             = 'Can\'t set undefined process key';
     const UNDEFINED_CHANNEL             = 'Can\'t set undefined channel key';

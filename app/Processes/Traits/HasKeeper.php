@@ -10,7 +10,7 @@
 namespace App\Processes\Traits;
 // use App\Lib\Enums\Channel;
 // use App\Lib\Enums\Process;
-use App\Exceptions\ProcessorException;
+use App\Exceptions\ProcessException;
 
 
 
@@ -31,14 +31,14 @@ trait HasKeeper {
 	/**
 	 * Load Keeper
 	 * 
-	 * @throws ProcessorException
+	 * @throws ProcessException
 	 * @return self
 	 */	
 	protected function loadKeeper() 
 	{			
 		$keeper = 'App\Processes\Keepers\\' . ucwords($this->process) . 'Keeper';
 
-		if (!class_exists($keeper))  throw new ProcessorException(ProcessorException::PROCESSOR_KEEPER_UNDEFINED);
+		if (!class_exists($keeper))  throw new ProcessException(ProcessException::UNDEFINED_KEEPER);
 
 		$this->keeper = new $keeper();		
 
