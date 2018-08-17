@@ -81,6 +81,19 @@ class BaseProcessor  {
 
 
 	/**
+	 * Set process config
+	 * 
+	 * @return self
+	 */
+	private function setConfig() 
+	{
+		$this->config = config('processes.settings.' . $this->process) ?? [];
+
+		return $this;
+	} 
+
+
+	/**
 	 * Load Processor
 	 * 
 	 * @throws ProcessException
@@ -102,20 +115,6 @@ class BaseProcessor  {
 
 		return $this;
 	}
-
-
-	/**
-	 * Set process config
-	 * 
-	 * @return self
-	 */
-	private function setConfig() 
-	{
-		$this->config = config('processes.settings.' . $this->process) ?? [];
-
-		return $this;
-	} 	
-
 }
 
 
