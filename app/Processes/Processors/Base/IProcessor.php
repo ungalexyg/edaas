@@ -4,9 +4,9 @@ namespace App\Processes\Processors\Base;
 
 
 /**
- * Process Interface 
+ * Processor Interface 
  */ 
-interface IProcessor {
+interface IProcessor extends IProcess {
 
 	
 	/**

@@ -1,11 +1,13 @@
 <?php 
 namespace App\Processes\Scanners;
 
+use App\Processes\Processors\Base\IProcess;
+
 
 /**
  * Interface Scanner
  */ 
-interface IScanner {
+interface IScanner extends IProcess {
 	
 
     /**
@@ -21,7 +23,9 @@ interface IScanner {
      * 
      * @return self
      */
-	public function scan();
+    public function scan();
+    
+    
 }
 
 
