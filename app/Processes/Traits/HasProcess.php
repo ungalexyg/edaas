@@ -2,7 +2,7 @@
 
 namespace App\Processes\Traits;
 
-use App\Exceptions\ProcessorException;
+use App\Exceptions\ProcessException;
 use App\Processes\Processors\Base\IProcessor;
 
 /**
@@ -75,13 +75,15 @@ trait HasProcess {
 	 */
 	public function pull($properties=[]) 
 	{
-		if(!($this->processor instanceof IProcessor)) throw new ProcessorException(ProcessorException::FAILED_PULL_INVALID_INSTANCE);
+		if(!($this->processor instanceof IProcessor)) throw new ProcessException(ProcessException::FAILED_PULL_INVALID_INSTANCE);
 
 		$properties = (!empty($properties) ? $properties : $this->properties);
 
+		$existing_properties = get_object_vars($this->processor);
+
 		foreach($properties as $property)
 		{
-			if(!isset($this->processor->{$property})) throw new ProcessorException(ProcessorException::FAILED_PULL_INVALID_PROPERTY);
+			if(!array_key_exists($property, $existing_properties)) throw new ProcessException(ProcessException::FAILED_PULL_INVALID_PROPERTY  . ' | property : ' . $property);
 
 			$this->{$property} 	= &$this->processor->{$property} ?? null;
 		}
@@ -98,13 +100,15 @@ trait HasProcess {
 	 */
 	public function push($properties=[]) 
 	{
-		if(!($this->processor instanceof IProcessor)) throw new ProcessorException(ProcessorException::FAILED_PUSH_INVALID_INSTANCE);
+		if(!($this->processor instanceof IProcessor)) throw new ProcessException(ProcessException::FAILED_PUSH_INVALID_INSTANCE);
 
 		$properties = (!empty($properties) ? $properties : $this->properties);
-
+		
+		$existing_properties = get_object_vars($this);
+		
 		foreach($properties as $property)
 		{
-			if(!isset($this->{$property})) throw new ProcessorException(ProcessorException::FAILED_PUSH_INVALID_PROPERTY);
+			if(!array_key_exists($property, $existing_properties)) throw new ProcessException(ProcessException::FAILED_PUSH_INVALID_PROPERTY . ' | property : ' . $property);
 
 			$this->processor->{$property} = &$this->{$property} ?? null;
 		}
