@@ -2,9 +2,10 @@
 
 namespace App\Processes\Processors\Base;
 
-use App\Exceptions\ProcessorSetterException;
 use App\Models\Channel;
 use App\Models\Process;
+use Illuminate\Support\Carbon;
+use App\Exceptions\ProcessorSetterException;
 
 
 /**
@@ -24,6 +25,8 @@ class ProcessesSetter  {
 	public function channelsProcesses() 
 	{
         $seeds = config('processes.channels_processes');
+
+        $process_age_days = 1;
 
         foreach($seeds as $channel_key => $config_processes) 
         {
@@ -53,8 +56,13 @@ class ProcessesSetter  {
 
                 if(!$channel->processes->contains($process->id))  // check if the channel already contains on of the proceses in the config 
                 {
+                    // if not contain, it's new, attach it now 
                     var_dump('+ attaching process_key : ' . $process->key);
-                    $channel->processes()->attach($process->id);  // if not contain, it's new, attach it now 
+                    $channel->processes()->attach($process->id, [
+                        Process::LAST_PROCESS => Carbon::now()->subDays($process_age_days) // dates will be updates after the 1st process, this is just to allow the processor to start 
+                    ]);  
+
+                    $process_age_days++;
                 }
             }
         }
