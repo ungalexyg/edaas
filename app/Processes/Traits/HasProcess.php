@@ -45,7 +45,14 @@ trait HasProcess {
 	public $bag=[];	
 
 
-	
+	/**
+	 * Default common process properties 
+	 * 
+	 * @var array
+	 */
+	protected $properties = ['process', 'channel', 'bag'];
+
+
 	/**
 	 * Set Processor
 	 * 
@@ -61,31 +68,48 @@ trait HasProcess {
 	
 
 	/**
-	 * Pull the process properties from the processor
+	 * Pull common process properties from the processor
 	 * 
+	 * @param array $properties
 	 * @return self
 	 */
-	public function pull() 
+	public function pull($properties=[]) 
 	{
-		$this->process 	= &$this->processor->process 	?? null;
-		$this->channel 	= &$this->processor->channel 	?? null;
-		$this->bag 		= &$this->processor->bag 		?? null;
+		if(!($this->processor instanceof IProcessor)) throw new ProcessorException(ProcessorException::FAILED_PULL_INVALID_INSTANCE);
+
+		$properties = (!empty($properties) ? $properties : $this->properties);
+
+		foreach($properties as $property)
+		{
+			if(!isset($this->processor->{$property})) throw new ProcessorException(ProcessorException::FAILED_PULL_INVALID_PROPERTY);
+
+			$this->{$property} 	= &$this->processor->{$property} ?? null;
+		}
 
 		return $this;
 	} 
 	
 	
 	/**
-	 * Push the process properties to the processor
+	 * Push common process properties to the processor
 	 * 
+	 * @param array $properties
 	 * @return self
 	 */
-	public function push() 
+	public function push($properties=[]) 
 	{
-		$this->processor->process 	= &$this->process 	?? null;
-		$this->processor->channel 	= &$this->channel 	?? null;
-		$this->processor->bag 		= &$this->bag 	   	?? null;
+		if(!($this->processor instanceof IProcessor)) throw new ProcessorException(ProcessorException::FAILED_PUSH_INVALID_INSTANCE);
+
+		$properties = (!empty($properties) ? $properties : $this->properties);
+
+		foreach($properties as $property)
+		{
+			if(!isset($this->{$property})) throw new ProcessorException(ProcessorException::FAILED_PUSH_INVALID_PROPERTY);
+
+			$this->processor->{$property} = &$this->{$property} ?? null;
+		}
 
 		return $this;
-	} 	
+	} 
+			
 }
