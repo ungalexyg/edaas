@@ -52,9 +52,9 @@ class Process extends BaseModel
 
 
     /**
-     * Scope mature channels processes
+     * Scope mature channels for process 
      * 
-     * Generate the following query : 
+     * Bsed on config, generate similar to the following query : 
      * 
      *  select 
      *       `channels`.*, 
