@@ -6,6 +6,31 @@
 # Processes
 #######################################
 
+/**
+ * --------------------------------------------------------------------------
+ *  Architecture
+ * --------------------------------------------------------------------------
+ * 
+ * Interfaces : 
+ * 
+ * - IProcess [pull(), push()]
+ *  -- IProcessor extends IProcess [load(), process()]
+ *  -- IScaner extends IProcess [handle(), scan()]     
+ *  -- IKeepr extends IProcess  [handle(), keep()]     
+ *  -- IWatcher extends IProcess [handle(), watch()]
+ * 
+ */ 
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  Processor
+ * --------------------------------------------------------------------------
+ * 
+ * Manage specific process operation using different types of child instances
+ * 
+ */ 
+
 
 
 /**
