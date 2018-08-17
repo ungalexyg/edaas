@@ -54,6 +54,20 @@ class Process extends BaseModel
     /**
      * Scope mature channels processes
      * 
+     * Generate the following query : 
+     * 
+     *  select 
+     *       `channels`.*, 
+     *       `channels_processes`.`process_id` as `pivot_process_id`, 
+     *       `channels_processes`.`channel_id` as `pivot_channel_id`, 
+     *       `channels_processes`.`last_process` as `pivot_last_process` 
+     *   from `channels` 
+     *   inner join `channels_processes` on `channels`.`id` = `channels_processes`.`channel_id` 
+     *   where `channels_processes`.`process_id` in (2) 
+     *   and `channels_processes`.`last_process` <= '2018-08-16 17:37:44' 
+     *   order by `channels_processes`.`last_process` asc 
+     *   limit 2;
+     *  
      * @see config('processes.settings.categories')
      * @param Illuminate\Database\Query\Builder // injected natively
      * @param string $process // processes.key
@@ -78,5 +92,4 @@ class Process extends BaseModel
         }])->where('key', $process);   
         
     }    
- 
 }
