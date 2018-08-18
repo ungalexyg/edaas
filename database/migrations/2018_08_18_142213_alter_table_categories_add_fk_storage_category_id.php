@@ -40,6 +40,6 @@ class AlterTableCategoriesAddFkStorageCategoryId extends Migration
      */
     public function down()
     {
-        //
+        $table->dropForeign(['storage_category_id']);
     }
 }
