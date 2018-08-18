@@ -27,7 +27,7 @@ class CreateTableStorageCategories extends Migration
             {
                 $table->increments('id');
                 $table->unsignedInteger('channel_id');
-                $table->unsignedInteger('category_id');
+                $table->unsignedInteger('category_id')->nullable()->comment('Some storage records might not be assigned to category '); 
                 $table->string('title')->nullable();
                 $table->string('path')->nullable();
                 $table->string('description')->nullable();

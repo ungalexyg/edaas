@@ -30,11 +30,11 @@ trait HasProcess
 
 
 	/**
-	 * The current channel
+	 * The mature channels for process
 	 * 
-	 * @var string
+	 * @var array
 	 */
-	public $channel;	
+	public $channels = [];	
 	
 
 	/**
@@ -58,7 +58,7 @@ trait HasProcess
 	 * 
 	 * @var array
 	 */
-	protected $properties = ['process', 'channel', 'config', 'bag'];
+	protected $properties = ['process', 'channels', 'config', 'bag'];
 
 
 	/**
@@ -91,7 +91,7 @@ trait HasProcess
 
 		foreach($properties as $property)
 		{
-			if(!array_key_exists($property, $existing_properties)) throw new ProcessException(ProcessException::FAILED_PULL_INVALID_PROPERTY  . ' | property : ' . $property);
+			if(!array_key_exists($property, $existing_properties)) throw new ProcessException(ProcessException::FAILED_PULL_INVALID_PROPERTY  . ' | property: ' . $property);
 
 			$this->{$property} 	= &$this->processor->{$property} ?? null;
 		}
@@ -116,7 +116,7 @@ trait HasProcess
 		
 		foreach($properties as $property)
 		{
-			if(!array_key_exists($property, $existing_properties)) throw new ProcessException(ProcessException::FAILED_PUSH_INVALID_PROPERTY . ' | property : ' . $property);
+			if(!array_key_exists($property, $existing_properties)) throw new ProcessException(ProcessException::FAILED_PUSH_INVALID_PROPERTY . ' | property: ' . $property . ' | instance: ' . get_class($this));
 
 			$this->processor->{$property} = &$this->{$property} ?? null;
 		}

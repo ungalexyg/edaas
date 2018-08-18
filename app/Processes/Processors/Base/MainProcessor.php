@@ -10,6 +10,7 @@
 
 namespace App\Processes\Processors\Base;
 
+use App\Models\Process;
 use App\Enums\Channels;
 use App\Enums\Processes;
 use App\Processes\Traits\HasProcess;
@@ -34,10 +35,10 @@ final class MainProcessor implements IMainProcessor
 	 * @param string $process
 	 * @param string|null $channel
 	 */
-	public function run($process, $channel=null) 
+	public function run($process) 
 	{
 		$this->setProcess($process)
-				->setChannel($channel)
+				->setChannels()
 					->setConfig()
 						->loadProcessor();
 				
@@ -63,17 +64,18 @@ final class MainProcessor implements IMainProcessor
 
 
 	/**
-	 * Set channel
+	 * Set mature channels for process
 	 * 
-	 * @param string Channels::$channel 
 	 * @throws ProcessException
 	 * @return self
 	 */	
-	private function setChannel($channel) 
+	private function setChannels() 
 	{
-		if(!is_null($channel) && !in_array($channel, Channels::getConstants())) throw new ProcessException(ProcessException::UNDEFINED_CHANNEL);
-				
-		$this->channel = $channel;		
+		$process = Process::matureChannels($this->process)->first(); // 1st process should be single result for $this->process anyway
+
+		if(!$process->channels) throw new ProcessException(ProcessException::MATURE_CHANNELS_NOT_FOUND);
+
+		$this->channels = $process->channels;		
 
 		return $this;
 	}	
@@ -108,7 +110,7 @@ final class MainProcessor implements IMainProcessor
 
 		$processor = new $processor();
 
-		$this->setProcessor($processor)->push(['process', 'channel', 'config']);		
+		$this->setProcessor($processor)->push(['process', 'channels', 'config']);		
 
 		$this->processor->load();
 

@@ -12,7 +12,7 @@ use App\Exceptions\BaseException;
 class ProcessException extends BaseException
 {
     const UNDEFINED_PROCESS             = 'Can\'t set undefined process key';
-    const UNDEFINED_CHANNEL             = 'Can\'t set undefined channel key';
+    const MATURE_CHANNELS_NOT_FOUND     = 'Mature channels for process not found';
     const UNDEFINED_PROCESSOR           = 'Failed to load undefined processor instance';
     const UNDEFINED_SCANNER             = 'Failed to load undefined scanner instance';
     const UNDEFINED_KEEPER              = 'Failed to load undefined keeper instance';

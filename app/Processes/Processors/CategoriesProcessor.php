@@ -37,6 +37,9 @@ class CategoriesProcessor implements IProcessor
 
 	/**
 	 * Manage the process
+	 * 
+	 * TODO: if the bag is empty, exception + report
+	 * 
 	 */
 	public function process() 
 	{

@@ -13,9 +13,8 @@ interface IMainProcessor extends IProcess
 	 * Run pre process operations
 	 * 
 	 * @param string $process
-	 * @param string|null $channel
 	 */
-	public function run($process, $channel=null); 
+	public function run($process); 
 
 
 	/**

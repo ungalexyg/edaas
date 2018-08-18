@@ -60,6 +60,8 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
 	/**
 	 * Fetch destenation
 	 * 
+     * //TODO: single point of $this->fetch build for all adapters
+     * 
      * @return array
 	 */        
     public function fetch() 
@@ -79,9 +81,9 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
             $parsed = $this->parseUrl($url);
 
             $this->fetch[] = [
-                'title'         => $node->text(),
-                'category_id'   => $parsed['category_id'],
-                'path'          => $parsed['path'],
+                'title'                 => $node->text(),
+                'channel_category_id'   => $parsed['channel_category_id'],
+                'path'                  => $parsed['path'],
             ];
 
         }); 
@@ -110,7 +112,6 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
         // catch vars
         $prefix         = $parts[1] ?? null;
         $category_id    = $parts[2] ?? null;
-        $path           = $parts[3] ?? null;
 
         // proper check
         if(!$prefix == 'category')      throw new AliexpressCategoriesAdapterException(AliexpressCategoriesAdapterException::INVALID_CATEGORY_URL . ' | ' . print_r(['url' => $url], 1));
@@ -119,8 +120,8 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
 
         // return
         return [
-            'category_id' => intval($category_id),
-            'path' => '/' . $path,
+            'channel_category_id' => intval($category_id),
+            'path' => $path,
         ];
     }
 
