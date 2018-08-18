@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\Processors;
 
 use Exception;
+use App\Exceptions\BaseException;
 
 
 /**

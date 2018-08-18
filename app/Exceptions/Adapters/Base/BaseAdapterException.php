@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\Adapters\Base;
 
 use Exception;
+use App\Exceptions\BaseException;
+
 
 /**
  * Adpter Exception

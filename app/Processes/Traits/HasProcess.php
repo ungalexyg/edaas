@@ -2,7 +2,7 @@
 
 namespace App\Processes\Traits;
 
-use App\Exceptions\ProcessException;
+use App\Exceptions\Processors\ProcessException;
 use App\Processes\Processors\Base\IProcessor;
 
 /**

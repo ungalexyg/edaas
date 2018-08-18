@@ -10,7 +10,7 @@
 namespace App\Processes\Traits;
 // use App\Enums\Channel;
 // use App\Enums\Process;
-use App\Exceptions\ProcessException;
+use App\Exceptions\Processors\ProcessException;
 
 
 
