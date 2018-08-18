@@ -2,7 +2,7 @@
 
 namespace App\Processes\Adapters\Base;
 
-use App\Exceptions\AdapterException;
+use App\Exceptions\Adapters\BaseAdapterException;
 
 
 /**
@@ -33,6 +33,14 @@ use App\Exceptions\AdapterException;
     protected $domain;
 
 
+    /**
+     * Fetched data
+     * 
+     * @var array
+     */
+    protected $fetch = [];
+
+
 	/**
 	 * Fetch adapter's targets
      * 
@@ -43,6 +51,10 @@ use App\Exceptions\AdapterException;
 
 	/**
 	 * Set URL
+     * 
+     * @notes
+     * $this->path should start with '/' this is the 1st slash aster the domain  
+     * e.g : $this->path = '/all-wholesale-products.html';
      * 
      * @param string|null $url
      * @return self
@@ -55,9 +67,7 @@ use App\Exceptions\AdapterException;
         }
         else 
         {
-            if(!$this->domain) throw new AdapterException(AdapterException::UNDEFINED_DOMAIN);
-
-            $this->path = ($this->path ? '/' . $this->path : '');
+            if(!$this->domain) throw new BaseAdapterException(BaseAdapterException::UNDEFINED_DOMAIN);
     
             $this->query = (!empty($this->query) ? '?' . http_build_query($this->query) : '');
     

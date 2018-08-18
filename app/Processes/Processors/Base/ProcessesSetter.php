@@ -5,7 +5,7 @@ namespace App\Processes\Processors\Base;
 use App\Models\Channel;
 use App\Models\Process;
 use Illuminate\Support\Carbon;
-use App\Exceptions\ProcessorSetterException;
+use App\Exceptions\Processors\ProcessorSetterException;
 
 
 /**

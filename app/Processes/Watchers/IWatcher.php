@@ -10,15 +10,7 @@ use App\Processes\Processors\Base\IProcess;
  */ 
 interface IWatcher extends IProcess 
 {
-
-    /**
-     * Handle process action
-     * 
-     * @return self
-     */
-	public function handle();
-
-
+    
     /**
      * Watch prospects
      * 

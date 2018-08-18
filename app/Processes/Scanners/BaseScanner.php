@@ -14,7 +14,6 @@ use App\Processes\Traits\HasAdapter;
  */ 
 abstract class BaseScanner implements IScanner 
 {
-
 	
 	/**
 	 * Use process traits
@@ -23,11 +22,11 @@ abstract class BaseScanner implements IScanner
 
 
     /**
-     * Handle process action
-	 * 
-	 * @return self
+     * Scan & fetch data from channel 
+     * 
+     * @return self
      */
-	abstract public function handle();
+	abstract public function scan();
 
 }
 

@@ -10,9 +10,9 @@ namespace App\Processes\Adapters\Base;
  {
 
 	/**
-	 * Locate initial prospect items
+	 * Fetch destenation
      * 
-     * @return mixed
+     * @return array
 	 */    
     public function fetch();
     

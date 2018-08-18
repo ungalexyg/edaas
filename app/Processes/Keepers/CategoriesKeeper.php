@@ -10,36 +10,30 @@ use App\Enums\Process;
  */ 
 class CategoriesKeeper extends BaseKeeper 
 {
-    
-    /**
-     * Handle process action
-     * 
-     * @return self
-     */
-    public function handle() 
+
+	/**
+	 * Store fresh scanned data in the storage
+	 * 
+	 * @return self
+	 */
+	public function store()
     {
-        $this->keep();
+        echo " Storing ... ";
 
         return $this;
     }
 
 
-    /**
-     * Watch prospects 
+	/**
+	 * Publish data from the storage to the public tables
+	 * 
+     *  TODO: methd not implemented
      * 
-     * @return self
-     */
-    public function keep() 
+	 * @return self
+	 */
+    public function publish() 
     {
-        echo "Keeping ...";
-
-       
-
-        $this->bag['got_scanned'] = $this->bag['scanned'];
-        $this->bag['keeped'] = 'keeped';
-        // [
-        //     $this->scanner->prop => $this->bag['scanned']
-        // ];
+        echo " Publishing ... ";
 
         return $this;
     }

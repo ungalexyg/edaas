@@ -25,11 +25,11 @@ class CategoriesScanner extends BaseScanner
      * 
      * @return self
      */
-    public function handle() 
+    public function scan() 
     {
         if($this->channel) 
         {
-            $scanned = $this->loadAdapter($this->channel)->adapter->fetch();
+            $this->bag[$this->process][$this->channel] = $this->loadAdapter($this->channel)->adapter->fetch();
         }
         else 
         {
@@ -37,12 +37,10 @@ class CategoriesScanner extends BaseScanner
 
             foreach($process->channels as $channel) 
             {    
-                $scanned = $this->loadAdapter($channel->key)->adapter->fetch();
+                $this->bag[$this->process][$channel->key] = $this->loadAdapter($channel->key)->adapter->fetch();
             }            
         }
         
-        $this->bag['scanned'][] = $scanned;
-
         return $this;
     }
 

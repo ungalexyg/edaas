@@ -10,20 +10,21 @@ use App\Processes\Processors\Base\IProcess;
  */ 
 interface IKeeper extends IProcess 
 {
-    /**
-     * Handle process action
-	 * 
-	 * @return self
-     */
-	public function handle();
-
-
+	
 	/**
-	 * Keep process data
+	 * Store fresh scanned data in the storage
 	 * 
 	 * @return self
 	 */
-	public function keep();
+	public function store();	
+	
+
+	/**
+	 * Publish data from the storage to the public tables
+	 * 
+	 * @return self
+	 */
+	public function publish();
 
 }
 

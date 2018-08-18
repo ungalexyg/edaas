@@ -13,13 +13,13 @@ namespace App\Processes\Processors\Base;
 use App\Enums\Channels;
 use App\Enums\Processes;
 use App\Processes\Traits\HasProcess;
-use App\Exceptions\ProcessException;
+use App\Exceptions\Processors\ProcessException;
 
 
 /**
- * Base Processor 
+ * Main Processor 
  */ 
-final class BaseProcessor  
+final class MainProcessor implements IMainProcessor  
 {
 
 	/**
@@ -31,7 +31,7 @@ final class BaseProcessor
 	/**
 	 * Run pre process operations
 	 * 
-	 * @param string @process
+	 * @param string $process
 	 * @param string|null $channel
 	 */
 	public function run($process, $channel=null) 
@@ -114,6 +114,17 @@ final class BaseProcessor
 
 		return $this;
 	}
+
+
+	/**
+	 * Perform specific action
+	 * 
+	 * @param string $action
+	 */
+	public function action($action) 
+	{
+		throw new ProcessException(ProcessException::METHOD_NOT_IMPLEMENTED);
+	}	
 }
 
 

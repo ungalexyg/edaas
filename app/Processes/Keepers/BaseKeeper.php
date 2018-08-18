@@ -8,9 +8,9 @@ use App\Processes\Traits\HasProcess;
 /**
  * Base Keeper
  * 
- * The Keeper Process organise & transform scanned raw data into stactured records
- * which will be used in the application.
- * This is the last point of the process which deals with data collection before insertion.
+ * The Keeper has 2 functions :
+ * 1) Organise & transform scanned raw data into stactured records which stored in the storage
+ * 2) Publish the stored data by syncing it from the storage to the published tables
  */ 
 abstract class BaseKeeper implements IKeeper 
 {
@@ -20,22 +20,21 @@ abstract class BaseKeeper implements IKeeper
 	 */
 	use HasProcess;
 
-
-    /**
-     * Handle process action
-	 * 
-	 * @return self
-     */
-	abstract public function handle();
-
-
+	
 	/**
-	 * Keep process data
+	 * Store fresh scanned data in the storage
 	 * 
 	 * @return self
 	 */
-	abstract public function keep();	
+	abstract public function store();	
 	
+
+	/**
+	 * Publish data from the storage to the public tables
+	 * 
+	 * @return self
+	 */
+	abstract public function publish();		
 }
 
 

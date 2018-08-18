@@ -40,9 +40,11 @@ class CategoriesProcessor implements IProcessor
 	 */
 	public function process() 
 	{
-		$this->scanner->pull()->handle()->push();
-		$this->keeper->pull()->handle()->push();
-		$this->watcher->pull()->handle()->push();
+		$this->scanner->pull()->scan()->push();
+		
+		$this->keeper->pull()->store()->publish()->push();
+		
+		$this->watcher->pull()->watch()->push();
 		
 		echo '<pre><hr />'; print_r($this->bag);
 	}

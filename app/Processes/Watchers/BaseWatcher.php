@@ -31,14 +31,6 @@ abstract class BaseWatcher implements IWatcher
 	use HasProcess;
 
 
-    /**
-     * Handle process action
-	 * 
-	 * @return self
-     */
-	abstract public function handle();
-
-
 	/**
 	 * Watch prospects
 	 * 

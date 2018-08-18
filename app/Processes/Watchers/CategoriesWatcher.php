@@ -11,19 +11,6 @@ use App\Enums\Process;
 class CategoriesWatcher extends BaseWatcher 
 {
 
-	/**
-	 * Handle process action
-	 * 
-	 * @return self
-	 */
-	public function handle() 
-	{   
-        $this->watch();
-        
-        return $this;
-	}
-
-
     /**
      * Watch prospects 
      * 
@@ -32,10 +19,6 @@ class CategoriesWatcher extends BaseWatcher
     public function watch() 
     {
         echo "Watching ...";
-        
-        $this->bag['watched'] = $this->bag['keeped'];
-
-        //$this->compare();
         
         return $this;
     }
