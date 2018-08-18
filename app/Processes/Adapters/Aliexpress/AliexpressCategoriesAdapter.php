@@ -33,7 +33,8 @@ use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
  * 
  * Handle Aliexpress categories operations
  */
- class AliexpressCategoriesAdapter extends BaseAliexpressAdapter {
+ class AliexpressCategoriesAdapter extends BaseAliexpressAdapter 
+ {
 
     /**
      * URL scheme

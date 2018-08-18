@@ -38,9 +38,9 @@
 
 /**
  * --------------------------------------------------------------------------
- *  Vendor Extension Referance 
+ *  Vendor Extension Reference 
  * --------------------------------------------------------------------------
- * Each Vendor Extension should have referance doc block like this one, with the following contents : 
+ * Each Vendor Extension should have reference doc block like this one, with the following contents : 
  * 
  * Extending vendor component
  * Extension src : /vendor/guzzlehttp/guzzle/src/Client.php

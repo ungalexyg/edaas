@@ -10,8 +10,8 @@ use App\Processes\Processors\Base\IProcessor;
  * 
  * Embed process related properties, utilities & referance to the processor instance in the using class
  */ 
-trait HasProcess {
-
+trait HasProcess 
+{
 
 	/**
 	 * Processor instance

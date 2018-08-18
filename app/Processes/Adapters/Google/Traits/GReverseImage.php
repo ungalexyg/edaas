@@ -34,9 +34,9 @@ use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
  * 
  * (properties prefix : GRIS)
  */
-trait GReverseImage {
+trait GReverseImage 
+{
 	
-
 	/**
 	 * Revenrse image search endpoint
 	 */

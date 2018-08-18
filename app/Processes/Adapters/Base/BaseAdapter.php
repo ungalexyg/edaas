@@ -8,7 +8,8 @@ use App\Exceptions\AdapterException;
 /**
  * Base Adapter
  */
- abstract class BaseAdapter implements IAdapter {
+ abstract class BaseAdapter implements IAdapter 
+ {
 
     /**
      * Adapter url

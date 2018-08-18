@@ -1,4 +1,5 @@
 <?php 
+
 namespace App\Processes\Watchers;
 
 use App\Processes\Processors\Base\IProcess;
@@ -7,7 +8,8 @@ use App\Processes\Processors\Base\IProcess;
 /**
  * Watcher Interface 
  */ 
-interface IWatcher extends IProcess {
+interface IWatcher extends IProcess 
+{
 
     /**
      * Handle process action

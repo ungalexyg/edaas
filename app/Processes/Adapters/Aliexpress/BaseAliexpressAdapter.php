@@ -1,10 +1,5 @@
 <?php 
 
-namespace App\Processes\Adapters\Aliexpress;
-
-use App\Enums\Channels;
-use App\Processes\Adapters\Base\BaseAdapter;
-
 /**
  * --------------------------------------------------------------------------
  *  TODO:
@@ -16,11 +11,18 @@ use App\Processes\Adapters\Base\BaseAdapter;
  * - products with X orders increased will be stored as 'Prospects' for forther treatment  
  */
 
+ 
+namespace App\Processes\Adapters\Aliexpress;
+
+use App\Enums\Channels;
+use App\Processes\Adapters\Base\BaseAdapter;
+
 
 /**
  * Base Aliexpress Adapter
  */
- abstract class BaseAliexpressAdapter extends BaseAdapter {
+ abstract class BaseAliexpressAdapter extends BaseAdapter 
+ {
 
 	/**
 	 * Channel adapter key

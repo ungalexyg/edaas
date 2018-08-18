@@ -1,15 +1,15 @@
 <?php 
+
 namespace App\Processes\Keepers;
+
 use App\Enums\Process;
+
 
 /**
  * Categories Keeper
  */ 
-class CategoriesKeeper extends BaseKeeper {
-
-
-    public $prop = 'CategoriesKeeper';
-
+class CategoriesKeeper extends BaseKeeper 
+{
     
     /**
      * Handle process action

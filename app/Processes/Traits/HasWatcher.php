@@ -1,24 +1,17 @@
 <?php 
-/**
- * --------------------------------------------------------------------------
- *  Has Watcher  
- * --------------------------------------------------------------------------
- * 
- * Embed Watcher instance to the using class
- */ 
-
+ 
 namespace App\Processes\Traits;
-// use App\Enums\Channel;
-// use App\Enums\Process;
-use App\Exceptions\ProcessException;
 
+use App\Exceptions\ProcessException;
 
 
 /**
  * Has Watcher Trait 
+ * 
+ * Embed Watcher instance to the using class
  */ 
-trait HasWatcher {
-
+trait HasWatcher 
+{
 
 	/**
 	 * Watcher instance

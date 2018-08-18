@@ -1,16 +1,5 @@
 <?php 
 
-/**
- * --------------------------------------------------------------------------
- *  Keeper 
- * --------------------------------------------------------------------------
- * 
- * The Keeper Process organise & transform scanned raw data into stactured records
- * which will be used in the application.
- * This is the last point of the process which deals with data collection before insertion.
- */ 
-
-
 namespace App\Processes\Keepers;
 
 use App\Processes\Traits\HasProcess;
@@ -18,9 +7,13 @@ use App\Processes\Traits\HasProcess;
 
 /**
  * Base Keeper
+ * 
+ * The Keeper Process organise & transform scanned raw data into stactured records
+ * which will be used in the application.
+ * This is the last point of the process which deals with data collection before insertion.
  */ 
-abstract class BaseKeeper implements IKeeper {
-
+abstract class BaseKeeper implements IKeeper 
+{
 
 	/**
 	 * Use process traits
@@ -42,6 +35,7 @@ abstract class BaseKeeper implements IKeeper {
 	 * @return self
 	 */
 	abstract public function keep();	
+	
 }
 
 

@@ -5,8 +5,8 @@ namespace App\Enums;
 /**
  * Base Enum
  */ 
-class BaseEnum  {
-
+class BaseEnum  
+{
     /**
      * Get class constants
      * 

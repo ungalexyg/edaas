@@ -19,7 +19,8 @@ use App\Exceptions\ProcessException;
 /**
  * Base Processor 
  */ 
-class BaseProcessor  {
+final class BaseProcessor  
+{
 
 	/**
 	 * Processes traits
@@ -35,8 +36,7 @@ class BaseProcessor  {
 	 */
 	public function run($process, $channel=null) 
 	{
-		$this
-			->setProcess($process)
+		$this->setProcess($process)
 				->setChannel($channel)
 					->setConfig()
 						->loadProcessor();

@@ -13,8 +13,8 @@ use App\Exceptions\ProcessorSetterException;
  * 
  * Handle Processor logistics.
  */ 
-class ProcessesSetter  {
-
+class ProcessesSetter  
+{
 	/**
 	 * Set channels processes
 	 * 

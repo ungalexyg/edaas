@@ -6,7 +6,8 @@ namespace App\Processes\Processors\Base;
 /**
  * Process Interface 
  */ 
-interface IProcess {
+interface IProcess 
+{
 
 	/**
 	 * Pull common process properties from the processor

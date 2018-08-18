@@ -7,9 +7,9 @@ use App\Processes\Processors\Base\IProcess;
 /**
  * Interface Scanner
  */ 
-interface IScanner extends IProcess {
-	
-
+interface IScanner extends IProcess 
+{
+    
     /**
      * Handle process action
      * 

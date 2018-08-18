@@ -12,7 +12,8 @@ use App\Processes\Traits\HasAdapter;
  * Locate raw data from assigned channels,  
  * then pass them to the Keeper for forther handling and storage. 
  */ 
-abstract class BaseScanner implements IScanner {
+abstract class BaseScanner implements IScanner 
+{
 
 	
 	/**

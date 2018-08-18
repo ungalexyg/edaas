@@ -9,9 +9,8 @@ use App\Enums\Processes;
 /**
  * Categories Scanner
  */ 
-class CategoriesScanner extends BaseScanner {
-
-    
+class CategoriesScanner extends BaseScanner 
+{
 
     /**
      * Handle process action

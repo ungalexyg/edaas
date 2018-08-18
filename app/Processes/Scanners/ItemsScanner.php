@@ -1,16 +1,4 @@
 <?php 
-/**
- * --------------------------------------------------------------------------
- *  Scanner
- * --------------------------------------------------------------------------
- * 
- * Locat raw data & "Prospect Items" from given "Prospects Channels", 
- * then pass them to the Keeper for forther handling and storage.
- * 
- * Prospects Channels :
- *  start with Ali
- */ 
-
 
 namespace App\Processes;
 
@@ -22,10 +10,18 @@ use App\Processes\Adapters\Google\GoogleAdapter;
 
 /**
  * Scanner Process 
+ * 
+ * Locat raw data & "Prospect Items" from given "Prospects Channels", 
+ * then pass them to the Keeper for forther handling and storage.
  */ 
-class ItemsScanner extends BaseProcess {
+class ItemsScanner extends BaseProcess 
+{
 
-
+    /**
+     * Img src 
+     * 
+     * @var string
+     */
     protected $img_src = "https://ae01.alicdn.com/kf/HTB1RrfMjCYTBKNjSZKbq6xJ8pXai/T-Shirt-Women-Summer-Short-Sleeve-V-Neck-t-shirt-Female-Cactus-Funny-Letter-Print-T.jpg";    
 
 

@@ -1,11 +1,8 @@
 <?php 
  /**
  * --------------------------------------------------------------------------
- *  Watcher
+ *  TODO:
  * --------------------------------------------------------------------------
- * 
- * The Watcher whatching the realized data, tracking, comparing & mark their performance according to set of conditions across mutiple channels.
- * 
  * TODO: write the conditions
  * 
  * TODO: 
@@ -22,8 +19,11 @@ use App\Processes\Traits\HasProcess;
 
 /**
  * Base Watcher
+ * 
+ * The Watcher whatching the realized data, tracking, comparing & mark their performance according to set of conditions across mutiple channels.
  */ 
-abstract class BaseWatcher implements IWatcher {
+abstract class BaseWatcher implements IWatcher 
+{
 
 	/**
 	 * Use process traits

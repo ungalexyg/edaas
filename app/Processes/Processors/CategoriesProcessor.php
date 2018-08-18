@@ -15,7 +15,8 @@ use App\Processes\Processors\Base\IProcessor;
  * 
  * Run categories processes
  */ 
-class CategoriesProcessor implements IProcessor {
+class CategoriesProcessor implements IProcessor 
+{
 
 	/**
 	 * Processes traits

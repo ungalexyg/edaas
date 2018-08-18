@@ -6,7 +6,8 @@ namespace App\Processes\Adapters\Base;
  /**
   * Adapter Interface
   */
- interface IAdapter {
+ interface IAdapter 
+ {
 
 	/**
 	 * Locate initial prospect items

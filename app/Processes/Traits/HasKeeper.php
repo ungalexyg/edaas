@@ -17,8 +17,8 @@ use App\Exceptions\ProcessException;
 /**
  * Has Keeper Trait 
  */ 
-trait HasKeeper {
-
+trait HasKeeper 
+{
 
 	/**
 	 * Keepr instance
@@ -45,5 +45,6 @@ trait HasKeeper {
 		$this->keeper->setProcessor($this);
 
 		return $this;
-	}		    
+	}		
+	    
 }

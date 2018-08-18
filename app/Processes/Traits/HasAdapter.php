@@ -10,7 +10,8 @@ use App\Exceptions\ProcessException;
  * 
  * Embed Adapter instance to the using class
  */ 
-trait HasAdapter {
+trait HasAdapter 
+{
 
 	/**
 	 * Adapter instance
@@ -39,4 +40,5 @@ trait HasAdapter {
 
 		return $this;
 	}		    
+
 }
