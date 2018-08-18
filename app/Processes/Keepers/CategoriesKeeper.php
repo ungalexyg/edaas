@@ -18,6 +18,8 @@ class CategoriesKeeper extends BaseKeeper
 	 */
 	public function store()
     {
+        // TODO: migrations ...
+        
         echo " Storing ... ";
 
         return $this;
