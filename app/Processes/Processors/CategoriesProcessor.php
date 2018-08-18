@@ -49,6 +49,3 @@ class CategoriesProcessor implements IProcessor
 		echo '<pre><hr />'; print_r($this->bag);
 	}
 }
-
-
-

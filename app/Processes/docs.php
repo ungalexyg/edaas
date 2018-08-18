@@ -14,6 +14,7 @@
  * Interfaces : 
  * 
  * - IProcess [pull(), push()]
+ *  -- IMainProcessor extends IProcess [run(), process()]
  *  -- IProcessor extends IProcess [load(), process()]
  *  -- IScaner extends IProcess [handle(), scan()]     
  *  -- IKeepr extends IProcess  [handle(), keep()]     

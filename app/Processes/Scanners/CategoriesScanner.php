@@ -33,7 +33,7 @@ class CategoriesScanner extends BaseScanner
         }
         else 
         {
-            $process = Process::matureChannels($this->process)->first(); // first() means to process, which should be single result for $this->process anyway
+            $process = Process::matureChannels($this->process)->first(); // 1st process should be single result for $this->process anyway
 
             foreach($process->channels as $channel) 
             {    
