@@ -13,7 +13,6 @@ use App\Exceptions\Processors\Keepers\CategoriesKeeperException;
  */ 
 class CategoriesKeeper extends BaseKeeper 
 {
-
 	/**
 	 * Store fresh scanned data in the storage
      *
@@ -86,7 +85,6 @@ class CategoriesKeeper extends BaseKeeper
 
         return $this;
     }
-
 }
 
 

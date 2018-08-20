@@ -25,6 +25,7 @@ namespace App\Processes\Adapters\Aliexpress;
 //use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
 use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
 use App\Lib\Vendor\Goutte\GoutteExtension as Spider;
+use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
 use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
 
 
@@ -37,7 +38,6 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
  */
  class AliexpressCategoriesAdapter extends BaseAliexpressAdapter 
  {
-
     /**
      * URL scheme
      * 
@@ -74,17 +74,24 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
 
         $crawler = $spider->request('GET', $this->url);    
 
-        $crawler->filter('h3.big-title.anchor1 > a')->each(function ($node) {
+        $crawler
+            ->filter('body .cg-main .item.util-clearfix')
+            ->each(function (Crawler $subcrawler) {
 
-            $url = $node->attr('href');
+                $subcrawler->filter('h3.big-title > a')->each(function($node){
 
-            $parsed = $this->parseUrl($url);
+                    //'ul.sub-item-cont'
 
-            $this->fetch[] = [
-                'title'                 => $node->text(),
-                'channel_category_id'   => $parsed['channel_category_id'],
-                'path'                  => $parsed['path'],
-            ];
+                    $parsed = $this->parseUrl($url);
+
+                    $this->fetch[] = [
+                        'title'                 => $node->text(),
+                        'channel_category_id'   => $parsed['channel_category_id'],
+                        'path'                  => $parsed['path'],
+                    ];
+
+                });
+
 
         }); 
         
@@ -124,7 +131,6 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
             'path' => $path,
         ];
     }
-
  }
 
 
