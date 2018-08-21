@@ -39,9 +39,10 @@ class CreateTableCategories extends Migration
                 $table->increments('id');
                 // if it's not organic category, the storage_category_id can be null
                 $table->unsignedInteger('storage_category_id')->nullable()->comment('reference to the corresponding storage record for Organic Categories - storage_categories.id');
-                $table->string('title')->nullable();
-                $table->string('path')->nullable();
-                $table->string('description')->nullable();
+                $table->unsignedInteger('parent_category_id')->nullable()->comment('parent category id');
+                $table->string('title', 1060)->nullable();
+                $table->string('description', 1060)->nullable();
+                $table->string('path',1060)->nullable();
                 $table->timestamps();
             });
         }

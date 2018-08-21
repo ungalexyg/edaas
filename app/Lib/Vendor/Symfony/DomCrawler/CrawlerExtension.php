@@ -11,14 +11,14 @@
  */ 
 namespace App\Lib\Vendor\Symfony\DomCrawler;
 
-use Symfony\Component\DomCrawler\Crawler as BaseCrawler;
+use Symfony\Component\DomCrawler\Crawler as CoreCrawler;
 
 
 /**
  * DomCrawler extension.
  * 
  */
-class CrawlerExtension extends BaseCrawler
+class CrawlerExtension extends CoreCrawler
 {
     
 }

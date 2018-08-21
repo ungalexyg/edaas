@@ -28,10 +28,11 @@ class CreateTableStorageCategories extends Migration
                 $table->increments('id');
                 $table->unsignedInteger('channel_id');
                 $table->unsignedInteger('category_id')->nullable()->comment('Some storage records might not be assigned to category '); 
-                $table->string('title')->nullable();
-                $table->string('path')->nullable();
-                $table->string('description')->nullable();
+                $table->string('title', 1060)->nullable();
+                $table->string('path', 1060)->nullable();
+                $table->string('description', 1060)->nullable();
                 $table->unsignedInteger('channel_category_id')->comment('The external category id in the channel');
+                $table->unsignedInteger('parent_channel_category_id')->comment('The external parent category id in the channel');
                 $table->timestamps();
 
                 // the storage_categories serve as meta & resource reference to the categories records

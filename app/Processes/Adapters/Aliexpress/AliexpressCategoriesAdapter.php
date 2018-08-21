@@ -25,9 +25,9 @@ namespace App\Processes\Adapters\Aliexpress;
 //use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
 use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
 use App\Lib\Vendor\Goutte\GoutteExtension as Spider;
-use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
 use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
-
+use Symfony\Component\DomCrawler\Crawler as CoreCrawler;
+use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
 
 
 
@@ -56,6 +56,13 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
      */
     protected $path = '/all-wholesale-products.html';
 
+    // Argument 1 passed to 
+    // App\Processes\Adapters\Aliexpress\AliexpressCategoriesAdapter::App\Processes\Adapters\Aliexpress\{closure}() 
+    // must be an instance of App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension, 
+    // instance of 
+    // Symfony\Component\DomCrawler\Crawler given, called in 
+    // /Users/ungalexy/code/valet/edaas/vendor/symfony/dom-crawler/Crawler.php on line 368
+
 
 	/**
 	 * Fetch destenation
@@ -74,26 +81,43 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
 
         $crawler = $spider->request('GET', $this->url);    
 
-        $crawler
-            ->filter('body .cg-main .item.util-clearfix')
-            ->each(function (Crawler $subcrawler) {
+        $crawler->filter('body .cg-main .item.util-clearfix')->each(function (CoreCrawler $subcrawler) {
 
-                $subcrawler->filter('h3.big-title > a')->each(function($node){
+            $subcrawler->filter('h3.big-title > a')->each(function($node) use($subcrawler) {
 
-                    //'ul.sub-item-cont'
+                $url = $node->attr('href'); 
+
+                $parsed = $this->parseUrl($url);
+                
+                $parent_channel_category_id = $parsed['channel_category_id'];
+
+                $this->fetch[] = [
+                    'title'                 => $node->text(),
+                    'channel_category_id'   => $parent_channel_category_id,
+                    'parent_channel_category_id' => 0,
+                    'path'                  => $parsed['path'],
+                ];
+
+                $subcrawler->filter('ul.sub-item-cont > li > a')->each(function($node) use($parent_channel_category_id) {
+
+                    $url = $node->attr('href'); 
 
                     $parsed = $this->parseUrl($url);
+                    
+                    $channel_category_id = $parsed['channel_category_id'];
 
                     $this->fetch[] = [
-                        'title'                 => $node->text(),
-                        'channel_category_id'   => $parsed['channel_category_id'],
-                        'path'                  => $parsed['path'],
+                        'title'                         => $node->text(),
+                        'channel_category_id'           => $channel_category_id,
+                        'parent_channel_category_id'    => $parent_channel_category_id,
+                        'path'                          => $parsed['path'],
                     ];
 
-                });
-
-
+                });  
+            });
         }); 
+
+        echo '<pre>'; print_r($this->fetch); die;
         
         return $this->fetch;
     }
