@@ -2,50 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Test;
+use App\Enums\Processes;
 use Illuminate\Http\Request;
-use App\Lib\Embed\Embed;
-use App\Processes\Scanner;
+use App\Processes\Processors\Base\MainProcessor as Processor;
+
+
 
 
 class DevController extends Controller
 {
 
-    /**
-     * Example google custom search
-     */
-    public function search()
+
+    ########################################
+    # Processes
+    ########################################
+
+    public function categories() 
     {
-        $res = app(Scanner::class)->gcseSearch("Baby Groot Flowerpot");
         
-        echo $res->getBody();
-    }
+        //(new Processor(Process::CATEGORIES))->process();
 
-    /**
-     * Example reverse image search
-     */
-    public function imageSearch()
-    {
-        $img_src_url = "https://ae01.alicdn.com/kf/HTB1RrfMjCYTBKNjSZKbq6xJ8pXai/T-Shirt-Women-Summer-Short-Sleeve-V-Neck-t-shirt-Female-Cactus-Funny-Letter-Print-T.jpg";
+        //(new CategoriesScanner)->process();
 
-        $results = app(Scanner::class)->grisSearch($img_src_url);
-        
-        dd($results);
+        (new Processor)->run(Processes::CATEGORIES);
+
+    
     }
 
 
-    /**
-     * Test mongo
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function mongo()
-    {
-        $data = Test::all();
-        echo '<pre>';
-        var_dump($data[0]->key);
-        die;
-    }
+
+
 
 
    

@@ -19,3 +19,12 @@ Route::get('/mongo', 'DevController@mongo');
 
 Route::get('/embed', 'DevController@embed');
 
+
+
+Route::get('/categories', 'DevController@categories');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
