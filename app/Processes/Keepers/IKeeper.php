@@ -2,6 +2,7 @@
 
 namespace App\Processes\Keepers;
 
+use App\Models\StorageCategory;
 use App\Processes\Processors\Base\IProcess;
 
 
@@ -24,7 +25,7 @@ interface IKeeper extends IProcess
 	 * 
 	 * @return self
 	 */
-	public function publish();
+	public static function publish(StorageCategory $storageCategory);
 
 }
 

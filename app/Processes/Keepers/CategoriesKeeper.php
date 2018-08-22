@@ -54,9 +54,7 @@ class CategoriesKeeper extends BaseKeeper
                 unset($category_data['channel_category_id']); // adjustment for updateOrCreate
 
                 $category_data['channel_id'] = $channel->id;
-                
-                //$category_data['confirmed'] = 0;
-                
+                                
                 // if there's a StorageCategory with the given channel_category_id, set the rest of the data to the given $category_data, otherwise create it.
                 StorageCategory::updateOrCreate(['channel_category_id' => $channel_category_id], $category_data);
             }

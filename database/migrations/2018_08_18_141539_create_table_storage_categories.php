@@ -27,14 +27,14 @@ class CreateTableStorageCategories extends Migration
             {
                 $table->increments('id');
                 $table->unsignedInteger('channel_id');
-                $table->unsignedInteger('category_id')->nullable()->comment('Some storage records might not be assigned to category '); 
+                $table->unsignedInteger('category_id')->nullable()->comment('Some storage records might not be assigned to category'); 
                 $table->string('title', 1060)->nullable();
                 $table->string('path', 1060)->nullable();
                 $table->string('description', 1060)->nullable();
+                $table->unsignedTinyInteger('confirmed')->default(0)->comment('If the storage category confirmed for publishing');
                 $table->unsignedInteger('channel_category_id')->comment('The external category id in the channel');
                 $table->unsignedInteger('parent_channel_category_id')->comment('The external parent category id in the channel');
                 $table->timestamps();
-
                 // the storage_categories serve as meta & resource reference to the categories records
                 // no need to cascade storages, the storage record can be deleted and the category can stay published 
                 // and if the categories added manually, they can't be cascaded.                

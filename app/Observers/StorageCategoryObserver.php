@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\StorageCategory;
+use Illuminate\Support\Facades\Log;
 use App\Processes\Keepers\CategoriesKeeper;
 
 
@@ -19,27 +20,33 @@ class StorageCategoryObserver
      */
     public function created(StorageCategory $storageCategory)
     {
-        // Mail to admin: new categories added to storage, visit it for confirmation...
+        Log::channel('observers')->info('observed created storageCategory', [
+            'location' => __METHOD__ .':'.__LINE__ , 
+            '$storageCategory' => $storageCategory->getAttributes()
+        ]);
 
-        //CategoriesKeeper::publish($storageCategory);
+        CategoriesKeeper::publish($storageCategory);
     }
 
     /**
      * Handle the storage category "updated" event.
-     *
-     * //TODO: hande confirmation trigger,
-     * if $storageCategory->confiremd, update category ... 
      * 
+     * TODO: $storageCategory->confirmed logic ...
      * 
      * @param  \App\StorageCategory  $storageCategory
      * @return void
      */
     public function updated(StorageCategory $storageCategory)
     {
-        //if($storageCategory->confiremd) 
-        //{
+        Log::channel('observers')->info('observed updated storageCategory', [
+            'location' => __METHOD__ .':'.__LINE__ , 
+            '$storageCategory' => $storageCategory->getAttributes()
+        ]);
+
+        // if($storageCategory->confirmed) 
+        // {
             CategoriesKeeper::publish($storageCategory);
-        //}
+        // }
     }
 
     /**

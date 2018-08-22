@@ -4,6 +4,7 @@ namespace App\Processes\Processors;
 
 //use App\Exceptions\ProcessException;
 use App\Processes\Traits\HasKeeper;
+use Illuminate\Support\Facades\Log;
 use App\Processes\Traits\HasProcess;
 use App\Processes\Traits\HasScanner;
 use App\Processes\Traits\HasWatcher;
@@ -21,7 +22,7 @@ class CategoriesProcessor implements IProcessor
 	/**
 	 * Processes traits
 	 */
-	use HasProcess, HasScanner, HasKeeper, HasWatcher;
+	use HasProcess, HasScanner, HasKeeper;
 
 
 	/**
@@ -32,23 +33,21 @@ class CategoriesProcessor implements IProcessor
 	public function load() 
 	{	
 		return $this->loadScanner()->loadKeeper();
-		//->loadWatcher(); 
 	}
 
 
 	/**
 	 * Manage the process
 	 * 
-	 * TODO: if the bag is empty, exception + report
-	 * 
+	 * @return void
 	 */
-	public function process() 
+	public function process() 	
 	{
 		$this->scanner->pull()->scan()->push();
 		
-		$this->keeper->pull()->store()->publish()->push();
+		$this->keeper->pull()->store();
 		
-		//$this->watcher->pull()->watch()->push();
+        Log::channel('processes')->info('process completed', ['location' => __METHOD__ .':'.__LINE__ ]);
 		
 		echo '<pre><hr />'; print_r($this->bag);
 	}

@@ -23,11 +23,12 @@
 namespace App\Processes\Adapters\Aliexpress;
 
 //use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
+use Illuminate\Support\Facades\Log;
 use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
 use App\Lib\Vendor\Goutte\GoutteExtension as Spider;
-use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
 use Symfony\Component\DomCrawler\Crawler as CoreCrawler;
 use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
+use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
 
 
 
@@ -112,13 +113,21 @@ use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
                         'channel_category_id'           => $channel_category_id,
                         'parent_channel_category_id'    => $parent_channel_category_id,
                     ];
-
                 });  
             });
         }); 
+                
 
-        echo '<pre>'; print_r($this->fetch); die;
-        
+        if(empty($this->fetch)) 
+        {
+            Log::channel('adapters')->info('returning empty fetch :/ ', ['location' => __METHOD__ .':'.__LINE__ , '$this->fetch' => $this->fetch]);
+        }
+        else 
+        {
+            Log::channel('adapters')->info('successful categories fetch!', ['location' => __METHOD__ .':'.__LINE__ ]);
+        }
+            
+    
         return $this->fetch;
     }
 

@@ -6,6 +6,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Log levels
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    // Log::emergency($message);
+    // Log::alert($message);
+    // Log::critical($message);
+    // Log::error($message);
+    // Log::warning($message);
+    // Log::notice($message);
+    // Log::info($message);
+    // Log::debug($message);
+
+    /*
+    |--------------------------------------------------------------------------
     | Default Log Channel
     |--------------------------------------------------------------------------
     |
@@ -33,11 +49,70 @@ return [
     */
 
     'channels' => [
+
+
+        ####################################
+        # custom logs
+        ####################################        
+
+
+        /**
+         * Processes log
+         * 
+         * Log::channel('processes')->info('Something happened!', ['location' => __METHOD__ .':'.__LINE__]);
+         */
+        'processes' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/processes/process'),
+            'days' => 14, // after how many the log days theoldest will be deleted
+            'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
+        ],
+
+
+        /**
+         * Adapters log
+         * 
+         * Log::channel('adapters')->info('Something happened!', ['location' => __METHOD__ .':'.__LINE__]);
+         */
+        'adapters' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/processes/adapters'),
+            'days' => 14, // after how many the log days theoldest will be deleted
+            'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
+        ],        
+        
+
+        /**
+         * Adapters log
+         * 
+         * Log::channel('adapters')->info('Something happened!', ['location' => __METHOD__ .':'.__LINE__]);
+         */
+        'observers' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/processes/observers'),
+            'days' => 14, // after how many the log days theoldest will be deleted
+            'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
+        ],   
+
+        
+
+        ####################################
+        # Default sample logs
+        ####################################
+
+
+        /**
+         * Sample stack
+         */
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],
         ],
 
+
+        /**
+         * Available drivers
+         */
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),

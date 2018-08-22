@@ -2,6 +2,7 @@
 
 namespace App\Processes\Keepers;
 
+use App\Models\StorageCategory;
 use App\Processes\Traits\HasProcess;
 
 
@@ -34,7 +35,7 @@ abstract class BaseKeeper implements IKeeper
 	 * 
 	 * @return self
 	 */
-	abstract public function publish();		
+	abstract public static function publish(StorageCategory $storageCategory);		
 }
 
 
