@@ -4,7 +4,12 @@ namespace App\Providers;
 
 use App\Models\StorageCategory;
 use Illuminate\Support\ServiceProvider;
+use App\Observers\StorageCategoryObserver;
 
+
+/**
+ * Observer service provider
+ */
 class ObserverServiceProvider extends ServiceProvider
 {
     /**
@@ -17,13 +22,13 @@ class ObserverServiceProvider extends ServiceProvider
         StorageCategory::observe(StorageCategoryObserver::class);
     }
 
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
-    }
+    // /**
+    //  * Register any application services.
+    //  *
+    //  * @return void
+    //  */
+    // public function register()
+    // {
+    //     //
+    // }
 }
