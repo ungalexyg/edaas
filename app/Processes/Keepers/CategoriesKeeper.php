@@ -25,11 +25,13 @@ class CategoriesKeeper extends BaseKeeper
      *               [0] => Array
      *                   (
      *                       [title] => Women's Clothing & Accessories
-     *                       [channel_category_id] => 100003109
      *                       [path] => /women-clothing-accessories.html
+     *                       [channel_category_id] => 100003109
+     *                       [parent_channel_category_id] => 100003222
      *                   )
 	 * 
-	 * @return self
+	 * @see App\Observers\StorageCategoryObserver
+     * @return self
 	 */
 	public function store()
     {
@@ -53,8 +55,10 @@ class CategoriesKeeper extends BaseKeeper
 
                 $category_data['channel_id'] = $channel->id;
                 
+                //$category_data['confirmed'] = 0;
+                
                 // if there's a StorageCategory with the given channel_category_id, set the rest of the data to the given $category_data, otherwise create it.
-                $storage_category = StorageCategory::updateOrCreate(['channel_category_id' => $channel_category_id], $category_data);
+                StorageCategory::updateOrCreate(['channel_category_id' => $channel_category_id], $category_data);
             }
         }
 
@@ -65,25 +69,17 @@ class CategoriesKeeper extends BaseKeeper
 	/**
 	 * Publish data from the storage to the public tables
 	 * 
-	 * @return self
+     * @see App\Observers\StorageCategoryObserver
+     * @param StorageCategory $storage_category
+	 * @return void
 	 */
-    public function publish() 
+    public static function publish(StorageCategory $storage_category) 
     {
-        foreach($this->channels as $channel) 
-        {
-            $storages = StorageCategory::where('channel_id', $channel->id)->get();
-
-            foreach($storages as $storage_category) 
-            {
-                // if there's a Category with the given storage_category_id, set the rest of the data to the 2nd given array, otherwise create it.
-                $category = Category::updateOrCreate(
-                    ['storage_category_id' => $storage_category->id], 
-                    ['title' => $storage_category->title, 'description' => $storage_category->description]
-                );
-            }
-        }
-
-        return $this;
+        // if there's a Category with the given storage_category_id, set the rest of the data to the 2nd given array, otherwise create it.
+        Category::updateOrCreate(
+            ['storage_category_id' => $storage_category->id], 
+            ['title' => $storage_category->title, 'description' => $storage_category->description]
+        );
     }
 }
 

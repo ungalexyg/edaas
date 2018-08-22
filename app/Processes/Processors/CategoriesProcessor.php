@@ -31,7 +31,8 @@ class CategoriesProcessor implements IProcessor
 	 */	
 	public function load() 
 	{	
-		return $this->loadScanner()->loadKeeper()->loadWatcher(); 
+		return $this->loadScanner()->loadKeeper();
+		//->loadWatcher(); 
 	}
 
 
@@ -47,7 +48,7 @@ class CategoriesProcessor implements IProcessor
 		
 		$this->keeper->pull()->store()->publish()->push();
 		
-		$this->watcher->pull()->watch()->push();
+		//$this->watcher->pull()->watch()->push();
 		
 		echo '<pre><hr />'; print_r($this->bag);
 	}

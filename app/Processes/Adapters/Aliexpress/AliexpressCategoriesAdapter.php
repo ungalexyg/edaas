@@ -92,10 +92,10 @@ use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
                 $parent_channel_category_id = $parsed['channel_category_id'];
 
                 $this->fetch[] = [
-                    'title'                 => $node->text(),
-                    'channel_category_id'   => $parent_channel_category_id,
-                    'parent_channel_category_id' => 0,
-                    'path'                  => $parsed['path'],
+                    'title'                         => $node->text(),
+                    'path'                          => $parsed['path'],
+                    'channel_category_id'           => $parent_channel_category_id,
+                    'parent_channel_category_id'    => 0,
                 ];
 
                 $subcrawler->filter('ul.sub-item-cont > li > a')->each(function($node) use($parent_channel_category_id) {
@@ -108,9 +108,9 @@ use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
 
                     $this->fetch[] = [
                         'title'                         => $node->text(),
+                        'path'                          => $parsed['path'],
                         'channel_category_id'           => $channel_category_id,
                         'parent_channel_category_id'    => $parent_channel_category_id,
-                        'path'                          => $parsed['path'],
                     ];
 
                 });  
@@ -151,8 +151,8 @@ use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
 
         // return
         return [
-            'channel_category_id' => intval($category_id),
             'path' => $path,
+            'channel_category_id' => intval($category_id),
         ];
     }
  }
