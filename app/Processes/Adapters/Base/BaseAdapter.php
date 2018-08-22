@@ -2,23 +2,81 @@
 
 namespace App\Processes\Adapters\Base;
 
+use App\Exceptions\Adapters\BaseAdapterException;
+
 
 /**
- * --------------------------------------------------------------------------
- *  TODO:
- * --------------------------------------------------------------------------
- * 
+ * Base Adapter
  */
- abstract class BaseAdapter implements IAdapter {
+ abstract class BaseAdapter implements IAdapter 
+ {
+
+    /**
+     * Adapter url
+     */
+    protected $url;
+
+
+    /**
+     * URL scheme
+     * 
+     * @var string
+     */
+    protected $scheme = 'http';
+
+
+    /**
+     * URL domain
+     * 
+     * @var string
+     */
+    protected $domain;
+
+
+    /**
+     * Fetched data
+     * 
+     * @var array
+     */
+    protected $fetch = [];
 
 
 	/**
-	 * Scan Prospect Items in given channel
+	 * Fetch adapter's targets
      * 
      * @return mixed
 	 */        
-    abstract public function ScanProspects(); 
+    abstract public function fetch(); 
 
+
+	/**
+	 * Set URL
+     * 
+     * @notes
+     * $this->path should start with '/' this is the 1st slash aster the domain  
+     * e.g : $this->path = '/all-wholesale-products.html';
+     * 
+     * @param string|null $url
+     * @return self
+	 */  
+    public function setUrl($url=null) 
+    {
+        if($url) 
+        {
+            $this->url = $url;
+        }
+        else 
+        {
+            if(!$this->domain) throw new BaseAdapterException(BaseAdapterException::UNDEFINED_DOMAIN);
+    
+            $this->query = (!empty($this->query) ? '?' . http_build_query($this->query) : '');
+    
+            $this->url = $this->scheme . '://' . $this->domain . $this->path . $this->query;
+        }
+
+        return $this;
+    }
+    
  }
 
 

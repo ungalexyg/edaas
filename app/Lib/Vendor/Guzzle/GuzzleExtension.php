@@ -13,7 +13,9 @@
  */
 
 namespace App\Lib\Vendor\Guzzle;
+
 use GuzzleHttp\Client as Guzzle;
+
 
 /**
  * App Guzzle Client. 

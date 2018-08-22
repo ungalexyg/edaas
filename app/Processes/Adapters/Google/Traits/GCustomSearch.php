@@ -64,9 +64,8 @@ use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
  * 
  * (properties prefix : gcse)
  */
-trait GCustomSearch {
-
-
+trait GCustomSearch 
+{
 	/**
 	 * GCSE API key
 	 */		

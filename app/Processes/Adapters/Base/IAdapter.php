@@ -3,28 +3,27 @@
 namespace App\Processes\Adapters\Base;
 
 
-/**
- * --------------------------------------------------------------------------
- *  TODO:
- * --------------------------------------------------------------------------
- * 
- */
- interface IAdapter {
+ /**
+  * Adapter Interface
+  */
+ interface IAdapter 
+ {
 
 	/**
-	 * Locate initial prospect items
+	 * Fetch destenation
      * 
-     * @return mixed
+     * @return array
 	 */    
-    public function LocateProspects(); 
-
-
+    public function fetch();
+    
+    
 	/**
-	 * Watch prospect items performance
+	 * Set URL
      * 
-     * @return mixed
-	 */    
-    public function WatchProspects();     
+     * @param string|null $url
+     * @return self
+	 */  
+    public function setUrl($url=null) ; 
 
  }
 
