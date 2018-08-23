@@ -18,14 +18,12 @@ class StorageCategoryObserver
      * @param  \App\StorageCategory  $storageCategory
      * @return void
      */
-    public function created(StorageCategory $storageCategory)
+    public function created(StorageCategory $storage_category)
     {
         Log::channel('observers')->info('observed created storageCategory', [
             'location' => __METHOD__ .':'.__LINE__ , 
-            '$storageCategory' => $storageCategory->getAttributes()
+            '$storageCategory' => $storage_category->getAttributes()
         ]);
-
-        CategoriesKeeper::publish($storageCategory);
     }
 
     /**
@@ -36,16 +34,16 @@ class StorageCategoryObserver
      * @param  \App\StorageCategory  $storageCategory
      * @return void
      */
-    public function updated(StorageCategory $storageCategory)
+    public function updated(StorageCategory $storage_category)
     {
         Log::channel('observers')->info('observed updated storageCategory', [
             'location' => __METHOD__ .':'.__LINE__ , 
-            '$storageCategory' => $storageCategory->getAttributes()
+            '$storageCategory' => $storage_category->getAttributes()
         ]);
 
         // if($storageCategory->confirmed) 
         // {
-            CategoriesKeeper::publish($storageCategory);
+            //CategoriesKeeper::publish($storageCategory);
         // }
     }
 
@@ -55,7 +53,7 @@ class StorageCategoryObserver
      * @param  \App\StorageCategory  $storageCategory
      * @return void
      */
-    public function deleted(StorageCategory $storageCategory)
+    public function deleted(StorageCategory $storage_category)
     {
         //
     }
