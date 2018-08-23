@@ -5,6 +5,7 @@ namespace App\Processes\Keepers;
 use App\Models\Channel;
 use App\Models\Category;
 use App\Models\StorageCategory;
+use Illuminate\Support\Facades\Log;
 use App\Exceptions\Processors\Keepers\CategoriesKeeperException;
 
 
@@ -56,9 +57,21 @@ class CategoriesKeeper extends BaseKeeper
                 $category_data['channel_id'] = $channel->id;
                                 
                 // if there's a StorageCategory with the given channel_category_id, set the rest of the data to the given $category_data, otherwise create it.
-                StorageCategory::updateOrCreate(['channel_category_id' => $channel_category_id], $category_data);
+                $storage_category = StorageCategory::updateOrCreate(['channel_category_id' => $channel_category_id], $category_data);
+
+                if(($this->config['auto_publish'] ?? false)) 
+                {
+                    static::publish($storage_category);
+                }
             }
         }
+
+        Log::channel('keepers')->info('completed store categories', ['location' => __METHOD__ .':'.__LINE__]);
+
+        if(($this->config['auto_publish'] ?? false)) 
+        {
+            static::publishLinkParents();
+        }        
 
         return $this;
     }
@@ -69,12 +82,12 @@ class CategoriesKeeper extends BaseKeeper
 	 * 
      * @see App\Observers\StorageCategoryObserver
      * @param StorageCategory $storage_category
-	 * @return void
+	 * @return Category $category // the published category
 	 */
     public static function publish(StorageCategory $storage_category) 
     {
         // if there's a Category with the given storage_category_id, set the rest of the data to the 2nd given array, otherwise create it.
-        Category::updateOrCreate(
+        $category = Category::updateOrCreate(
             [
                 'storage_category_id' => $storage_category->id
             ], [
@@ -82,6 +95,56 @@ class CategoriesKeeper extends BaseKeeper
                 'description' => $storage_category->description
             ]
         );
+
+        // link the fresh category to the storage_category 
+        $storage_category->category_id = $category->id;
+       
+        $storage_category->save();
+
+        return $category;
+    }
+
+
+    /**
+     * Link published cateogires parents 
+     * based on channel's hirarchy in storage category
+     * 
+     * // TODO: consider channel_id if multiple channels involved
+     * 
+     * 
+     * @return void
+     */
+    public static function publishLinkParents() 
+    {
+        // get categoies where there is storage link but the parent category not set yet
+        $categories = Category::where('storage_category_id', '!=', null)->where('parent_category_id', '=', null)->get();
+
+        foreach($categories as $category) 
+        {
+            // find the storage category record with the channel parent
+            $storage_category = StorageCategory::with('parent')->find($category->storage_category_id);
+
+            // if it has a parent
+            if(isset($storage_category->parent->id)) 
+            {
+                $parent_category = Category::where('storage_category_id', '=', $storage_category->parent->id)->first();
+
+                if(isset($parent_category->id)) 
+                {
+                    $category->parent_category_id = $parent_category->id;
+    
+                    $category->save();
+                }
+            }
+            elseif($storage_category->parent_channel_category_id == 0) // if the storage record is for channel parent category
+            {
+                $category->parent_category_id = 0; // update the published category also as parent category
+    
+                $category->save();                
+            }
+        }  
+        
+        Log::channel('keepers')->info('completed publishLinkParents', ['location' => __METHOD__ .':'.__LINE__]);        
     }
 }
 

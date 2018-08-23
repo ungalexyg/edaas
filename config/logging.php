@@ -56,6 +56,12 @@ return [
         ####################################        
 
 
+        // TODO:L 
+
+        // split logs per process
+        //'path' => storage_path('logs/processes/categories/processor'),
+        //'path' => storage_path('logs/processes/items/scanner'),
+
         /**
          * Processes log
          * 
@@ -95,6 +101,18 @@ return [
         ],   
 
         
+        /**
+         * Keepers log
+         * 
+         * Log::channel('keepers')->info('Something happened!', ['location' => __METHOD__ .':'.__LINE__]);
+         */
+        'keepers' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/processes/keepers'),
+            'days' => 14, // after how many the log days theoldest will be deleted
+            'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
+        ],   
+
 
         ####################################
         # Default sample logs

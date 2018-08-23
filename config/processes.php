@@ -92,6 +92,9 @@ return [
 
             // how many from the 'mature' process_channels should be processed in each process ?            
             'limit_channels' => 2, 
+
+            // publish fetched storage_category records automatically to the public category table ?
+            'auto_publish' => true,             
         ] 
     ],
 
