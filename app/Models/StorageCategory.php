@@ -52,4 +52,30 @@ class StorageCategory extends BaseModel
         return $this->hasOne(Category::class);
     }
     
+
+    /**
+     * Get parent category (as defined in the channel) 
+     */
+    public function parent() 
+    {
+        return $this->belongsTo(StorageCategory::class, 
+            'parent_channel_category_id',  // use this fk from curr record
+            'channel_category_id' // to find parent with the same value in this key
+        );
+    }
+
+    
+    /**
+     * Get channel's category childrens (as defined in the channel) 
+     */    
+    public function children() 
+    {
+        return $this->hasMany(StorageCategory::class, 
+            'parent_channel_category_id',  // all the children have this fk
+            'channel_category_id' // with the value that curr reord has in this local key
+        );        
+    }    
 }
+
+
+

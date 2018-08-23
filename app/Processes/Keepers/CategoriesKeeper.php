@@ -75,8 +75,12 @@ class CategoriesKeeper extends BaseKeeper
     {
         // if there's a Category with the given storage_category_id, set the rest of the data to the 2nd given array, otherwise create it.
         Category::updateOrCreate(
-            ['storage_category_id' => $storage_category->id], 
-            ['title' => $storage_category->title, 'description' => $storage_category->description]
+            [
+                'storage_category_id' => $storage_category->id
+            ], [
+                'title' => $storage_category->title, 
+                'description' => $storage_category->description
+            ]
         );
     }
 }

@@ -42,4 +42,22 @@ class Category extends Model
     {
         return $this->hasOne(StorageCategory::class);
     }
+
+
+    /**
+     * Get parent category 
+     */
+    public function parent() 
+    {
+        return $this->belongsTo(StorageCategory::class, 'parent_category_id');
+    }
+
+    
+    /**
+     * Get category childrens 
+     */    
+    public function children() 
+    {
+        return $this->hasMany(StorageCategory::class, 'parent_category_id', 'id');        
+    }       
 }
