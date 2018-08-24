@@ -15,7 +15,7 @@ class ChannelsProcessesSeeder extends Seeder
      */
     public function run()
     {
-        (new ProcessesSetter)->channelsProcesses(); 
+        (new ProcessesSetter)->setProcessesChannels(); 
     }
 }
 

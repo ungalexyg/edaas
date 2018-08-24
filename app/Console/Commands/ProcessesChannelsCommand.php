@@ -3,9 +3,14 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Processes\Base\ProcessorSetter;
+use App\Processes\Processors\Base\ProcessesSetter;
 
-class ProcessesChannels extends Command
+
+
+/**
+ * Processes Channels Command
+ */
+class ProcessesChannelsCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -38,6 +43,6 @@ class ProcessesChannels extends Command
      */
     public function handle()
     {
-        (new ProcessorSetter)->channelsProcesses(); 
+        (new ProcessesSetter)->setProcessesChannels(); 
     }
 }

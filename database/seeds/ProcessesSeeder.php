@@ -4,9 +4,12 @@ use Illuminate\Database\Seeder;
 
 use App\Models\Process;
 
+
+/**
+ * Processes Seeder
+ */
 class ProcessesSeeder extends Seeder
 {
-    
     /**
      * Run the database seeds.
      *
@@ -18,7 +21,7 @@ class ProcessesSeeder extends Seeder
 
         foreach($seeds as  $key => $seed) 
         {
-            $process = Process::updateOrCreate(['key' => $key], $seed);
+            Process::updateOrCreate(['key' => $key], $seed);
         }
     }
 }

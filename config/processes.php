@@ -23,13 +23,13 @@ return [
      */    
     'processes' => [
 
-        Processes::ITEMS => [
-            'name'          => 'Items',
-            'description'   => 'Scan items in channel',      
-        ],
         Processes::CATEGORIES => [
             'name'          => 'Categories',
             'description'   => 'Scan categories in channel',       
+        ],        
+        Processes::ITEMS => [
+            'name'          => 'Items',
+            'description'   => 'Scan items in channel',      
         ]
     ],
 
@@ -39,6 +39,11 @@ return [
      */
     'channels' => [
 
+        Channels::ALIEXPRESS => [
+            'domain'        => 'aliexpress.com',
+            'name'          => 'Aliexpress',
+            'description'   => 'The Aliexpress marketplace',            
+        ],         
         Channels::AMAZON     => [
             'domain'        => 'amazon.com',
             'name'          => 'Amazon',
@@ -48,32 +53,41 @@ return [
             'domain'        => 'ebay.com',
             'name'          => 'Ebay',
             'description'   => 'The Ebay marketplace',            
-        ],
-        Channels::ALIEXPRESS => [
-            'domain'        => 'aliexpress.com',
-            'name'          => 'Aliexpress',
-            'description'   => 'The Aliexpress marketplace',            
-        ]          
+        ]
     ],
 
 
     /**
      * Enable processes for each channel
      */
-    'channels_processes' => [
+    'processes_channels' => [
 
-        Channels::ALIEXPRESS => [
-            Processes::ITEMS,
-            Processes::CATEGORIES,           
+        Processes::CATEGORIES => [          
+            Channels::ALIEXPRESS,
+            // Channels::AMAZON,
+            // Channels::EBAY
+        ], 
+        Processes::ITEMS => [
+            //Channels::ALIEXPRESS,
+            //Channels::AMAZON,
+            //Channels::EBAY
         ],
-        Channels::AMAZON     => [
-            Processes::ITEMS,
-            //Processes::CATEGORIES,          
-        ],
-        Channels::EBAY       => [
-            Processes::ITEMS,
-            //Processes::CATEGORIES,
-        ]  
+
+
+
+
+        // Channels::ALIEXPRESS => [
+        //     Processes::ITEMS,
+        //     Processes::CATEGORIES,           
+        // ],
+        // Channels::AMAZON     => [
+        //     Processes::ITEMS,
+        //     //Processes::CATEGORIES,          
+        // ],
+        // Channels::EBAY       => [
+        //     Processes::ITEMS,
+        //     //Processes::CATEGORIES,
+        // ]  
     ],
 
 

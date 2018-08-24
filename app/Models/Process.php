@@ -47,7 +47,7 @@ class Process extends BaseModel
      */
     public function channels()
     {
-        return $this->belongsToMany(Channel::class, 'channels_processes', 'process_id', 'channel_id')->withPivot(static::LAST_PROCESS);
+        return $this->belongsToMany(Channel::class, 'processes_channels', 'process_id', 'channel_id')->withPivot(static::LAST_PROCESS);
     }    
 
 
@@ -58,14 +58,14 @@ class Process extends BaseModel
      * 
      *  select 
      *       `channels`.*, 
-     *       `channels_processes`.`process_id` as `pivot_process_id`, 
-     *       `channels_processes`.`channel_id` as `pivot_channel_id`, 
-     *       `channels_processes`.`last_process` as `pivot_last_process` 
+     *       `processes_channels`.`process_id` as `pivot_process_id`, 
+     *       `processes_channels`.`channel_id` as `pivot_channel_id`, 
+     *       `processes_channels`.`last_process` as `pivot_last_process` 
      *   from `channels` 
-     *   inner join `channels_processes` on `channels`.`id` = `channels_processes`.`channel_id` 
-     *   where `channels_processes`.`process_id` in (2) 
-     *   and `channels_processes`.`last_process` <= '2018-08-16 17:37:44' 
-     *   order by `channels_processes`.`last_process` asc 
+     *   inner join `processes_channels` on `channels`.`id` = `processes_channels`.`channel_id` 
+     *   where `processes_channels`.`process_id` in (2) 
+     *   and `processes_channels`.`last_process` <= '2018-08-16 17:37:44' 
+     *   order by `processes_channels`.`last_process` asc 
      *   limit 2;
      *  
      * @see config('processes.settings.categories')
@@ -86,7 +86,7 @@ class Process extends BaseModel
         $query->with(['channels' => function($q) use ($datetime, $limit_channels){
 
             $q->wherePivot(static::LAST_PROCESS,'<=', $datetime)
-            ->orderBy('channels_processes.'.static::LAST_PROCESS, 'asc')
+            ->orderBy('processes_channels.'.static::LAST_PROCESS, 'asc')
             ->take($limit_channels);
 
         }])->where('key', $process);   

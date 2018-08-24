@@ -4,9 +4,11 @@ use Illuminate\Database\Seeder;
 
 use App\Models\Channel;
 
+/**
+ * Channel Seeder
+ */
 class ChannelsSeeder extends Seeder
-{
-    
+{   
     /**
      * Run the database seeds.
      *
@@ -18,7 +20,7 @@ class ChannelsSeeder extends Seeder
 
         foreach($seeds as $key => $seed) 
         {
-            $process = Channel::updateOrCreate(['key' => $key], $seed);
+            Channel::updateOrCreate(['key' => $key], $seed);
         }
     }
 }
