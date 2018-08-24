@@ -70,7 +70,7 @@ class Process extends BaseModel
      *  
      * @see config('processes.settings.categories')
      * @param Illuminate\Database\Query\Builder // injected natively
-     * @param string $process // processes.key
+     * @param string $process // processes key
      * @return void
      */
     public function scopeMatureChannels($query, $process)

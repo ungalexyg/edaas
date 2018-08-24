@@ -121,14 +121,14 @@ class CategoriesKeeper extends BaseKeeper
 
         foreach($categories as $category) 
         {
-            // find the storage category record with the channel parent
-            $storage_category = StorageCategory::with('parent')->find($category->storage_category_id);
-
-            // if it has a parent
-            if(isset($storage_category->parent->id)) 
+            $storage_category = StorageCategory::withParent($category->storage_category_id)->first();
+            
+            if(isset($storage_category->parent->id)) // if it has a parent
             {
+                // check if the parent already published
                 $parent_category = Category::where('storage_category_id', '=', $storage_category->parent->id)->first();
 
+                // if it's published, assign it to the child now
                 if(isset($parent_category->id)) 
                 {
                     $category->parent_category_id = $parent_category->id;
@@ -136,7 +136,7 @@ class CategoriesKeeper extends BaseKeeper
                     $category->save();
                 }
             }
-            elseif($storage_category->parent_channel_category_id == 0) // if the storage record is for channel parent category
+            elseif($storage_category->parent_channel_category_id == 0) // if the storage record is parent category in the channel
             {
                 $category->parent_category_id = 0; // update the published category also as parent category
     

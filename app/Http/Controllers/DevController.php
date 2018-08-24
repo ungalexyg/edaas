@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Processes;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\StorageCategory;
 use App\Processes\Processors\Base\MainProcessor as Processor;
 
 
@@ -19,14 +21,7 @@ class DevController extends Controller
 
     public function categories() 
     {
-        
-        //(new Processor(Process::CATEGORIES))->process();
-
-        //(new CategoriesScanner)->process();
-
-        (new Processor)->run(Processes::CATEGORIES);
-
-    
+       (new Processor)->run(Processes::CATEGORIES);
     }
 
 

@@ -37,12 +37,12 @@ class CreateTableCategories extends Migration
             Schema::create($this->table, function (Blueprint $table) 
             {
                 $table->increments('id');
-                // if it's not organic category, the storage_category_id can be null
-                $table->unsignedInteger('storage_category_id')->nullable()->comment('reference to the corresponding storage record for Organic Categories - storage_categories.id');
-                $table->unsignedInteger('parent_category_id')->nullable()->comment('parent category id');
                 $table->string('title', 1060)->nullable();
                 $table->string('description', 1060)->nullable();
                 $table->string('path',1060)->nullable();
+                // if it's not organic category, the storage_category_id can be null
+                $table->unsignedInteger('parent_category_id')->nullable()->comment('parent category id');
+                $table->unsignedInteger('storage_category_id')->nullable()->comment('reference to the corresponding storage record for Organic Categories - storage_categories.id');
                 $table->timestamps();
             });
         }
