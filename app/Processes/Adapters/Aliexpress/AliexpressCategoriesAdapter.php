@@ -22,8 +22,7 @@
 
 namespace App\Processes\Adapters\Aliexpress;
 
-//use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
-use Illuminate\Support\Facades\Log;
+use Log;
 use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
 use App\Lib\Vendor\Goutte\GoutteExtension as Spider;
 use Symfony\Component\DomCrawler\Crawler as CoreCrawler;
@@ -56,14 +55,6 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
      * @var string 
      */
     protected $path = '/all-wholesale-products.html';
-
-    // Argument 1 passed to 
-    // App\Processes\Adapters\Aliexpress\AliexpressCategoriesAdapter::App\Processes\Adapters\Aliexpress\{closure}() 
-    // must be an instance of App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension, 
-    // instance of 
-    // Symfony\Component\DomCrawler\Crawler given, called in 
-    // /Users/ungalexy/code/valet/edaas/vendor/symfony/dom-crawler/Crawler.php on line 368
-
 
 	/**
 	 * Fetch destenation
@@ -117,17 +108,8 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
             });
         }); 
                 
-
-        if(empty($this->fetch)) 
-        {
-            Log::channel('adapters')->info('returning empty fetch :/ ', ['location' => __METHOD__ .':'.__LINE__ , '$this->fetch' => $this->fetch]);
-        }
-        else 
-        {
-            Log::channel('adapters')->info('successful categories fetch!', ['location' => __METHOD__ .':'.__LINE__ ]);
-        }
+        Log::channel(Log::CATEGORIES_ADAPTERS)->info($this->domain . ' - returned ' . (!empty($this->fetch) ? 'full fetch :)' : 'empty fetch :/'), ['in' => __METHOD__ .':'.__LINE__]);
             
-    
         return $this->fetch;
     }
 

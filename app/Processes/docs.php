@@ -18,57 +18,57 @@
  *  -- IProcessor extends IProcess [load(), process()]
  *  -- IScaner extends IProcess [handle(), scan()]     
  *  -- IKeepr extends IProcess  [handle(), keep()]     
- *  -- IWatcher extends IProcess [handle(), watch()]
+ *  -- IPublisher extends IProcess [handle(), watch()]
  * 
  */ 
 
 
 /**
  * --------------------------------------------------------------------------
- *  Processor
+ *  Processors
  * --------------------------------------------------------------------------
  * 
- * Manage specific process operation using different types of child instances
- * 
+ * The processors manage specific process flow operation using different types of child instances.
  */ 
-
 
 
 /**
  * --------------------------------------------------------------------------
- *  Scanner
+ *  Scanners
  * --------------------------------------------------------------------------
  * 
- * Locat "Prospect Items" from given "Prospects Channels" & store them in "Propects Q" for forther handling by the Watcher.
- * 
- * Prospects Channels :
- *  start with Ali
- * 
- * TODO: Ali adapter
- * 
+ * The Scanners scan "Prospect Items" from given "Prospects Channels" using Adapters, then pass them to the Keeperes to store them and wait for forther handling.
  */ 
 
 
  /**
  * --------------------------------------------------------------------------
- *  Watcher
+ *  Keepers
  * --------------------------------------------------------------------------
  * 
- * The Watcher whatching the prospect items, tracking, comparing & mark their performance according to set of conditions across mutiple channels.
+ * The Keepers collect, organise & store the data into the storge DB.
+ */ 
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  Publishers
+ * --------------------------------------------------------------------------
  * 
- * TODO: write the conditions
- * 
+ * The Publishers grab stored data from the storage DB & publish it into the public tables which display data in the app.
  */ 
 
 
  /**
  * --------------------------------------------------------------------------
- *  Keeper
+ *  Observers
  * --------------------------------------------------------------------------
  * 
- * The Keeper collect, organise & transform the data into api stactured records.
- * 
+ * The Observers Observing the prospect items, tracking, comparing & mark their performance according to set of conditions across mutiple channels.
+ * The Observers are Laravel native classes so they are located in their native path App/Observers.
  */ 
+
+
 
 
 

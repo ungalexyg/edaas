@@ -16,7 +16,7 @@ class ProcessException extends BaseException
     const UNDEFINED_PROCESSOR           = 'Failed to load undefined processor instance';
     const UNDEFINED_SCANNER             = 'Failed to load undefined scanner instance';
     const UNDEFINED_KEEPER              = 'Failed to load undefined keeper instance';
-    const UNDEFINED_WATCHER             = 'Failed to load undefined watcher instance';  
+    const UNDEFINED_PUBLISHER           = 'Failed to load undefined publisher instance';  
     const UNDEFINED_ADAPTER             = 'Failed to load undefined adapter instance';  
     const FAILED_PULL_INVALID_INSTANCE  = 'Trying to pull process data from invalid processor instance';
     const FAILED_PUSH_INVALID_INSTANCE  = 'Trying to push process data to invalid processor instance';

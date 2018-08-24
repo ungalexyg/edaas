@@ -1,9 +1,23 @@
 <?php
 
+ /**
+ * --------------------------------------------------------------------------
+ *  TODO:
+ * --------------------------------------------------------------------------
+ * TODO: write the conditions
+ * 
+ * TODO: 
+ * check Observers:
+ * https://medium.com/sammich-shop/simple-record-history-tracking-with-laravel-observers-48a2e3c5698b
+ * 
+ * 
+ */ 
+
+
 namespace App\Observers;
 
+use Log;
 use App\Models\StorageCategory;
-use Illuminate\Support\Facades\Log;
 use App\Processes\Keepers\CategoriesKeeper;
 
 
@@ -15,14 +29,14 @@ class StorageCategoryObserver
     /**
      * Handle to the storage category "created" event.
      *
-     * @param  \App\StorageCategory  $storageCategory
+     * @param App\Models\StorageCategory $storage_category
      * @return void
      */
     public function created(StorageCategory $storage_category)
     {
-        Log::channel('observers')->info('observed created storageCategory', [
-            'location' => __METHOD__ .':'.__LINE__ , 
-            '$storageCategory' => $storage_category->getAttributes()
+        Log::channel(Log::CATEGORIES_OBSERVER)->info('observed created storageCategory', [
+            'in' => __METHOD__ .':'.__LINE__ , 
+            'storage_category' => $storage_category->getAttributes()
         ]);
     }
 
@@ -31,30 +45,25 @@ class StorageCategoryObserver
      * 
      * TODO: $storageCategory->confirmed logic ...
      * 
-     * @param  \App\StorageCategory  $storageCategory
+     * @param  App\Models\StorageCategory $storage_category
      * @return void
      */
     public function updated(StorageCategory $storage_category)
     {
-        Log::channel('observers')->info('observed updated storageCategory', [
-            'location' => __METHOD__ .':'.__LINE__ , 
-            '$storageCategory' => $storage_category->getAttributes()
+        Log::channel(Log::CATEGORIES_OBSERVER)->info('observed updated storageCategory', [
+            'in' => __METHOD__ .':'.__LINE__ , 
+            'storage_category' => $storage_category->getAttributes()
         ]);
-
-        // if($storageCategory->confirmed) 
-        // {
-            //CategoriesKeeper::publish($storageCategory);
-        // }
     }
 
     /**
      * Handle the storage category "deleted" event.
      *
-     * @param  \App\StorageCategory  $storageCategory
+     * @param  App\Models\StorageCategory $storage_category
      * @return void
      */
-    public function deleted(StorageCategory $storage_category)
-    {
-        //
-    }
+    // public function deleted(StorageCategory $storage_category)
+    // {
+    //     //
+    // }
 }

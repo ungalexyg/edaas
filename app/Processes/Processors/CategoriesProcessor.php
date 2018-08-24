@@ -2,12 +2,12 @@
 
 namespace App\Processes\Processors;
 
-//use App\Exceptions\ProcessException;
+
+use Log;
 use App\Processes\Traits\HasKeeper;
-use Illuminate\Support\Facades\Log;
 use App\Processes\Traits\HasProcess;
 use App\Processes\Traits\HasScanner;
-use App\Processes\Traits\HasWatcher;
+use App\Processes\Traits\HasPublisher;
 use App\Processes\Processors\Base\IProcessor;
 
 
@@ -18,11 +18,10 @@ use App\Processes\Processors\Base\IProcessor;
  */ 
 class CategoriesProcessor implements IProcessor 
 {
-
 	/**
 	 * Processes traits
 	 */
-	use HasProcess, HasScanner, HasKeeper;
+	use HasProcess, HasScanner, HasKeeper, HasPublisher;
 
 
 	/**
@@ -47,8 +46,15 @@ class CategoriesProcessor implements IProcessor
 		
 		$this->keeper->pull()->store();
 		
-        Log::channel('processes')->info('process completed', ['location' => __METHOD__ .':'.__LINE__ ]);
-		
+		if(($this->config['auto_publish'] ?? false)) 
+		{			
+			$this->keeper->push();
+
+			$this->loadPublisher()->publisher->pull()->publish();
+		}
+
+		Log::channel(Log::CATEGORIES_PROCESSOR)->info('categories processor completed the process', ['in' => __METHOD__ .':'.__LINE__]);
+
 		echo '<pre><hr />'; print_r($this->bag);
 	}
 }

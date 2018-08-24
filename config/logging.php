@@ -1,6 +1,12 @@
 <?php
 
+use App\Enums\Processes;
+use App\Lib\Vendor\Laravel\Log;
 use Monolog\Handler\StreamHandler;
+
+$process_categories_path = 'logs/processes/'.Processes::CATEGORIES;
+$process_items_path = 'logs/processes/'.Processes::ITEMS;
+
 
 return [
 
@@ -51,72 +57,167 @@ return [
     'channels' => [
 
 
-        ####################################
-        # custom logs
-        ####################################        
+        ##############################################
+        # Process Categories Logs
+        ##############################################        
 
-
-        // TODO:L 
-
-        // split logs per process
-        //'path' => storage_path('logs/processes/categories/processor'),
-        //'path' => storage_path('logs/processes/items/scanner'),
 
         /**
-         * Processes log
+         * Categories processor log
          * 
-         * Log::channel('processes')->info('Something happened!', ['location' => __METHOD__ .':'.__LINE__]);
-         */
-        'processes' => [
+         * Log::channel(Log::CATEGORIES_PROCESSOR)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         */        
+        Log::CATEGORIES_PROCESSOR => [
             'driver' => 'daily',
-            'path' => storage_path('logs/processes/process'),
+            'path' => storage_path($process_categories_path . '/processor.log'),
             'days' => 14, // after how many the log days theoldest will be deleted
             'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
         ],
 
+        /**
+         * Categories scanner log
+         * 
+         * Log::channel(Log::CATEGORIES_SCANNER)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         */        
+        Log::CATEGORIES_SCANNER => [
+            'driver' => 'daily',
+            'path' => storage_path($process_categories_path . '/scanner.log'),
+            'days' => 14, 
+            'level' => 'debug', 
+        ],  
 
         /**
-         * Adapters log
+         * Categories adapters log
          * 
-         * Log::channel('adapters')->info('Something happened!', ['location' => __METHOD__ .':'.__LINE__]);
-         */
-        'adapters' => [
+         * Log::channel(Log::CATEGORIES_ADAPTERS)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         */        
+        Log::CATEGORIES_ADAPTERS => [
             'driver' => 'daily',
-            'path' => storage_path('logs/processes/adapters'),
-            'days' => 14, // after how many the log days theoldest will be deleted
-            'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
+            'path' => storage_path($process_categories_path . '/adapters.log'),
+            'days' => 14, 
+            'level' => 'debug', 
         ],        
         
-
         /**
-         * Adapters log
+         * Categories keeper log
          * 
-         * Log::channel('adapters')->info('Something happened!', ['location' => __METHOD__ .':'.__LINE__]);
-         */
-        'observers' => [
+         * Log::channel(Log::CATEGORIES_KEEPER)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         */        
+        Log::CATEGORIES_KEEPER => [
             'driver' => 'daily',
-            'path' => storage_path('logs/processes/observers'),
-            'days' => 14, // after how many the log days theoldest will be deleted
-            'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
+            'path' => storage_path($process_categories_path . '/keeper.log'),
+            'days' => 14, 
+            'level' => 'debug', 
         ],   
 
+        /**
+         * Categories observers log
+         * 
+         * Log::channel(Log::CATEGORIES_OBSERVER)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         */        
+        Log::CATEGORIES_OBSERVER => [
+            'driver' => 'daily',
+            'path' => storage_path($process_categories_path . '/observer.log'),
+            'days' => 14, 
+            'level' => 'debug', 
+        ],   
+
+        /**
+         * Categories publishers log
+         * 
+         * Log::channel(Log::CATEGORIES_PUBLISHER)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         */        
+        Log::CATEGORIES_PUBLISHER => [
+            'driver' => 'daily',
+            'path' => storage_path($process_categories_path . '/publishers.log'),
+            'days' => 14, 
+            'level' => 'debug', 
+        ],   
+
+
+
+        ##############################################
+        # Process Items Logs
+        ##############################################
+
+
+        /**
+         * Categories processor log
+         * 
+         * Log::channel(Log::ITEMS_PROCESSOR)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         */        
+        Log::ITEMS_PROCESSOR => [
+            'driver' => 'daily',
+            'path' => storage_path($process_items_path . '/processor.log'),
+            'days' => 14, // after how many the log days theoldest will be deleted
+            'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
+        ],
+
+        /**
+         * Categories scanner log
+         * 
+         * Log::channel(Log::ITEMS_SCANNER)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         */        
+        Log::ITEMS_SCANNER => [
+            'driver' => 'daily',
+            'path' => storage_path($process_items_path . '/scanner.log'),
+            'days' => 14, 
+            'level' => 'debug', 
+        ],  
+
+        /**
+         * Categories adapters log
+         * 
+         * Log::channel(Log::ITEMS_ADAPTERS)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         */        
+        Log::ITEMS_ADAPTERS => [
+            'driver' => 'daily',
+            'path' => storage_path($process_items_path . '/adapters.log'),
+            'days' => 14, 
+            'level' => 'debug', 
+        ],        
         
         /**
-         * Keepers log
+         * Categories keeper log
          * 
-         * Log::channel('keepers')->info('Something happened!', ['location' => __METHOD__ .':'.__LINE__]);
-         */
-        'keepers' => [
+         * Log::channel(Log::ITEMS_KEEPER)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         */        
+        Log::ITEMS_KEEPER => [
             'driver' => 'daily',
-            'path' => storage_path('logs/processes/keepers'),
-            'days' => 14, // after how many the log days theoldest will be deleted
-            'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
+            'path' => storage_path($process_items_path . '/keeper.log'),
+            'days' => 14, 
+            'level' => 'debug', 
         ],   
 
+        /**
+         * Categories observers log
+         * 
+         * Log::channel(Log::ITEMS_OBSERVER)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         */        
+        Log::ITEMS_OBSERVER => [
+            'driver' => 'daily',
+            'path' => storage_path($process_items_path . '/observer.log'),
+            'days' => 14, 
+            'level' => 'debug', 
+        ],   
 
-        ####################################
+        /**
+         * Categories publishers log
+         * 
+         * Log::channel(Log::ITEMS_PUBLISHER)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         */        
+        Log::ITEMS_PUBLISHER => [
+            'driver' => 'daily',
+            'path' => storage_path($process_items_path . '/publishers.log'),
+            'days' => 14, 
+            'level' => 'debug', 
+        ],          
+
+
+        #############################################
         # Default sample logs
-        ####################################
+        #############################################
+        
 
 
         /**

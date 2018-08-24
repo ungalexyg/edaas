@@ -13,21 +13,11 @@ use App\Processes\Processors\Base\MainProcessor as Processor;
 
 class DevController extends Controller
 {
-
-
-    ########################################
-    # Processes
-    ########################################
-
+    /**
+     * Process Categories 
+     */
     public function categories() 
     {
        (new Processor)->run(Processes::CATEGORIES);
     }
-
-
-
-
-
-
-   
 }

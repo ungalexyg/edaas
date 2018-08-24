@@ -58,7 +58,7 @@ return [
 
 
     /**
-     * Enable processes for each channel
+     * Enable channels for each process
      */
     'processes_channels' => [
 
@@ -68,26 +68,10 @@ return [
             // Channels::EBAY
         ], 
         Processes::ITEMS => [
-            //Channels::ALIEXPRESS,
+            Channels::ALIEXPRESS,
             //Channels::AMAZON,
             //Channels::EBAY
-        ],
-
-
-
-
-        // Channels::ALIEXPRESS => [
-        //     Processes::ITEMS,
-        //     Processes::CATEGORIES,           
-        // ],
-        // Channels::AMAZON     => [
-        //     Processes::ITEMS,
-        //     //Processes::CATEGORIES,          
-        // ],
-        // Channels::EBAY       => [
-        //     Processes::ITEMS,
-        //     //Processes::CATEGORIES,
-        // ]  
+        ], 
     ],
 
 
