@@ -25,7 +25,7 @@ interface IMainProcessor extends IProcess
 	 * 
 	 * @param string $action
 	 */	
-	public function action($action);	
+	//public function action($action);	
 
 }
 

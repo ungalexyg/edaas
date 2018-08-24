@@ -20,4 +20,13 @@ class DevController extends Controller
     {
        (new Processor)->run(Processes::CATEGORIES);
     }
+
+
+    /**
+     * Process Items
+     */
+    public function items() 
+    {
+       (new Processor)->run(Processes::ITEMS);
+    }    
 }

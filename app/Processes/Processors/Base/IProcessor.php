@@ -8,14 +8,12 @@ namespace App\Processes\Processors\Base;
  */ 
 interface IProcessor extends IProcess 
 {
-
 	/**
 	 * Load processor dependencies
 	 * 
 	 * @return self
 	 */	
 	public function load();	
-
 
 
 	/**
@@ -25,6 +23,13 @@ interface IProcessor extends IProcess
 	 */
 	public function process();	
 
+
+	/**
+	 * Update process timestamp
+	 * 
+	 * @return self
+	 */
+	public function stamp();	
 }
 
 
