@@ -2,7 +2,6 @@
 
 namespace App\Processes\Processors;
 
-use Log;
 use App\Processes\Processors\Base\BaseProcessor;
 
 
