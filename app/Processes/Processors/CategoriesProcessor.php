@@ -76,7 +76,10 @@ class CategoriesProcessor implements IProcessor
 		{
 			if(array_key_exists($channel->key, $processed_channels)) 
 			{
-				$process->channels()->updateExistingPivot($channel->id, [Process::LAST_PROCESS => date("Y-m-d H:i:s")]);
+				$process->channels()->updateExistingPivot($channel->id, [
+					Process::LAST_PROCESS => date("Y-m-d H:i:s"),
+					Process::PROCESS_COUNT => ($channel->pivot->process_count + 1),
+				]);
 			}
 		}
 

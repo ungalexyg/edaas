@@ -22,6 +22,7 @@ Route::get('/embed', 'DevController@embed');
 
 
 Route::get('/categories', 'DevController@categories');
+Route::get('/items', 'DevController@items');
 
 Auth::routes();
 

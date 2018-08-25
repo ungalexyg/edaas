@@ -29,11 +29,12 @@ class CreateTableStorageCategories extends Migration
                 $table->string('title', 1060)->nullable();
                 $table->string('path', 1060)->nullable();
                 $table->string('description', 1060)->nullable();
-                $table->unsignedTinyInteger('confirmed')->default(0)->comment('If the storage category confirmed for publishing');
                 $table->unsignedInteger('category_id')->nullable()->comment('The published category that sourced from this record. Some storage records might not be assigned to category');                 
                 $table->unsignedInteger('channel_id')->comment('The channel id that this record fetched from');                
                 $table->unsignedInteger('channel_category_id')->comment('The external category id in the channel');
                 $table->unsignedInteger('parent_channel_category_id')->comment('The external parent category id in the channel');
+                $table->unsignedTinyInteger('active')->default(0)->comment('If the category is active, the ItemsProcesssor will fetch items from this category in the channel [active = 1 | not active = 0]');
+                $table->unsignedTinyInteger('published')->default(0)->comment('If the record is published, the CategoriesPublisher will update the sourced category_id with the latest updates from the CategoiresProcessor [published = 1 | not published = 0]');
                 $table->timestamps();
                 
                 // the storage_categories serve as meta & resource reference to the categories records

@@ -95,6 +95,7 @@ class StorageCategory extends BaseModel
      * 
      * @param Builder $query natively injected 
      * @param int $child_id child's storage_category.id
+     * @return void
      */
     public function scopeWithParent($query, $child_id) 
     {
@@ -115,6 +116,7 @@ class StorageCategory extends BaseModel
      * 
      * @param Builder $query natively injected 
      * @param int $parent_id parent's storage_category.id
+     * @return void
      */    
     public function scopeWithChildren($query, $parent_id) 
     {
@@ -126,6 +128,61 @@ class StorageCategory extends BaseModel
             
         }])->find($storage_category->id); 
     }
+
+
+    /**
+     * Get published storage category records
+     * 
+     * useage : StorageCategory::published()->get(); 
+     * 
+     * @param Builder $query natively injected 
+     * @return void
+     */    
+    public function scopePublished($query) 
+    {
+        $query->where('published', '=', 1);
+    }
+
+
+    /**
+     * Get unpublished storage category records
+     * 
+     * useage : StorageCategory::unpublished()->get(); 
+     * 
+     * @param Builder $query natively injected 
+     * @return void
+     */    
+    public function scopeUnpublished($query) 
+    {
+        $query->where('published', '=', 0);
+    }
+
+
+    /**
+     * Get active storage category records
+     * 
+     * useage : StorageCategory::active()->get(); 
+     * 
+     * @param Builder $query natively injected 
+     * @return void
+     */    
+    public function scopeActive($query) 
+    {
+        $query->where('active', '=', 1);
+    }
+
+    /**
+     * Get unactive storage category records
+     * 
+     * useage : StorageCategory::unactive()->get(); 
+     * 
+     * @param Builder $query natively injected 
+     * @return void
+     */    
+    public function scopeUnactive($query) 
+    {
+        $query->where('active', '=', 0);
+    }    
 }
 
 

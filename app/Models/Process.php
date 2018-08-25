@@ -39,7 +39,8 @@ class Process extends BaseModel
     /**
      * Fileds constants
      */
-    const LAST_PROCESS = 'last_process';
+    const LAST_PROCESS  = 'last_process';
+    const PROCESS_COUNT = 'process_count';
 
 
     /**

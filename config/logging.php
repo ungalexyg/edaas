@@ -4,8 +4,16 @@ use App\Enums\Processes;
 use App\Lib\Vendor\Laravel\Log;
 use Monolog\Handler\StreamHandler;
 
-$process_categories_path = 'logs/processes/'.Processes::CATEGORIES;
+// process categories log path
+$process_categories_path = 'logs/processes/'.Processes::CATEGORIES; 
+
+// process  items log path
 $process_items_path = 'logs/processes/'.Processes::ITEMS;
+
+// default process log days old to be deleted 
+$process_log_days = 7;
+
+
 
 
 return [
@@ -70,7 +78,7 @@ return [
         Log::CATEGORIES_PROCESSOR => [
             'driver' => 'daily',
             'path' => storage_path($process_categories_path . '/processor.log'),
-            'days' => 14, // after how many the log days theoldest will be deleted
+            'days' => $process_log_days, // after how many the log days theoldest will be deleted
             'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
         ],
 
@@ -82,7 +90,7 @@ return [
         Log::CATEGORIES_SCANNER => [
             'driver' => 'daily',
             'path' => storage_path($process_categories_path . '/scanner.log'),
-            'days' => 14, 
+            'days' => $process_log_days, 
             'level' => 'debug', 
         ],  
 
@@ -94,7 +102,7 @@ return [
         Log::CATEGORIES_ADAPTERS => [
             'driver' => 'daily',
             'path' => storage_path($process_categories_path . '/adapters.log'),
-            'days' => 14, 
+            'days' => $process_log_days, 
             'level' => 'debug', 
         ],        
         
@@ -106,7 +114,7 @@ return [
         Log::CATEGORIES_KEEPER => [
             'driver' => 'daily',
             'path' => storage_path($process_categories_path . '/keeper.log'),
-            'days' => 14, 
+            'days' => $process_log_days, 
             'level' => 'debug', 
         ],   
 
@@ -118,7 +126,7 @@ return [
         Log::CATEGORIES_OBSERVER => [
             'driver' => 'daily',
             'path' => storage_path($process_categories_path . '/observer.log'),
-            'days' => 14, 
+            'days' => $process_log_days, 
             'level' => 'debug', 
         ],   
 
@@ -130,7 +138,7 @@ return [
         Log::CATEGORIES_PUBLISHER => [
             'driver' => 'daily',
             'path' => storage_path($process_categories_path . '/publishers.log'),
-            'days' => 14, 
+            'days' => $process_log_days, 
             'level' => 'debug', 
         ],   
 
@@ -149,7 +157,7 @@ return [
         Log::ITEMS_PROCESSOR => [
             'driver' => 'daily',
             'path' => storage_path($process_items_path . '/processor.log'),
-            'days' => 14, // after how many the log days theoldest will be deleted
+            'days' => $process_log_days, // after how many the log days theoldest will be deleted
             'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
         ],
 
@@ -161,7 +169,7 @@ return [
         Log::ITEMS_SCANNER => [
             'driver' => 'daily',
             'path' => storage_path($process_items_path . '/scanner.log'),
-            'days' => 14, 
+            'days' => $process_log_days, 
             'level' => 'debug', 
         ],  
 
@@ -173,7 +181,7 @@ return [
         Log::ITEMS_ADAPTERS => [
             'driver' => 'daily',
             'path' => storage_path($process_items_path . '/adapters.log'),
-            'days' => 14, 
+            'days' => $process_log_days, 
             'level' => 'debug', 
         ],        
         
@@ -185,7 +193,7 @@ return [
         Log::ITEMS_KEEPER => [
             'driver' => 'daily',
             'path' => storage_path($process_items_path . '/keeper.log'),
-            'days' => 14, 
+            'days' => $process_log_days, 
             'level' => 'debug', 
         ],   
 
@@ -197,7 +205,7 @@ return [
         Log::ITEMS_OBSERVER => [
             'driver' => 'daily',
             'path' => storage_path($process_items_path . '/observer.log'),
-            'days' => 14, 
+            'days' => $process_log_days, 
             'level' => 'debug', 
         ],   
 
@@ -209,7 +217,7 @@ return [
         Log::ITEMS_PUBLISHER => [
             'driver' => 'daily',
             'path' => storage_path($process_items_path . '/publishers.log'),
-            'days' => 14, 
+            'days' => $process_log_days, 
             'level' => 'debug', 
         ],          
 

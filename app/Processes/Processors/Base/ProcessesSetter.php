@@ -101,7 +101,8 @@ class ProcessesSetter
                 var_dump('+ attaching channel | id: ' . $channel->id . ' | key: ' . $channel->key);
 
                 $process->channels()->attach($channel->id, [
-                    Process::LAST_PROCESS => Carbon::now()->subDays($this->process_age_days) 
+                    Process::LAST_PROCESS => Carbon::now()->subDays($this->process_age_days), 
+                    Process::PROCESS_COUNT => 0,
                 ]);  
 
                 $this->process_age_days++;

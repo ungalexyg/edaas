@@ -19,7 +19,7 @@ class CategoriesPublisher extends BasePublisher
 	 */
     public function publish() 
     {
-        $storages = StorageCategory::where('category_id', '=', null)->get();
+        $storages = StorageCategory::unpublished()->get(); 
 
         foreach($storages as $storage_category) 
         {
@@ -53,7 +53,14 @@ class CategoriesPublisher extends BasePublisher
 
         // link the fresh category to the storage_category 
         $storage_category->category_id = $category->id;
-       
+
+        // mark the storage record as published to updated the sourced category with the latest fetched items
+        $storage_category->published = 1;
+
+        // mark the storage record as active for items process
+        $storage_category->active = (($this->config['auto_active'] ?? false) ? 1 : 0); 
+
+        // save the updates
         $storage_category->save();
 
         return $category;        
