@@ -21,6 +21,13 @@ use App\Enums\Processes;
  */
 class Log extends CoreLog
 {
+
+    /**
+     * Logging channels keyes - main processor 
+     */
+    const MAIN_PROCESSOR        =  'main_processor';
+
+
     /**
      * Logging channels keyes - categories process 
      */

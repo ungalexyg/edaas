@@ -48,6 +48,13 @@ class ItemsProcessor implements IProcessor
 	 */
 	protected function setCategoiries() 
 	{
+
+
+
+		# select from storage_categorires where active
+
+
+
 		//$process = Process::matureChannels($this->process)->first(); // 1st process should be single result for $this->process anyway
 
 		// if(!$process->channels) throw new ProcessException(ProcessException::MATURE_CHANNELS_NOT_FOUND);

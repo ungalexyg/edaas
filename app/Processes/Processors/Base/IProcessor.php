@@ -30,6 +30,15 @@ interface IProcessor extends IProcess
 	 * @return self
 	 */
 	public function stamp();	
+
+
+	/**
+	 * Generate process response
+	 * 
+	 * @return array $response
+	 */
+	public function response();		
+
 }
 
 

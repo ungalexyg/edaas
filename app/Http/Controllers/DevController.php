@@ -10,7 +10,13 @@ use App\Processes\Processors\Base\MainProcessor as Processor;
 
 
 
+/*
+TODO:
 
+for categoires and items 
+https://laracasts.com/discuss/channels/eloquent/dynamic-table-name
+
+*/
 class DevController extends Controller
 {
     /**
@@ -18,7 +24,9 @@ class DevController extends Controller
      */
     public function categories() 
     {
-       (new Processor)->run(Processes::CATEGORIES);
+       $response = (new Processor)->run(Processes::CATEGORIES);
+
+       dd($response);
     }
 
 
@@ -27,6 +35,8 @@ class DevController extends Controller
      */
     public function items() 
     {
-       (new Processor)->run(Processes::ITEMS);
+        $response = (new Processor)->run(Processes::ITEMS);
+       
+        dd($response);
     }    
 }

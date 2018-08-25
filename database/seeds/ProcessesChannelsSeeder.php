@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Processes\Processors\Base\ProcessesSetter;
+use App\Processes\Processors\Setter\ProcessesSetter;
 
 
-
-class ChannelsProcessesSeeder extends Seeder
+/**
+ * Processes Channels Seeder
+ */
+class ProcessesChannelsSeeder extends Seeder
 {
-
     /**
      * Run the database seeds.
      *

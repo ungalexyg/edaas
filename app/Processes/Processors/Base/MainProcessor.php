@@ -1,17 +1,10 @@
 <?php 
 
-/**
- * --------------------------------------------------------------------------
- *  Base Processor 
- * --------------------------------------------------------------------------
- * 
- * Load the current processor & initiate the process 
- */ 
-
 namespace App\Processes\Processors\Base;
 
-use App\Models\Process;
+use Log;
 use App\Enums\Channels;
+use App\Models\Process;
 use App\Enums\Processes;
 use App\Processes\Traits\HasProcess;
 use App\Exceptions\Processors\ProcessException;
@@ -19,10 +12,11 @@ use App\Exceptions\Processors\ProcessException;
 
 /**
  * Main Processor 
+ * 
+ * Load the processor & run it's process 
  */ 
 final class MainProcessor implements IMainProcessor  
 {
-
 	/**
 	 * Processes traits
 	 */
@@ -34,15 +28,26 @@ final class MainProcessor implements IMainProcessor
 	 * 
 	 * @param string $process
 	 * @param string|null $channel
+	 * @return array $response
 	 */
 	public function run($process) 
 	{
-		$this->setProcess($process)
-				->setChannels()
-					->setConfig()
-						->loadProcessor();
-				
-		$this->processor->process();
+		try 
+		{
+			$this->setProcess($process)
+					->setChannels()
+						->setConfig()
+							->loadProcessor();
+
+			return $this->processor->process()->response();
+		}
+		catch(\Exception $e) 
+		{
+			return [
+				'exception' => get_class($e),
+				'message' => $e->getMessage()
+			];
+		}
 	}
 
 
@@ -73,7 +78,12 @@ final class MainProcessor implements IMainProcessor
 	{
 		$process = Process::matureChannels($this->process)->first(); // 1st process should be single result for $this->process anyway
 
-		if(!$process->channels) throw new ProcessException(ProcessException::MATURE_CHANNELS_NOT_FOUND);
+		if(!$process->channels->count()) 
+		{
+			Log::channel(Log::MAIN_PROCESSOR)->info(ProcessException::MATURE_CHANNELS_NOT_FOUND, ['in' => __METHOD__ .':'.__LINE__]);
+			
+			throw new ProcessException(ProcessException::MATURE_CHANNELS_NOT_FOUND);
+		} 
 
 		$this->channels = $process->channels;		
 
@@ -116,17 +126,6 @@ final class MainProcessor implements IMainProcessor
 
 		return $this;
 	}
-
-
-	/**
-	 * Perform specific action
-	 * 
-	 * @param string $action
-	 */
-	public function action($action) 
-	{
-		throw new ProcessException(ProcessException::METHOD_NOT_IMPLEMENTED);
-	}	
 }
 
 

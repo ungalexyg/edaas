@@ -65,6 +65,19 @@ return [
     'channels' => [
 
 
+        /**
+         * Main processor log
+         * 
+         * Log::channel(Log::MAIN_PROCESSOR)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         */        
+        Log::MAIN_PROCESSOR => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/processes/main/processor.log'),
+            'days' => $process_log_days, // after how many the log days theoldest will be deleted
+            'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
+        ],
+
+
         ##############################################
         # Process Categories Logs
         ##############################################        

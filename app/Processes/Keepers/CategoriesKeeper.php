@@ -37,7 +37,7 @@ class CategoriesKeeper extends BaseKeeper
 	public function store()
     {
         $categories = $this->bag[$this->process] ?? null;
-
+        
         if(!is_array($categories)) throw new CategoriesKeeperException(CategoriesKeeperException::INVALID_BAG_CONTENTS . ' | ' . print_r(['bag' => $this->bag], 1));
 
         foreach($categories as $channel_key => $channel_categories) 

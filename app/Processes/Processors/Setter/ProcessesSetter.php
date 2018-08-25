@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Processes\Processors\Base;
+namespace App\Processes\Processors\Setter;
 
 use App\Models\Channel;
 use App\Models\Process;

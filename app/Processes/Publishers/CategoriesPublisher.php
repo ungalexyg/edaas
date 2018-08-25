@@ -66,17 +66,18 @@ class CategoriesPublisher extends BasePublisher
         return $category;        
     }     
     
-
+    
     /**
      * Link published cateogires parents 
      * based on channel's hirarchy in storage category
      * 
+     * @see App\Models\Category
      * @return void
      */
     public function publishLinkParents() 
     {
-        // get categoies where there is storage link but the parent category not set yet
-        $categories = Category::where('storage_category_id', '!=', null)->where('parent_category_id', '=', null)->get();
+        // get organic & orphan categories
+        $categories = Category::organic()->orphan()->get();
 
         foreach($categories as $category) 
         {

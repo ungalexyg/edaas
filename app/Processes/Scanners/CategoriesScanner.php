@@ -19,6 +19,8 @@ class CategoriesScanner extends BaseScanner
      */
     public function scan() 
     {
+        dd($this->channels);
+
         foreach($this->channels as $channel) 
         {    
             $this->bag[$this->process][$channel->key] = $this->loadAdapter($channel->key)->adapter->fetch();

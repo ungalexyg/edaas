@@ -30,6 +30,14 @@ trait HasProcess
 
 
 	/**
+	 * Response message
+	 * 
+	 * @var null|string
+	 */
+	protected $message;
+
+
+	/**
 	 * The mature channels for process
 	 * 
 	 * @var array
@@ -58,7 +66,7 @@ trait HasProcess
 	 * 
 	 * @var array
 	 */
-	protected $properties = ['process', 'channels', 'config', 'bag'];
+	protected $properties = ['process', 'channels', 'config', 'bag', 'message'];
 
 
 	/**
@@ -122,6 +130,5 @@ trait HasProcess
 		}
 
 		return $this;
-	} 
-	
+	} 	
 }

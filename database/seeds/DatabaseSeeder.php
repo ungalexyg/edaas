@@ -1,10 +1,6 @@
 <?php
 
-
 use Illuminate\Database\Seeder;
-// use ChannelsSeeder;
-// use ProcessesSeeder;
-// use ProcessesChannelsSeeder;
 
 
 class DatabaseSeeder extends Seeder
@@ -19,7 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ChannelsSeeder::class,
             ProcessesSeeder::class,
-            ChannelsProcessesSeeder::class
+            ProcessesChannelsSeeder::class
         ]);
     }
 }

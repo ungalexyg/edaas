@@ -1,30 +1,32 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Processes;
 
 use Illuminate\Console\Command;
-use App\Processes\Processors\Base\ProcessesSetter;
+use App\Processes\Processors\Setter\ProcessesSetter;
 
 
 
 /**
- * Processes Channels Command
+ * Process Set Command
+ * 
+ * Set channels for each process based on processes config
  */
-class ProcessesChannelsCommand extends Command
+class ProcessSetChannelsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'processes:channels';
+    protected $signature = 'process:set-channels';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Refresh channels processes relations basedon processes config';
+    protected $description = 'Set channels for each process based on processes config';
 
     /**
      * Create a new command instance.
