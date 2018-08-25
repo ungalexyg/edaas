@@ -37,7 +37,7 @@ class CreateTableStorageCategories extends Migration
                 $table->unsignedTinyInteger('published')->default(0)->comment('If the record is published, the CategoriesPublisher will update the sourced category_id with the latest updates from the CategoiresProcessor [published = 1 | not published = 0]');
                 $table->timestamps();
                 
-                // the storage_categories serve as meta & resource reference to the categories records
+                // the storage_categories serve as resource reference to the categories records when they published
                 // no need to cascade storages, the storage record can be deleted and the category can stay published 
                 // and if the categories added manually, they can't be cascaded.                
                 $table->foreign('channel_id')->references('id')->on('channels');//->onDelete('cascade');                

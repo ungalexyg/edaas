@@ -24,7 +24,7 @@ class AlterTableCategoriesAddFkStorageCategoryId extends Migration
     {
         Schema::table($this->table, function (Blueprint $table) {
             
-            // the storage_categories serve as meta & resource reference to the categories records
+            // the storage_categories serve as resource reference to the categories records when they published
             // no need to cascade storages, the storage record can be deleted and the category can stay published 
             // and if the categories added manually, they can't be cascaded
             $table->foreign('storage_category_id')->references('id')->on('storage_categories'); //->onDelete('cascade');       

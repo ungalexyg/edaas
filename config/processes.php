@@ -94,7 +94,7 @@ return [
             // publish fetched storage_category records automatically to the public category table ?
             'auto_publish' => true,             
 
-            // activate fetched storage_category records automatically so the ItemsProcessor will fetch from them items ?
+            // activate published storage_category records automatically so the ItemsProcessor will fetch from them items ?
             'auto_active' => false,                         
         ] 
     ],
