@@ -34,11 +34,11 @@ trait HasAction
 	{	
 		if(!in_array($key, Actions::getConstants())) throw new ActionException(ActionException::UNDEFINED_ACTION_KEY);
 
-		$action = str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
+		list($entity, $action) = explode('@', $key);
 
-        $action = 'App\Actions\\' . ucwords($action) . 'Action';
+        $class = 'App\Actions\\' . $entity . '\\' . ucwords($action) . 'Action';
 
-		$this->action = new $action();			
+		$this->action = new $class();			
 		
 		if(!($this->action instanceof IAction)) throw new ActionException(ActionException::INVALID_ACTION_INSTANCE);
 

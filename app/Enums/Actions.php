@@ -11,7 +11,7 @@ class Actions extends BaseEnum
     /**
      * Processes actions
      */
-    const ACTIVATE_STORAGE_CATEGORY = 'activate_storage_category';
+    const ACTIVATE_STORAGE_CATEGORY = 'StorageCategory@activate';
 }
 
 

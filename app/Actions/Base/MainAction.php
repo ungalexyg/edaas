@@ -27,7 +27,7 @@ final class MainAction implements IMainAction
 	 * @param array $params
 	 * @return array $response
 	 */	
-	public function do($action, $params=[])
+	public function __construct($action, $params=[])
 	{
 		try 
 		{

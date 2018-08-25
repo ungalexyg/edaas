@@ -14,7 +14,7 @@ interface IMainAction
 	 * @param string App\Enums\Actions::$action
 	 * @return array $response
 	 */	
-	public function do($action);	
+	//public function do($action);	
 }
 
 
