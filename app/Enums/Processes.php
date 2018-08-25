@@ -8,10 +8,8 @@ namespace App\Enums;
  */ 
 class Processes extends BaseEnum 
 {
-
     const CATEGORIES = 'categories';
     const ITEMS = 'items';
-
 }
 
 

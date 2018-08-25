@@ -11,21 +11,23 @@
 |
 */
 
-Route::get('/search', 'DevController@search');
 
-Route::get('/search-img', 'DevController@imageSearch');
+/**
+ * Processes routes
+ */
+Route::get('process/categories', 'ProcessController@categories');
+Route::get('process/items', 'ProcessController@items');
 
-Route::get('/mongo', 'DevController@mongo');
+/**
+ * Actions routes
+ */
+Route::get('action/{action}/{params}', 'ActionController@action');
 
-Route::get('/embed', 'DevController@embed');
 
-
-
-Route::get('/categories', 'DevController@categories');
-Route::get('/items', 'DevController@items');
-
+/**
+ * Auth outes
+ */
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 

@@ -23,6 +23,12 @@ class Log extends CoreLog
 {
 
     /**
+     * Logging channels keyes - actions 
+     */
+    const ACTIONS               =  'actions';
+
+
+    /**
      * Logging channels keyes - main processor 
      */
     const MAIN_PROCESSOR        =  'main_processor';

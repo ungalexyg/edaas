@@ -3,7 +3,6 @@
 namespace App\Processes\Processors\Base;
 
 use Log;
-use App\Enums\Channels;
 use App\Models\Process;
 use App\Enums\Processes;
 use App\Processes\Traits\HasProcess;
@@ -13,7 +12,7 @@ use App\Exceptions\Processors\ProcessException;
 /**
  * Main Processor 
  * 
- * Load the processor & run it's process 
+ * Load the processors & run their process 
  */ 
 final class MainProcessor implements IMainProcessor  
 {
@@ -122,7 +121,7 @@ final class MainProcessor implements IMainProcessor
 		$this->processor->load();
 
 		return $this;
-	}
+	}	
 }
 
 

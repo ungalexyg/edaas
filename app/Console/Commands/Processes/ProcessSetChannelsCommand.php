@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Processes;
 
-use Illuminate\Console\Command;
+use App\Console\Commands\Base\BaseCommand;
 use App\Processes\Processors\Setter\ProcessesSetter;
 
 
@@ -12,7 +12,7 @@ use App\Processes\Processors\Setter\ProcessesSetter;
  * 
  * Set channels for each process based on processes config
  */
-class ProcessSetChannelsCommand extends Command
+class ProcessSetChannelsCommand extends BaseCommand
 {
     /**
      * The name and signature of the console command.
@@ -21,6 +21,7 @@ class ProcessSetChannelsCommand extends Command
      */
     protected $signature = 'process:set-channels';
 
+    
     /**
      * The console command description.
      *
@@ -28,15 +29,6 @@ class ProcessSetChannelsCommand extends Command
      */
     protected $description = 'Set channels for each process based on processes config';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.

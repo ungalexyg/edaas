@@ -1,24 +1,30 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Base;
 
-use Illuminate\Console\Command;
+use Illuminate\Console\Command as CoreCommand;
 
-class TestCommand extends Command
+
+/**
+ * Base Command
+ */
+abstract class BaseCommand extends CoreCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = '-'; 
+
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = '-';
+
 
     /**
      * Create a new command instance.
@@ -30,18 +36,11 @@ class TestCommand extends Command
         parent::__construct();
     }
 
+    
     /**
      * Execute the console command.
      *
      * @return mixed
      */
-    public function handle()
-    {
-        // desaired pattern
-
-        (new Scanner(Process::CATEGORIES))->start();
-        
-        
-        (new Whatcher(Process::CATEGORIES))->start();
-    }
+    abstract public function handle();
 }

@@ -17,7 +17,7 @@ for categoires and items
 https://laracasts.com/discuss/channels/eloquent/dynamic-table-name
 
 */
-class DevController extends Controller
+class ProcessController extends Controller
 {
     /**
      * Process Categories 

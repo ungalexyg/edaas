@@ -3,7 +3,7 @@
 namespace App\Console\Commands\Processes;
 
 use App\Enums\Processes;
-use Illuminate\Console\Command;
+use App\Console\Commands\Base\BaseCommand;
 use App\Processes\Processors\Base\MainProcessor as Processor;
 
 
@@ -12,7 +12,7 @@ use App\Processes\Processors\Base\MainProcessor as Processor;
  * 
  * Run the categories process
  */
-class ProcessCategoriesCommand extends Command
+class ProcessCategoriesCommand extends BaseCommand
 {
     /**
      * The name and signature of the console command.
@@ -21,6 +21,7 @@ class ProcessCategoriesCommand extends Command
      */
     protected $signature = 'process:categories {--output=message?}'; // output response ['messsage' | 'full']
 
+    
     /**
      * The console command description.
      *
@@ -28,15 +29,6 @@ class ProcessCategoriesCommand extends Command
      */
     protected $description = 'Run the categories process';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.
@@ -48,7 +40,7 @@ class ProcessCategoriesCommand extends Command
         $output = $this->option('output');
 
         $response = (new Processor)->run(Processes::CATEGORIES);
-
+                
         if($output == 'full') 
         {
             $this->info(print_r($response, 1));  

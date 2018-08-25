@@ -11,7 +11,7 @@ $process_categories_path = 'logs/processes/'.Processes::CATEGORIES;
 $process_items_path = 'logs/processes/'.Processes::ITEMS;
 
 // default process log days old to be deleted 
-$process_log_days = 7;
+$default_log_days = 7;
 
 
 
@@ -65,6 +65,29 @@ return [
     'channels' => [
 
 
+        ##############################################
+        # Actions Logs
+        ##############################################   
+
+
+        /**
+         * Main processor log
+         * 
+         * Log::channel(Log::ACTIONS)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         */        
+        Log::ACTIONS => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/actions/actions.log'),
+            'days' => $default_log_days, // after how many the log days theoldest will be deleted
+            'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
+        ],        
+
+
+        ##############################################
+        # Processor logs
+        ##############################################    
+
+
         /**
          * Main processor log
          * 
@@ -73,7 +96,7 @@ return [
         Log::MAIN_PROCESSOR => [
             'driver' => 'daily',
             'path' => storage_path('logs/processes/main/processor.log'),
-            'days' => $process_log_days, // after how many the log days theoldest will be deleted
+            'days' => $default_log_days, // after how many the log days theoldest will be deleted
             'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
         ],
 
@@ -91,7 +114,7 @@ return [
         Log::CATEGORIES_PROCESSOR => [
             'driver' => 'daily',
             'path' => storage_path($process_categories_path . '/processor.log'),
-            'days' => $process_log_days, // after how many the log days theoldest will be deleted
+            'days' => $default_log_days, // after how many the log days theoldest will be deleted
             'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
         ],
 
@@ -103,7 +126,7 @@ return [
         Log::CATEGORIES_SCANNER => [
             'driver' => 'daily',
             'path' => storage_path($process_categories_path . '/scanner.log'),
-            'days' => $process_log_days, 
+            'days' => $default_log_days, 
             'level' => 'debug', 
         ],  
 
@@ -115,7 +138,7 @@ return [
         Log::CATEGORIES_ADAPTERS => [
             'driver' => 'daily',
             'path' => storage_path($process_categories_path . '/adapters.log'),
-            'days' => $process_log_days, 
+            'days' => $default_log_days, 
             'level' => 'debug', 
         ],        
         
@@ -127,7 +150,7 @@ return [
         Log::CATEGORIES_KEEPER => [
             'driver' => 'daily',
             'path' => storage_path($process_categories_path . '/keeper.log'),
-            'days' => $process_log_days, 
+            'days' => $default_log_days, 
             'level' => 'debug', 
         ],   
 
@@ -139,7 +162,7 @@ return [
         Log::CATEGORIES_OBSERVER => [
             'driver' => 'daily',
             'path' => storage_path($process_categories_path . '/observer.log'),
-            'days' => $process_log_days, 
+            'days' => $default_log_days, 
             'level' => 'debug', 
         ],   
 
@@ -151,7 +174,7 @@ return [
         Log::CATEGORIES_PUBLISHER => [
             'driver' => 'daily',
             'path' => storage_path($process_categories_path . '/publishers.log'),
-            'days' => $process_log_days, 
+            'days' => $default_log_days, 
             'level' => 'debug', 
         ],   
 
@@ -170,7 +193,7 @@ return [
         Log::ITEMS_PROCESSOR => [
             'driver' => 'daily',
             'path' => storage_path($process_items_path . '/processor.log'),
-            'days' => $process_log_days, // after how many the log days theoldest will be deleted
+            'days' => $default_log_days, // after how many the log days theoldest will be deleted
             'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
         ],
 
@@ -182,7 +205,7 @@ return [
         Log::ITEMS_SCANNER => [
             'driver' => 'daily',
             'path' => storage_path($process_items_path . '/scanner.log'),
-            'days' => $process_log_days, 
+            'days' => $default_log_days, 
             'level' => 'debug', 
         ],  
 
@@ -194,7 +217,7 @@ return [
         Log::ITEMS_ADAPTERS => [
             'driver' => 'daily',
             'path' => storage_path($process_items_path . '/adapters.log'),
-            'days' => $process_log_days, 
+            'days' => $default_log_days, 
             'level' => 'debug', 
         ],        
         
@@ -206,7 +229,7 @@ return [
         Log::ITEMS_KEEPER => [
             'driver' => 'daily',
             'path' => storage_path($process_items_path . '/keeper.log'),
-            'days' => $process_log_days, 
+            'days' => $default_log_days, 
             'level' => 'debug', 
         ],   
 
@@ -218,7 +241,7 @@ return [
         Log::ITEMS_OBSERVER => [
             'driver' => 'daily',
             'path' => storage_path($process_items_path . '/observer.log'),
-            'days' => $process_log_days, 
+            'days' => $default_log_days, 
             'level' => 'debug', 
         ],   
 
@@ -230,7 +253,7 @@ return [
         Log::ITEMS_PUBLISHER => [
             'driver' => 'daily',
             'path' => storage_path($process_items_path . '/publishers.log'),
-            'days' => $process_log_days, 
+            'days' => $default_log_days, 
             'level' => 'debug', 
         ],          
 
@@ -239,7 +262,6 @@ return [
         # Default sample logs
         #############################################
         
-
 
         /**
          * Sample stack
