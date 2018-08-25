@@ -34,7 +34,7 @@ trait HasProcess
 	 * 
 	 * @var null|string
 	 */
-	protected $message;
+	public $message;
 
 
 	/**

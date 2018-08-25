@@ -34,12 +34,9 @@ final class MainProcessor implements IMainProcessor
 	{
 		try 
 		{
-			$this->setProcess($process)
-					->setChannels()
-						->setConfig()
-							->loadProcessor();
+			$this->setProcess($process)->setChannels()->setConfig()->loadProcessor();
 
-			return $this->processor->process()->response();
+			return $this->processor->process()->stamp()->response();
 		}
 		catch(\Exception $e) 
 		{

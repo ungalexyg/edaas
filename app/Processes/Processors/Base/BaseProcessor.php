@@ -72,7 +72,7 @@ abstract class BaseProcessor implements IProcessor
 	{
 		if(!$this->message) 
 		{
-			$this->message = 'the processor completed the process with ' . (!empty($this->bag) ? 'full bag :)': 'empty bag :/');
+			$this->message = 'the '.$this->process.' processor completed the process with ' . (!empty($this->bag) ? 'full bag :)': 'empty bag :/');
 		}
 
 		$log_channel = ( $this->process ? $this->process . '_processor' :  Log::MAIN_PROCESSOR);

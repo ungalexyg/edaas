@@ -80,17 +80,17 @@ return [
      */
     'settings' => [
 
+        // what should be the minimum age of a process in order to run it by MINUTES ?
+        // the age of the process checked by : channels_processes.last_process.            
+        // if several processes are 'mature' enough, the processor will start to run from the oldest
+        'min_age' => (60*24), // 24 hours in minutes, 
+
+        // how many from the 'mature' process_channels should be processed in each process ?            
+        'limit_channels' => 2,         
+
         Processes::ITEMS => [
         ],
         Processes::CATEGORIES => [
-            // what should be the minimum age of a process in order to run it by MINUTES ?
-            // the age of the process checked by : channels_processes.last_process.            
-            // if several processes are 'mature' enough, the processor will start to run from the oldest
-            'min_age' => (60*24), // 24 hours in minutes, 
-
-            // how many from the 'mature' process_channels should be processed in each process ?            
-            'limit_channels' => 2, 
-
             // publish fetched storage_category records automatically to the public category table ?
             'auto_publish' => true,             
 

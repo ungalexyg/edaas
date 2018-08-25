@@ -55,7 +55,7 @@ class Process extends BaseModel
     /**
      * Scope mature channels for process 
      * 
-     * Bsed on config, generate similar to the following query : 
+     * Bsed on processes config, generate similar to the following query : 
      * 
      *  select 
      *       `channels`.*, 
@@ -69,14 +69,14 @@ class Process extends BaseModel
      *   order by `processes_channels`.`last_process` asc 
      *   limit 2;
      *  
-     * @see config('processes.settings.categories')
+     * @see config('processes.settings')
      * @param Illuminate\Database\Query\Builder // injected natively
      * @param string $process // processes key
      * @return void
      */
     public function scopeMatureChannels($query, $process)
     {
-        $config = config('processes.settings.categories');
+        $config = config('processes.settings');
 
         $min_age = $config['min_age'] ?? (60*24); // 24 hours in minutes
         

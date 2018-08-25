@@ -3,6 +3,7 @@
 namespace App\Processes\Processors;
 
 use Log;
+use App\Processes\Processors\Base\BaseProcessor;
 
 
 /**
@@ -22,6 +23,7 @@ class CategoriesProcessor extends BaseProcessor
 		return $this->loadScanner()->loadKeeper();
 	}
 
+	
 	/**
 	 * Manage the process
 	 * 
@@ -39,8 +41,6 @@ class CategoriesProcessor extends BaseProcessor
 
 			$this->loadPublisher()->publisher->pull()->publish();
 		}
-
-		$this->stamp();
 
 		return $this;
 	}		

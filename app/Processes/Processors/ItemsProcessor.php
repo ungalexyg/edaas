@@ -2,14 +2,7 @@
 
 namespace App\Processes\Processors;
 
-
-use Log;
-use App\Processes\Traits\HasKeeper;
-use App\Processes\Traits\HasProcess;
-use App\Processes\Traits\HasScanner;
-use App\Processes\Traits\HasPublisher;
-use App\Processes\Processors\Base\IProcessor;
-use App\Models\Process;
+use App\Processes\Processors\Base\BaseProcessor;
 
 /**
  * Items Processor 
