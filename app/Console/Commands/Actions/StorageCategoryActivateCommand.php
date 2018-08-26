@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Console\Commands\Actions;
+namespace App\Console\Commands\Acts;
 
-use App\Enums\Actions;
-use App\Actions\Base\MainAction as Action;
+use App\Enums\Acts;
+use App\Acts\Base\MainAct as Act;
 use App\Console\Commands\Base\BaseCommand;
 use App\Http\Controllers\StorageCategoryController;
 
@@ -18,7 +18,7 @@ class StorageCategoryActivateCommand extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'action:StorageCategory@activate {id}'; // required storage category id 
+    protected $signature = 'Act:StorageCategory@activate {id}'; // required storage category id 
 
 
     /**
@@ -40,7 +40,7 @@ class StorageCategoryActivateCommand extends BaseCommand
         
         $id = $this->argument('id');
         
-        $response = (new Action(Actions::ACTIVATE_STORAGE_CATEGORY, ['id' => $id]));
+        $response = (new Act(Acts::ACTIVATE_STORAGE_CATEGORY, ['id' => $id]));
         
         $this->info(print_r($response, 1));  
     }

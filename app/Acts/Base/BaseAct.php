@@ -1,17 +1,17 @@
 <?php 
 
-namespace App\Actions\Base;
+namespace App\Acts\Base;
 
 use Log;
 
 
 /**
- * Base Action
+ * Base Act
  */ 
-abstract class BaseAction implements IAction  
+abstract class BaseAct implements IAct  
 {
 	/**
-	 * Action key
+	 * Act key
 	 * 
 	 * @var null|string
 	 */
@@ -19,7 +19,7 @@ abstract class BaseAction implements IAction
 
 
 	/**
-	 * Action params
+	 * Act params
 	 * 
 	 * @var array
 	 */
@@ -27,7 +27,7 @@ abstract class BaseAction implements IAction
 		
 
 	/**
-	 * Action message
+	 * Act message
 	 * 
 	 * @var null|string
 	 */
@@ -35,7 +35,7 @@ abstract class BaseAction implements IAction
 
 
 	/**
-	 * Handle action
+	 * Handle Act
 	 * 
 	 * @return self
 	 */	
@@ -43,8 +43,8 @@ abstract class BaseAction implements IAction
 
 
 	/**
-	 * Generate action response
-	 * and log action's message
+	 * Generate Act response
+	 * and log Act's message
 	 * 
 	 * @return array $response
 	 */
@@ -52,10 +52,10 @@ abstract class BaseAction implements IAction
 	{
 		if(!$this->message) 
 		{
-			$this->message = 'the action '. $this->key .' completed';
+			$this->message = 'the Act '. $this->key .' completed';
 		}
 
-		Log::channel(Log::ACTIONS)->info($this->message, ['in' => __METHOD__ .':'.__LINE__]);
+		Log::channel(Log::ACTS)->info($this->message, ['in' => __METHOD__ .':'.__LINE__]);
 
 		return ['message' => $this->message];
 	}		

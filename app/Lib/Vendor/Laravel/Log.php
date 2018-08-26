@@ -21,11 +21,10 @@ use App\Enums\Processes;
  */
 class Log extends CoreLog
 {
-
     /**
-     * Logging channels keyes - actions 
+     * Logging channels keyes - Acts 
      */
-    const ACTIONS               =  'actions';
+    const ACTS                  =  'acts';
 
 
     /**

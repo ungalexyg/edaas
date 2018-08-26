@@ -1,15 +1,15 @@
 <?php 
 
-namespace App\Actions\Base;
+namespace App\Acts\Base;
 
 
 /**
- * Action Interface 
+ * Act Interface 
  */ 
-interface IAction
+interface IAct
 {
 	/**
-	 * Handle action
+	 * Handle Act
 	 * 
 	 * @return self
 	 */	
@@ -17,7 +17,7 @@ interface IAction
 
 
 	/**
-	 * Return action's response
+	 * Return Act's response
 	 * 
 	 * @return array
 	 */

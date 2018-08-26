@@ -4,12 +4,12 @@ namespace App\Enums;
 
 
 /**
- * Actions Enum
+ * Acts Enum
  */ 
-class Actions extends BaseEnum 
+class Acts extends BaseEnum 
 {
     /**
-     * Processes actions
+     * Processes Acts
      */
     const ACTIVATE_STORAGE_CATEGORY = 'StorageCategory@activate';
 }

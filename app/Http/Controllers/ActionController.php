@@ -6,21 +6,17 @@ use App\Enums\Processes;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\StorageCategory;
-use App\Actions\Base\MainAction as Action;
+use App\Acts\Base\MainAct as Act;
 
 
 
-class ActionController extends Controller
+class ActController extends Controller
 {
     /**
-     * Perform action
+     * Perform an act
      */
-    public function action($action, $params) 
+    public function act($act, $params) 
     {
-        
+
     }
-
-
-
-
 }

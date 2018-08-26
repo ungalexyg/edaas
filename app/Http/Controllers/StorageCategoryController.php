@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Actions;
+use App\Enums\Acts;
 use App\Enums\Processes;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\StorageCategory;
-use App\Actions\Base\MainAction as Action;
+use App\Acts\Base\MainAct as Act;
 
 
 
 class StorageCategoryController extends Controller
 {
     /**
-     * Perform action
+     * Perform Act
      */
     public function activate($id) 
     {
-        $response = (new Action)->do(Actions::ACTIVATE_STORAGE_CATEGORY, ['id' => $id]);
+        $response = (new Act)->do(Acts::ACTIVATE_STORAGE_CATEGORY, ['id' => $id]);
 
         dd($response);
     }

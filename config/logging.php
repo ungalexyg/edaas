@@ -73,11 +73,11 @@ return [
         /**
          * Main processor log
          * 
-         * Log::channel(Log::ACTIONS)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         * Log::channel(Log::ACTS)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
          */        
-        Log::ACTIONS => [
+        Log::ACTS => [
             'driver' => 'daily',
-            'path' => storage_path('logs/actions/actions.log'),
+            'path' => storage_path('logs/acts/acts.log'),
             'days' => $default_log_days, // after how many the log days theoldest will be deleted
             'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
         ],        
