@@ -11,12 +11,7 @@ use App\Processes\Processors\Base\IProcess;
  */ 
 interface IKeeper extends IProcess 
 {
-	/**
-	 * Store fresh scanned data in the storage
-	 * 
-	 * @return self
-	 */
-	public function store();	
+
 }
 
 

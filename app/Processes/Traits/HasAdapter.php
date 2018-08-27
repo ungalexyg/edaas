@@ -2,7 +2,7 @@
 
 namespace App\Processes\Traits;
 
-use App\Exceptions\Processors\ProcessException;
+use App\Exceptions\Processors\MainProcessorException;
 
 
 /**
@@ -25,14 +25,14 @@ trait HasAdapter
 	 * Load Adapter
 	 * 
 	 * @param string $channel
-	 * @throws ProcessException
+	 * @throws MainProcessorException
 	 * @return self
 	 */	
 	public function loadAdapter($channel) 
 	{			
 		$adapter = 'App\Processes\Adapters\\' . ucwords($channel) . '\\' . ucwords($channel) . ucwords($this->process) . 'Adapter';
 
-		if (!class_exists($adapter))  throw new ProcessException(ProcessException::UNDEFINED_ADAPTER . ' | adapter : ' . $adapter);
+		if (!class_exists($adapter))  throw new MainProcessorException(MainProcessorException::UNDEFINED_ADAPTER . ' | adapter : ' . $adapter);
 
 		$this->adapter = new $adapter();		
 

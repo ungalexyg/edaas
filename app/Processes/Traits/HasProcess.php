@@ -2,8 +2,10 @@
 
 namespace App\Processes\Traits;
 
-use App\Exceptions\Processors\ProcessException;
+use App\Models\Process;
 use App\Processes\Processors\Base\IProcessor;
+use App\Exceptions\Processors\MainProcessorException;
+use App\Enums\ProcessesEnum as Processes;
 
 /**
  * Has Process Trait 
@@ -62,73 +64,54 @@ trait HasProcess
 
 
 	/**
-	 * Default common process properties 
+	 * Set process
 	 * 
-	 * @var array
-	 */
-	protected $properties = ['process', 'channels', 'config', 'bag', 'message'];
-
-
-	/**
-	 * Set Processor
-	 * 
-	 * @param IProcessor $processor
+	 * @param string Processes::$process 
+	 * @throws MainProcessorException
 	 * @return self
 	 */	
-	public function setProcessor(IProcessor &$processor) 
-	{			
-		$this->processor = $processor;		
-
+	private function setProcess($process) 
+	{
+		if(!in_array($process, Processes::getConstants())) throw new MainProcessorException(MainProcessorException::UNDEFINED_PROCESS);
+		
+		$this->process = $process;
+		
 		return $this;
 	}
-	
+
 
 	/**
-	 * Pull common process properties from the processor
+	 * Set mature channels for process
 	 * 
-	 * @param array $properties
+	 * @throws MainProcessorException
+	 * @return self
+	 */	
+	private function setChannels() 
+	{
+		$process = Process::matureChannels($this->process)->first(); // 1st process should be single result for $this->process anyway
+
+		if(!$process->channels->count()) 
+		{
+			Log::channel(Log::MAIN_PROCESSOR)->info(MainProcessorException::MATURE_CHANNELS_NOT_FOUND, ['in' => __METHOD__ .':'.__LINE__]);
+			
+			throw new MainProcessorException(MainProcessorException::MATURE_CHANNELS_NOT_FOUND);
+		} 
+
+		$this->channels = $process->channels;		
+
+		return $this;
+	}	
+
+
+	/**
+	 * Set process config
+	 * 
 	 * @return self
 	 */
-	public function pull($properties=[]) 
+	private function setConfig() 
 	{
-		if(!($this->processor instanceof IProcessor)) throw new ProcessException(ProcessException::FAILED_PULL_INVALID_INSTANCE);
-
-		$properties = (!empty($properties) ? $properties : $this->properties);
-
-		$existing_properties = get_object_vars($this->processor);
-
-		foreach($properties as $property)
-		{
-			if(!array_key_exists($property, $existing_properties)) throw new ProcessException(ProcessException::FAILED_PULL_INVALID_PROPERTY  . ' | property: ' . $property);
-
-			$this->{$property} 	= &$this->processor->{$property} ?? null;
-		}
+		$this->config = config('processes.settings.' . $this->process) ?? [];
 
 		return $this;
 	} 
-	
-	
-	/**
-	 * Push common process properties to the processor
-	 * 
-	 * @param array $properties
-	 * @return self
-	 */
-	public function push($properties=[]) 
-	{
-		if(!($this->processor instanceof IProcessor)) throw new ProcessException(ProcessException::FAILED_PUSH_INVALID_INSTANCE);
-
-		$properties = (!empty($properties) ? $properties : $this->properties);
-		
-		$existing_properties = get_object_vars($this);
-		
-		foreach($properties as $property)
-		{
-			if(!array_key_exists($property, $existing_properties)) throw new ProcessException(ProcessException::FAILED_PUSH_INVALID_PROPERTY . ' | property: ' . $property . ' | instance: ' . get_class($this));
-
-			$this->processor->{$property} = &$this->{$property} ?? null;
-		}
-
-		return $this;
-	} 	
 }

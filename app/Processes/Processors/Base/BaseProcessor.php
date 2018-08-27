@@ -3,12 +3,9 @@
 namespace App\Processes\Processors\Base;
 
 use Log;
-use App\Processes\Traits\HasKeeper;
-use App\Processes\Traits\HasProcess;
-use App\Processes\Traits\HasScanner;
-use App\Processes\Traits\HasPublisher;
+use Act;
 use App\Models\Process;
-
+use App\Processes\Traits\HasProcess;
 
 /**
  * Base Processor 
@@ -18,15 +15,7 @@ abstract class BaseProcessor implements IProcessor
 	/**
 	 * Processes traits
 	 */
-	use HasProcess, HasScanner, HasKeeper, HasPublisher;
-
-
-	/**
-	 * Load processor dependencies
-	 * 
-	 * @return self
-	 */	
-	abstract public function load();	
+	use HasProcess;
 
 
 	/**
@@ -35,6 +24,30 @@ abstract class BaseProcessor implements IProcessor
 	 * @return self
 	 */
 	abstract public function process();	
+
+
+    /**
+     * Scan & fetch data from channel 
+     * 
+     * @return self
+     */
+	abstract public function scan();
+
+    
+	/**
+	 * Store fresh scanned data in the storage
+	 * 
+	 * @return self
+	 */
+	abstract public function store();			
+
+
+    /**
+	 *  Publish data from the storage 
+	 * 
+	 * @return void
+     */
+	abstract public function publish();		
 
 
 	/**

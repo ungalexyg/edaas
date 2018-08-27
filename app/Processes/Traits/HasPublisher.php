@@ -2,7 +2,7 @@
  
 namespace App\Processes\Traits;
 
-use App\Exceptions\Processors\ProcessException;
+use App\Exceptions\Processors\MainProcessorException;
 
 
 /**
@@ -23,14 +23,14 @@ trait HasPublisher
 	/**
 	 * Load Publisher
 	 * 
-	 * @throws ProcessException
+	 * @throws MainProcessorException
 	 * @return self
 	 */	
 	protected function loadPublisher() 
 	{			
 		$publisher = 'App\Processes\Publishers\\' . ucwords($this->process) . 'Publisher';
 	
-		if (!class_exists($publisher))  throw new ProcessException(ProcessException::UNDEFINED_PUBLISHER);
+		if (!class_exists($publisher))  throw new MainProcessorException(MainProcessorException::UNDEFINED_PUBLISHER);
 
 		$this->publisher = new $publisher();		
 

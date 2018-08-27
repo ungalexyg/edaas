@@ -2,7 +2,7 @@
 
 namespace App\Processes\Traits;
 
-use App\Exceptions\Processors\ProcessException;
+use App\Exceptions\Processors\MainProcessorException;
 
 
 /**
@@ -24,14 +24,14 @@ trait HasScanner
 	/**
 	 * Load Scanner
 	 * 
-	 * @throws ProcessException
+	 * @throws MainProcessorException
 	 * @return self
 	 */	
 	protected function loadScanner() 
 	{	
         $scanner = 'App\Processes\Scanners\\' . ucwords($this->process) . 'Scanner';
 
-        if (!class_exists($scanner))  throw new ProcessException(ProcessException::UNDEFINED_SCANNER);
+        if (!class_exists($scanner))  throw new MainProcessorException(MainProcessorException::UNDEFINED_SCANNER);
 
         $this->scanner = new $scanner();			
 

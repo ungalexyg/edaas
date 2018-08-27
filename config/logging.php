@@ -113,22 +113,10 @@ return [
          */        
         Log::CATEGORIES_PROCESSOR => [
             'driver' => 'daily',
-            'path' => storage_path($process_categories_path . '/processor.log'),
+            'path' => storage_path($process_categories_path . '/'.Log::CATEGORIES_PROCESSOR.'.log'),
             'days' => $default_log_days, // after how many the log days theoldest will be deleted
             'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
         ],
-
-        /**
-         * Categories scanner log
-         * 
-         * Log::channel(Log::CATEGORIES_SCANNER)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
-         */        
-        Log::CATEGORIES_SCANNER => [
-            'driver' => 'daily',
-            'path' => storage_path($process_categories_path . '/scanner.log'),
-            'days' => $default_log_days, 
-            'level' => 'debug', 
-        ],  
 
         /**
          * Categories adapters log
@@ -142,17 +130,6 @@ return [
             'level' => 'debug', 
         ],        
         
-        /**
-         * Categories keeper log
-         * 
-         * Log::channel(Log::CATEGORIES_KEEPER)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
-         */        
-        Log::CATEGORIES_KEEPER => [
-            'driver' => 'daily',
-            'path' => storage_path($process_categories_path . '/keeper.log'),
-            'days' => $default_log_days, 
-            'level' => 'debug', 
-        ],   
 
         /**
          * Categories observers log
@@ -165,18 +142,7 @@ return [
             'days' => $default_log_days, 
             'level' => 'debug', 
         ],   
-
-        /**
-         * Categories publishers log
-         * 
-         * Log::channel(Log::CATEGORIES_PUBLISHER)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
-         */        
-        Log::CATEGORIES_PUBLISHER => [
-            'driver' => 'daily',
-            'path' => storage_path($process_categories_path . '/publishers.log'),
-            'days' => $default_log_days, 
-            'level' => 'debug', 
-        ],   
+  
 
 
 
@@ -197,17 +163,6 @@ return [
             'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
         ],
 
-        /**
-         * Categories scanner log
-         * 
-         * Log::channel(Log::ITEMS_SCANNER)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
-         */        
-        Log::ITEMS_SCANNER => [
-            'driver' => 'daily',
-            'path' => storage_path($process_items_path . '/scanner.log'),
-            'days' => $default_log_days, 
-            'level' => 'debug', 
-        ],  
 
         /**
          * Categories adapters log
@@ -221,17 +176,6 @@ return [
             'level' => 'debug', 
         ],        
         
-        /**
-         * Categories keeper log
-         * 
-         * Log::channel(Log::ITEMS_KEEPER)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
-         */        
-        Log::ITEMS_KEEPER => [
-            'driver' => 'daily',
-            'path' => storage_path($process_items_path . '/keeper.log'),
-            'days' => $default_log_days, 
-            'level' => 'debug', 
-        ],   
 
         /**
          * Categories observers log

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Exceptions\Processors\Keepers;
+namespace App\Exceptions\Processors;
 
 use App\Exceptions\BaseException;
 
 
 /**
- * Categories Keeper Exception
+ * Categories Processor Exception
  */
-class CategoriesKeeperException extends BaseException
+class CategoriesProcessorException extends BaseException
 {
     const INVALID_BAG_CONTENTS          = 'Invalid bag contents passed to the keeper';
     const INVALID_CHANNEL_KEY           = 'Invalid channel key passed to keeper';

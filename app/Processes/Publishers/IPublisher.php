@@ -10,12 +10,7 @@ use App\Processes\Processors\Base\IProcess;
  */ 
 interface IPublisher extends IProcess 
 {
-    /**
-	 *  Publish data from the storage 
-	 * 
-	 * @return void
-     */
-    public function publish();	
+
 }
 
 

@@ -8,11 +8,12 @@ use App\Exceptions\BaseException;
 /**
  * Process Exception
  */
-class ProcessException extends BaseException
+class MainProcessorException extends BaseException
 {
     const UNDEFINED_PROCESS             = 'Can\'t set undefined process key';
     const MATURE_CHANNELS_NOT_FOUND     = 'Mature channels for the process not found yet, try after the maturity period that was set in the config under the min_age';
     const UNDEFINED_PROCESSOR           = 'Failed to load undefined processor instance';
+    const INVALID_PROCESSOR             = 'Trying to load invalid processor instance';
     const UNDEFINED_SCANNER             = 'Failed to load undefined scanner instance';
     const UNDEFINED_KEEPER              = 'Failed to load undefined keeper instance';
     const UNDEFINED_PUBLISHER           = 'Failed to load undefined publisher instance';  

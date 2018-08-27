@@ -9,14 +9,6 @@ namespace App\Processes\Processors\Base;
 interface IProcessor extends IProcess 
 {
 	/**
-	 * Load processor dependencies
-	 * 
-	 * @return self
-	 */	
-	public function load();	
-
-
-	/**
 	 * Perform the process
 	 * 
 	 * @return self
@@ -24,12 +16,36 @@ interface IProcessor extends IProcess
 	public function process();	
 
 
+    /**
+     * Scan & fetch data from channel 
+     * 
+     * @return self
+     */
+	public function scan();
+
+    
+	/**
+	 * Store fresh scanned data in the storage
+	 * 
+	 * @return self
+	 */
+	public function store();			
+
+
+    /**
+	 *  Publish data from the storage 
+	 * 
+	 * @return void
+     */
+	public function publish();	
+		
+
 	/**
 	 * Update process timestamp
 	 * 
 	 * @return self
 	 */
-	public function stamp();	
+	public function stamp();		
 
 
 	/**
