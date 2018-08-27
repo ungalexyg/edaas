@@ -3,9 +3,10 @@
 namespace App\Acts\StorageCategory;
 
 use App\Enums\Acts;
-use App\Models\StorageCategory;
 use App\Acts\Base\BaseAct;
+use App\Models\StorageCategory;
 use App\Exceptions\Acts\ActException;
+
 
 /**
  * Activate storage category Act
@@ -13,11 +14,11 @@ use App\Exceptions\Acts\ActException;
 class ActivateAct extends BaseAct
 {
     /**
-     * Handle Act
+     * Perform an Act
      *
      * @return mixed
      */
-    public function handle()
+    public function perform()
     {   
         $id = $this->params['id'] ?? false;
 
@@ -27,9 +28,12 @@ class ActivateAct extends BaseAct
 
         if(!isset($storage_category->id)) throw new ActException('the StorageCategory record not found for id ' . $id);
 
-        $storage_category->active = 1;
+        if($storage_category->active != 1) 
+        {
+            $storage_category->active = 1;
 
-        $storage_category->save();
+            $storage_category->save();
+        }
 
         $this->message = 'storage category ' . $id . ' activated.';
 

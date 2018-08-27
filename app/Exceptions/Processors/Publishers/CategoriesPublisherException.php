@@ -2,7 +2,6 @@
 
 namespace App\Exceptions\Processors\Publishers;
 
-use Exception;
 use App\Exceptions\BaseException;
 
 

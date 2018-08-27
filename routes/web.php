@@ -13,18 +13,6 @@
 
 
 /**
- * Processes routes
- */
-Route::get('process/categories', 'ProcessController@categories');
-Route::get('process/items', 'ProcessController@items');
-
-/**
- * Actions routes
- */
-Route::get('action/{action}/{params}', 'ActionController@action');
-
-
-/**
  * Auth outes
  */
 Auth::routes();

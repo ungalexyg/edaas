@@ -2,11 +2,13 @@
 
 namespace App\Acts\Base;
 
+use App\Enums\Contracts\IActsEnum;
+
 
 /**
  * Main Act Interface 
  */ 
-interface IMainAct 
+interface IMainAct extends IActsEnum  
 {
 	/**
 	 * Initiate IAct instance & perform it's handler

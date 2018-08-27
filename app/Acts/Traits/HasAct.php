@@ -2,8 +2,8 @@
 
 namespace App\Acts\Traits;
 
-use App\Enums\Acts;
 use App\Acts\Base\IAct;
+use App\Enums\ActsEnum;
 use App\Exceptions\Acts\ActException;
 
 
@@ -19,7 +19,7 @@ trait HasAct
 	 * 
 	 * @var IAct
 	 */
-	protected $act;	     
+	protected static $act;	     
 
 
 	/**
@@ -28,24 +28,24 @@ trait HasAct
 	 * @param string $key // Act key
 	 * @param array $params // Act params
 	 * @throws ActException
-	 * @return self
+	 * @return IAct
 	 */	
-	protected function loadAct($key, $params=[]) 
+	protected static function loadAct($key, $params=[]) 
 	{	
-		if(!in_array($key, Acts::getConstants())) throw new ActException(ActException::UNDEFINED_Act_KEY);
+		if(!in_array($key, ActsEnum::getConstants())) throw new ActException(ActException::UNDEFINED_Act_KEY);
 
 		list($entity, $Act) = explode('@', $key);
 
         $class = 'App\Acts\\' . $entity . '\\' . ucwords($Act) . 'Act';
 
-		$this->act = new $class();			
+		static::$act = new $class();			
 		
-		if(!($this->act instanceof IAct)) throw new ActException(ActException::INVALID_Act_INSTANCE);
+		if(!(static::$act instanceof IAct)) throw new ActException(ActException::INVALID_Act_INSTANCE);
 
-		$this->act->key = $key;
+		static::$act->key = $key;
 		
-		$this->act->params = $params;
+		static::$act->params = $params;
 
-        return $this;
+		return static::$act;
 	}	    
 }

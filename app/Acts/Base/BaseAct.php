@@ -8,7 +8,7 @@ use Log;
 /**
  * Base Act
  */ 
-abstract class BaseAct implements IAct  
+abstract class BaseAct implements IAct
 {
 	/**
 	 * Act key
@@ -35,11 +35,11 @@ abstract class BaseAct implements IAct
 
 
 	/**
-	 * Handle Act
+	 * Perform an Act
 	 * 
 	 * @return self
 	 */	
-	abstract public function handle();	
+	abstract public function perform();	
 
 
 	/**

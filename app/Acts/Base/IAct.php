@@ -2,18 +2,20 @@
 
 namespace App\Acts\Base;
 
+use App\Enums\Contracts\IActsEnum;
+
 
 /**
  * Act Interface 
  */ 
-interface IAct
+interface IAct extends IActsEnum 
 {
 	/**
-	 * Handle Act
+	 * Perform an Act
 	 * 
 	 * @return self
 	 */	
-	public function handle();	
+	public function perform();	
 
 
 	/**

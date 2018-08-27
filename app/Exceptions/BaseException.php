@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use Exception;
+use Exception as CoreException;
 
 
 /**
@@ -11,7 +11,7 @@ use Exception;
  * Handle common exceptions functionality
  * 
  */
-class BaseException extends Exception
+class BaseException extends CoreException
 {
     
     const METHOD_NOT_IMPLEMENTED = 'Method not implemented';

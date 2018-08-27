@@ -2,7 +2,6 @@
 
 namespace App\Exceptions\Adapters\Aliexpress;
 
-use Exception;
 use App\Exceptions\BaseException;
 
 

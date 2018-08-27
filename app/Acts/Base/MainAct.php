@@ -20,24 +20,31 @@ final class MainAct implements IMainAct
 	 */
 	use HasAct;
 
+
 	/**
 	 * Initiate IAct instance & perform it's handler
+	 * The act performed in try catch block since 
+	 * it runs in processes which shouldn't be stopped by exceptions.
 	 * 
-	 * @param string App\Enums\Acts::$Act
+	 * usage: Act::do(Act::SOMETHING, $params);
+	 * 
+	 * @param string App\Enums\IActsEnum::$act 
 	 * @param array $params
 	 * @return array $response
 	 */	
-	public function __construct($Act, $params=[])
+	public static function do($act, $params=[])
 	{
 		try 
 		{
-			return $this->loadAct($Act, $params)->Act->handle()->response();
+			return static::loadAct($act, $params)->perform()->response();
 		}
 		catch(\Exception $e) 
 		{
 			return [
 				'exception' => get_class($e),
-				'message' => $e->getMessage()
+				'message' => $e->getMessage(),
+				'file' => $e->getFile(),
+				'line' => $e->getLine()
 			];
 		}
 	}

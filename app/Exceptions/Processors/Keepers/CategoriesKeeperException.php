@@ -2,7 +2,6 @@
 
 namespace App\Exceptions\Processors\Keepers;
 
-use Exception;
 use App\Exceptions\BaseException;
 
 

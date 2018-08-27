@@ -2,7 +2,6 @@
 
 namespace App\Exceptions\Acts;
 
-use Exception;
 use App\Exceptions\BaseException;
 
 

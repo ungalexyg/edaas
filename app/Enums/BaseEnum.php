@@ -2,6 +2,7 @@
 
 namespace App\Enums;
 
+
 /**
  * Base Enum
  */ 
@@ -16,7 +17,6 @@ class BaseEnum
     {
         return (new \ReflectionClass(get_called_class()))->getConstants();
     }
-
 }
 
 

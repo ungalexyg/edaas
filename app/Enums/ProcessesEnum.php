@@ -6,11 +6,8 @@ namespace App\Enums;
 /**
  * Processes Enum
  */ 
-class Processes extends BaseEnum 
+class ProcessesEnum extends BaseEnum 
 {
     const CATEGORIES = 'categories';
     const ITEMS = 'items';
 }
-
-
-
