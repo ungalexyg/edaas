@@ -7,9 +7,7 @@ use Exception as CoreException;
 
 /**
  * Base Exception
- * 
  * Handle common exceptions functionality
- * 
  */
 class BaseException extends CoreException
 {

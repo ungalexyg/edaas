@@ -6,7 +6,7 @@ namespace App\Enums;
 /**
  * Channels Enum
  */ 
-class ChannelsEnum extends BaseEnum 
+class ChannelEnum extends BaseEnum 
 {
     const ALIEXPRESS    = 'aliexpress';
     const AMAZON        = 'amazon';

@@ -18,7 +18,7 @@ class ActivateAct extends BaseAct
      *
      * @return mixed
      */
-    public function perform()
+    public function execute()
     {   
         $id = $this->params['id'] ?? false;
 

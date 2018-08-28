@@ -6,7 +6,7 @@ namespace App\Enums\Contracts;
 /**
  * Acts Enum Interface
  */ 
-interface IActsEnum
+interface IActEnum
 {
     /**
      * Acts keys

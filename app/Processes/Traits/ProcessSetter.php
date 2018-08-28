@@ -3,26 +3,14 @@
 namespace App\Processes\Traits;
 
 use App\Models\Process;
-use App\Processes\Processors\Base\IProcessor;
-use App\Exceptions\Processors\MainProcessorException;
-use App\Enums\ProcessesEnum as Processes;
+use App\Exceptions\Processors\ProcessSetterException;
+use App\Enums\ProcessEnum as Processes;
 
 /**
- * Has Process Trait 
- * 
- * Embed process related properties, utilities & referance to the processor instance in the using class
+ * Process Setter Trait 
  */ 
-trait HasProcess 
+trait ProcessSetter 
 {
-
-	/**
-	 * Processor instance
-	 * 
-	 * @var IProcessor
-	 */
-	protected $processor;	   
-
-
 	/**
 	 * The current process
 	 * 
@@ -72,7 +60,7 @@ trait HasProcess
 	 */	
 	private function setProcess($process) 
 	{
-		if(!in_array($process, Processes::getConstants())) throw new MainProcessorException(MainProcessorException::UNDEFINED_PROCESS);
+		if(!in_array($process, Processes::getConstants())) throw new ProcessSetterException(ProcessSetterException::UNDEFINED_PROCESS);
 		
 		$this->process = $process;
 		
@@ -92,9 +80,9 @@ trait HasProcess
 
 		if(!$process->channels->count()) 
 		{
-			Log::channel(Log::MAIN_PROCESSOR)->info(MainProcessorException::MATURE_CHANNELS_NOT_FOUND, ['in' => __METHOD__ .':'.__LINE__]);
+			Log::channel(Log::MAIN_PROCESSOR)->info(ProcessSetterException::MATURE_CHANNELS_NOT_FOUND, ['in' => __METHOD__ .':'.__LINE__]);
 			
-			throw new MainProcessorException(MainProcessorException::MATURE_CHANNELS_NOT_FOUND);
+			throw new ProcessSetterException(ProcessSetterException::MATURE_CHANNELS_NOT_FOUND);
 		} 
 
 		$this->channels = $process->channels;		

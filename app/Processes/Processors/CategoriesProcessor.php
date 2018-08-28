@@ -23,14 +23,9 @@ class CategoriesProcessor extends BaseProcessor
 	 */
 	public function process() 	
 	{
-		$this->scan();
+		$this->scan()->store();
 		
-		$this->store();
-		
-		if(($this->config['auto_publish'] ?? false)) 
-		{			
-			$this->publish();
-		}
+		($this->config['auto_publish'] ?? false) ? $this->publish() : null;
 
 		return $this;
 	}		

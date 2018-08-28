@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
-
-
 /**
- * Processes routes
+ * Process Routes
  */
-Route::get('act', 'ProcessController@act');
+
+Route::group(['prefix' => 'processes',], function(){
+    Route::get('/categories'    , 'ProcessController@categories');        
+    Route::get('/items'         , 'ProcessController@items');        
+}); 

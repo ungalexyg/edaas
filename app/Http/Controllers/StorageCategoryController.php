@@ -8,7 +8,7 @@ use App\Http\Controllers\Traits\ResourceBoilerplate;
 
 
 
-class StorageCategoryController extends Controller
+class StorageCategoryController extends BaseController
 {
     /**
      * Controller traits

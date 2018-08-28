@@ -2,13 +2,13 @@
 
 namespace App\Enums\Contracts;
 
-use App\Enums\ProcessesEnum as Processes;
+use App\Enums\ProcessEnum as Processes;
 
 
 /**
  * Logs Enum Interface
  */ 
-interface ILogsEnum
+interface ILogEnum
 {
     /**
      * Logging channels keyes - Acts 

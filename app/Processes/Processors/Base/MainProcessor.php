@@ -3,9 +3,6 @@
 namespace App\Processes\Processors\Base;
 
 use Log;
-use App\Models\Process;
-
-use App\Processes\Traits\HasProcess;
 use App\Exceptions\Processors\MainProcessorException;
 
 
@@ -16,10 +13,13 @@ use App\Exceptions\Processors\MainProcessorException;
  */ 
 final class MainProcessor
 {
+
 	/**
-	 * Processes traits
+	 * Processor instance
+	 * 
+	 * @var IProcessor
 	 */
-	use HasProcess;
+	protected $processor;	  	
 
 
 	/**
@@ -45,7 +45,6 @@ final class MainProcessor
 			];
 		}
 	}
-
 
 
 	/**

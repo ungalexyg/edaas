@@ -11,7 +11,7 @@
 namespace App\Lib\Vendor\Laravel;
 
 use App\Enums\Processes;
-use App\Enums\Contracts\ILogsEnum;
+use App\Enums\Contracts\ILogEnum;
 use Illuminate\Support\Facades\Log as CoreLog;
 
 
@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Log as CoreLog;
  * 
  * Laravel's Log extension
  */
-class Log extends CoreLog implements ILogsEnum
+class Log extends CoreLog implements ILogEnum
 {
 
 }   

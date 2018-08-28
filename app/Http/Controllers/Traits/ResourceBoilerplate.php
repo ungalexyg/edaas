@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Traits;
 
-use App\Exceptions\BaseException as Exception;
+use App\Exceptions\Controllers\ControllerException as Exception;
 
 
 /**

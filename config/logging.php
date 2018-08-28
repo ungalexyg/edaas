@@ -2,7 +2,7 @@
 
 use App\Lib\Vendor\Laravel\Log;
 use Monolog\Handler\StreamHandler;
-use App\Enums\ProcessesEnum as Processes;
+use App\Enums\ProcessEnum as Processes;
 
 // process categories log path
 $process_categories_path = 'logs/processes/'.Processes::CATEGORIES; 

@@ -19,7 +19,7 @@
  * 
  * e.g :
  * 
- * single class loaded once and own the enums, the same enums exists in App\Enums\LogsEnum 
+ * single class loaded once and own the enums, the same enums exists in App\Enums\LogEnum 
  * 
  * Log::channel(Log::PROCESS)  
  * 

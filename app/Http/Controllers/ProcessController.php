@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Processes;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\StorageCategory;
+use App\Enums\ProcessEnum as Processes;
 use App\Processes\Processors\Base\MainProcessor as Processor;
 
 
@@ -17,7 +17,7 @@ for categoires and items
 https://laracasts.com/discuss/channels/eloquent/dynamic-table-name
 
 */
-class ProcessController extends Controller
+class ProcessController extends BaseController
 {
     /**
      * Process Categories 

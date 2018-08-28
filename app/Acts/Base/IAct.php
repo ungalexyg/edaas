@@ -2,20 +2,27 @@
 
 namespace App\Acts\Base;
 
-use App\Enums\Contracts\IActsEnum;
+use App\Enums\Contracts\IActEnum;
 
 
 /**
  * Act Interface 
  */ 
-interface IAct extends IActsEnum 
+interface IAct
 {
 	/**
-	 * Perform an Act
+	 * Validate Act input
 	 * 
 	 * @return self
 	 */	
-	public function perform();	
+	public function validate(); 
+
+	/**
+	 * Execute an Act
+	 * 
+	 * @return self
+	 */	
+	public function execute();	
 
 
 	/**

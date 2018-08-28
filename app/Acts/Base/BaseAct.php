@@ -11,35 +11,25 @@ use Log;
 abstract class BaseAct implements IAct
 {
 	/**
-	 * Act key
-	 * 
-	 * @var null|string
+	 * Act traits
 	 */
-	public $key;
+	use ActSetter;
 
-
+	
 	/**
-	 * Act params
-	 * 
-	 * @var array
-	 */
-	public $params = [];
-		
-
-	/**
-	 * Act message
-	 * 
-	 * @var null|string
-	 */
-	public $message;
-
-
-	/**
-	 * Perform an Act
+	 * Validate Act input
 	 * 
 	 * @return self
 	 */	
-	abstract public function perform();	
+	abstract public function validate(); 
+
+
+	/**
+	 * Execute an Act
+	 * 
+	 * @return self
+	 */	
+	abstract public function execute();	
 
 
 	/**

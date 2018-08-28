@@ -10,7 +10,7 @@ use App\Acts\Base\MainAct as Act;
 
 
 
-class ActController extends Controller
+class ActController extends BaseController
 {
     /**
      * Perform an act

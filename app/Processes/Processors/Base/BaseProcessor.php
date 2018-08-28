@@ -5,7 +5,7 @@ namespace App\Processes\Processors\Base;
 use Log;
 use Act;
 use App\Models\Process;
-use App\Processes\Traits\HasProcess;
+use App\Processes\Traits\ProcessSetter;
 
 /**
  * Base Processor 
@@ -15,7 +15,7 @@ abstract class BaseProcessor implements IProcessor
 	/**
 	 * Processes traits
 	 */
-	use HasProcess;
+	use ProcessSetter;
 
 
 	/**
