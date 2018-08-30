@@ -8,6 +8,10 @@ use Exception as CoreException;
 /**
  * Base Exception
  * Handle common exceptions functionality
+ * 
+ * TODO: 
+ * - report handler for all exceptions
+ * - proper handler for prud vs dev, hide internal info
  */
 class BaseException extends CoreException
 {

@@ -1,93 +1,15 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\StorageCategory\Traits;
 
 use App\Models\Category;
-use Illuminate\Database\Eloquent\Model;
 
 
 /**
- * Storage Category Model
- * 
- * TODO: consider split storage per channel
- * e.g: storage_category_aliexpress, storage_category_amazon
+ * Storage Category Scopes 
  */
-class StorageCategory extends BaseModel
+trait Scopes
 {
-
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'storage_categories';    
-
-
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    //public $timestamps = false;
-
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    //protected $fillable = [];    
-    
-
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array
-     */
-    protected $guarded = []; // if $guarded is empty, all the cols are $fillable
-
-
-    /**
-     * Connect the storageCategory with the Category
-     */
-    public function category()
-    {
-        return $this->hasOne(Category::class);
-    }
-    
-
-    /**
-     * Get storage category parent 
-     * 
-     * ! @note  
-     * this relation should NOT be used directly since it is based on ids from several channels, 
-     * instead, use the local scope scopeWithParent() that based on this relation 
-     */
-    public function parent() 
-    {
-        return $this->belongsTo(StorageCategory::class, 
-            'parent_channel_category_id',  // use this fk from curr record
-            'channel_category_id' // to find parent with the same value in this key
-        );
-    }
-    
-
-    /**
-     * Get storage category childrens 
-     * 
-     * ! @note
-     * this relation should NOT be used directly since it is based on ids from several channels, 
-     * instead, use the local scope scopeWithChildren() that based on this relation 
-     */    
-    public function children() 
-    {
-        return $this->hasMany(StorageCategory::class, 
-            'parent_channel_category_id',  // all the children have this fk
-            'channel_category_id' // with the value that curr reord has in this local key
-        );        
-    } 
-
-
     /**
      * Get storage category with it's parent in the channel 
      * 
@@ -182,8 +104,5 @@ class StorageCategory extends BaseModel
     public function scopeUnactive($query) 
     {
         $query->where('active', '=', 0);
-    }    
+    }       
 }
-
-
-

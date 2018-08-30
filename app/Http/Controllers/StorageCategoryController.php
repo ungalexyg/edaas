@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 //use Illuminate\Http\Request;
-use Act;
+//use Act;
+// use App\Models\Category;
+// use App\Lib\Helpers\LaraHelpers as Lara;
 use App\Http\Controllers\Traits\ResourceBoilerplate;
-
-
+use App\Models\StorageCategory\StorageCategory;
 
 class StorageCategoryController extends BaseController
 {
@@ -21,8 +22,8 @@ class StorageCategoryController extends BaseController
      */
     public function activate($id) 
     {   
-        $response = Act::do(Act::STORAGE_CATEGORY_ACTIVATE, ['id' => $id]);
-        
-        dd($response);
+        $resulrt = StorageCategory::perform('activate', ['id' => $id]);
+
+        return $resulrt;
     } 
 }

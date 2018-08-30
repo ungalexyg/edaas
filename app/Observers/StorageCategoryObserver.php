@@ -17,7 +17,7 @@
 namespace App\Observers;
 
 use Log;
-use App\Models\StorageCategory;
+use App\Models\StorageCategory\StorageCategory;
 use App\Processes\Keepers\CategoriesKeeper;
 
 

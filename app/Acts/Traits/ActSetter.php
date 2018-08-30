@@ -5,7 +5,7 @@ namespace App\Acts\Traits;
 use App\Acts\Base\IAct;
 use App\Enums\ActEnum;
 use App\Exceptions\Acts\ActException as Exception;
-
+use App\Lib\Helpers\LaraHelpers as Lara;
 
 /**
  * Has Act Trait 
@@ -15,19 +15,11 @@ use App\Exceptions\Acts\ActException as Exception;
 trait ActSetter 
 {
 	/**
-	 * Act key
-	 * 
-	 * @var null|string
-	 */
-	protected $key;
-
-
-	/**
-	 * Act params
+	 * Act input
 	 * 
 	 * @var array
 	 */
-	protected $params = [];
+	protected $input = [];
 		
 
 	/**
@@ -45,53 +37,33 @@ trait ActSetter
 	 */
 	protected $model;
 
-	
-	/**
-	 * Set act key
-	 * 
-	 * @param string $act App\Enums\Contracts\IActEnum::$act 
-	 * @throws ActException
-	 * @return self
-	 */
-	public function setKey(&$key) 
-	{
-		if(!in_array($key, ActEnum::getConstants())) throw new Exception(Exception::UNDEFINED_ACT_KEY);
-
-		$this->key = $key;
-		
-		return $this;
-	}
-
 
 	/**
-	 * Set act key
+	 * Set act input
 	 * 
 	 * @param array
 	 * @return self
 	 */
-	public function setParams(&$params=[]) 
+	public function setInput(&$input=[]) 
 	{
-		$this->params = $params;
+		$this->input = $input;
 
 		return $this;
 	}
 	
 	
 	/**
-	 * Load model act 
+	 * Set act model
 	 * 
-	 * @param string $model // model calss name
-	 * @throws ActException
+	 * @param Illuminate\Database\Eloquent\Model
 	 * @return self
 	 */
-	public function loadModel($model) 
+	public function setModel(&$model) 
 	{
-		$class = ($this->model_namespace ?? 'App\Models\\') . $model;
+		if(!Lara::isEloquent($model)) throw new Exception(Exception::INVALID_MODEL . ' | model:' . $model);
 
-		$this->model = new $class();
-
-		if (!is_subclass_of($this->model, 'Illuminate\Database\Eloquent\Model')) throw new Exception(Exception::INVALID_MODEL);
-
+		$this->model = $model;
+		
 		return $this;
-	}	
+	}
 }

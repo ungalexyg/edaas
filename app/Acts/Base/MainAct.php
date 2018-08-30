@@ -20,6 +20,37 @@ final class MainAct implements IActEnum
 	 * @var IAct
 	 */
 	private static $act;	     
+	
+
+	/**
+	 * Act entity 
+	 * 
+	 * @var string
+	 */
+	private static $entity;	     
+	
+
+	/**
+	 * Act action
+	 * 
+	 * @var string
+	 */
+	private static $action;	     
+
+
+	/**
+	 * Act model 
+	 * 
+	 * @var string|object
+	 */
+	private static $model;		
+
+
+
+
+
+
+
 
 
 
@@ -35,15 +66,19 @@ final class MainAct implements IActEnum
 	 * @usage: Act::perform(Act::SOMETHING, $params);
 	 * @usage: act($act, $params);
 	 * @see App\Lib\helpers.php act()
-     * @param string $act App\Enums\Contracts\IActEnum::$act 
-	 * @param array $params
+     * @param string|array $reference act reference
+	 * @param array $input
      * @return array $response
 	 */	
-	public static function perform($act, $params=[])
+	public static function perform($reference, $input=[])
 	{
 		try 
 		{
-			return static::loadAct($act, $params)->execute()->response();
+			$response = static::loadAct($reference, $input)->execute()->response();
+			
+			unset(static::$act);
+			
+			return $response;
 		}
 		catch(\Exception $e) 
 		{
@@ -60,25 +95,73 @@ final class MainAct implements IActEnum
 	/**
 	 * Load Act
 	 * 
-	 * @param string $key // Act key
-	 * @param array $params // Act params
+	 * @param string|array $reference act reference 
+	 * @param array $input // Act input
 	 * @throws ActException
 	 * @return IAct
 	 */	
-	private static function loadAct($key, $params=[]) 
-	{	
-		list($model, $act) = explode('@', $key);
+	private static function loadAct($reference, $input=[]) 
+	{			
+		static::extractReference($reference);
 
-        $class = 'App\Acts\\' . $model . '\\' . ucwords($act) . 'Act';
+		$act = 'App\Acts\\' . static::$entity . '\\' . ucwords(static::$action) . 'Act';		
 
-		if (!class_exists($class))  throw new Exception(Exception::UNDEFINED_ACT);
+		$model = 'App\Models\\' . static::$entity;			
+
+		if(!class_exists($act))  throw new Exception(Exception::UNDEFINED_ACT);
 
 		static::$act = new $class();			
 		
 		if(!(static::$act instanceof IAct)) throw new Exception(Exception::INVALID_ACT);
 
-		return static::$act->seKey($key)->setParams($params)->loadModel($model);
-	}	    	
+		return static::$act->setInput($input)->setModel($model);
+	}	   
+	
+	
+	/**
+	 * Extract act reference
+	 * 
+	 * @param string|array $reference key:  'Model@action' | [Model::class, 'action'] 
+	 * @throws ActException
+	 * @return void
+	 */
+	public static function extractReference($reference) 
+	{
+		// handle string ref: 'Model@action', 
+		// we get the entity name & need to build related model path
+		if(is_string($reference)) 
+		{
+			list(static::$entity, static::$action) = explode('@', $reference);
+		}
+		// handle array ref: [Model::class, 'action'], 
+		// we get the model path & need to extract entity name
+		elseif(is_array($reference)) 
+		{
+			list($model, static::$action) = $reference;		
+
+			if(Lara::isEloquent($model)) 
+			{				
+				if(Lara::isEloquentInstance($model)) 
+				{
+					static::$model = &$model;
+				}
+			}	
+	
+			// 	$class = get_class($category);
+			// 	$class = explode('\\', $class);
+			// 	$class = end($class);
+
+
+            $parts = explode('\\', $model);
+
+            static::$entity = end($parts);			
+		}
+		// invalid reference, throw exception 		
+		else 
+		{
+			throw new Exception(Exception::INVALID_REFERENCE . ' | reference: ' . var_export($reference, 1));
+		}
+	}	
 }
 
 

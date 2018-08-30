@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Models\StorageCategory;
+use App\Models\StorageCategory\StorageCategory;
 use Illuminate\Support\ServiceProvider;
-use App\Observers\StorageCategoryObserver;
+use App\Observers\StorageCategory\StorageCategoryObserver;
 
 
 /**

@@ -3,6 +3,7 @@
 namespace App\Acts\Base;
 
 use Log;
+use App\Acts\Traits\ActSetter;
 
 
 /**

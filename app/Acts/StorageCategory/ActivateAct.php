@@ -13,6 +13,17 @@ use App\Exceptions\Acts\ActException;
  */
 class ActivateAct extends BaseAct
 {
+	/**
+	 * Validate Act input
+	 * 
+	 * @return self
+	 */	
+    public function validate() 
+    {
+        
+    }
+    
+
     /**
      * Perform an Act
      *

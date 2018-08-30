@@ -30,7 +30,7 @@
             "App\\": "app/"
         },
         "files": [
-            "app/Lib/helpers.php"
+            "app/Lib/Helpers/helpers.php"
         ]        
     },
     "autoload-dev": {
