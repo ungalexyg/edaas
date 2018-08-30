@@ -30,9 +30,13 @@ trait Acts
             $storage_category->active = 1;
 
             $storage_category->save();
-        }
 
-        $this->response[] = 'storage category ' . $id . ' activated.';
+            $this->response[] = 'Storage category ' . $id . ' activated.';            
+        }
+        else 
+        {
+            $this->response[] = 'Storage category ' . $id . ' is already active.';            
+        }
 
         return $this;
     }
