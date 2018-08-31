@@ -11,7 +11,7 @@ interface IStorageCategory
     /**
      * Activate Storage Category
      */
-    public function activate(); 
+    //public function activate(); 
 }
 
 

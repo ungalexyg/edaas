@@ -5,19 +5,21 @@ namespace App\Models\StorageCategory\Traits;
 use App\Exceptions\Models\StorageCategoryException as Exception; 
 
 
-
-
 /**
  * Storage Category Acts
  */
 trait Acts
 {
+
+
+
+
     /**
-     * Publish Storage Category
+     * Activate Storage Category
      * 
      * @return self
      */
-    public function activate()
+    public function actActivate()
     {
         $id = $this->input->id;
 
@@ -40,7 +42,29 @@ trait Acts
 
         return $this;
     }
+
+
+    public function actPublish($id) 
+    {   
+        static::perform('publish', $id);
+    }
+
+
+	/**
+	 * Publish Storage Category
+	 * 
+	 */
+    public function actPublishAll() 
+    {
+        $storages = StorageCategory::unpublished()->get(); 
+
+        foreach($storages as $storage_category) 
+        {
+            $this->publishSingle($storage_category);
+        }
+
+        $this->publishLinkParents(); 
+
+        Log::channel(Log::CATEGORIES_PUBLISHER)->info('categories publisher completed publish process', ['in' => __METHOD__ .':'.__LINE__]);                
+    }    
 }
-
-
-

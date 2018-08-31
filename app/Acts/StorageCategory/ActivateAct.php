@@ -1,53 +1,53 @@
 <?php
 
-namespace App\Acts\StorageCategory;
+// namespace App\Acts\StorageCategory;
 
-use App\Enums\Acts;
-use App\Acts\Base\BaseAct;
-use App\Models\StorageCategory;
-use App\Exceptions\Acts\ActException;
+// use App\Enums\Acts;
+// use App\Acts\Base\BaseAct;
+// use App\Models\StorageCategory;
+// use App\Exceptions\Acts\ActException;
 
 
-/**
- * Activate storage category Act
- */
-class ActivateAct extends BaseAct
-{
-	/**
-	 * Validate Act input
-	 * 
-	 * @return self
-	 */	
-    public function validate() 
-    {
+// /**
+//  * Activate storage category Act
+//  */
+// class ActivateAct extends BaseAct
+// {
+// 	/**
+// 	 * Validate Act input
+// 	 * 
+// 	 * @return self
+// 	 */	
+//     public function validate() 
+//     {
         
-    }
+//     }
     
 
-    /**
-     * Perform an Act
-     *
-     * @return mixed
-     */
-    public function execute()
-    {   
-        $id = $this->params['id'] ?? false;
+//     /**
+//      * Perform an Act
+//      *
+//      * @return mixed
+//      */
+//     public function execute()
+//     {   
+//         $id = $this->params['id'] ?? false;
 
-        if(!$id) throw new ActException(ActException::REQUIRED_PARAMS_MISSING . ' | Act: ' . $this->key . ' | missing: id');
+//         if(!$id) throw new ActException(ActException::REQUIRED_PARAMS_MISSING . ' | Act: ' . $this->key . ' | missing: id');
 
-        $storage_category = StorageCategory::find($id);
+//         $storage_category = StorageCategory::find($id);
 
-        if(!isset($storage_category->id)) throw new ActException('the StorageCategory record not found for id ' . $id);
+//         if(!isset($storage_category->id)) throw new ActException('the StorageCategory record not found for id ' . $id);
 
-        if($storage_category->active != 1) 
-        {
-            $storage_category->active = 1;
+//         if($storage_category->active != 1) 
+//         {
+//             $storage_category->active = 1;
 
-            $storage_category->save();
-        }
+//             $storage_category->save();
+//         }
 
-        $this->message = 'storage category ' . $id . ' activated.';
+//         $this->message = 'storage category ' . $id . ' activated.';
 
-        return $this;
-    }
-}
+//         return $this;
+//     }
+// }

@@ -24,12 +24,15 @@ trait Singelton
 
 	/**
 	 * Get self singelton instance 
+	 * 
+	 * @param null|string $class
+	 * @return object static::$self
 	 */
-	protected static function self() 
+	public static function self($class=null) 
 	{
 		if(!static::$self) 
 		{
-			$class = get_called_class();
+			$class = $class ?? get_called_class();
 		
 			static::$self = new $class();
 

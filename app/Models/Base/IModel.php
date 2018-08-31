@@ -11,14 +11,23 @@ use Illuminate\Database\Eloquent\Model as CoreModel;
 interface IModel
 {
 	/**
-	 * Perform operation
+	 * Initiate model instance
 	 * 
-	 * @param string $action
-	 * @param array $input
-	 * @return void
+	 * @param string $method
+	 * @param mixed $input
+	 * @return bool
 	 */
-	public static function perform($action, $input=[]);
+	public static function init($method, $input); 
 	
+
+	/**
+	 * Get self singelton instance 
+	 * 
+	 * @param null|string $class
+	 * @return object static::$self
+	 */
+	public static function self($class=null); 
+
 
 	/**
 	 * Validate action
@@ -37,7 +46,7 @@ interface IModel
 	
 
 	/**
-	 * Response action's resulta
+	 * Response action's results 
 	 * 
 	 * @return void
 	 */			

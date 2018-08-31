@@ -17,21 +17,21 @@ abstract class BaseModel extends CoreModel implements IModel
 	 */
 	use Singelton;
 
-
+	
 	/**
-	 * Action to perform
+	 * Called method
 	 * 
 	 * @var string
 	 */
-	protected $act;
-	
-	
+	protected $method;	
+
+
 	/**
 	 * Action input
 	 * 
-	 * @var array
+	 * @var mixed
 	 */
-	protected $input = [];
+	protected $input;
 
 
 	/**
@@ -49,53 +49,93 @@ abstract class BaseModel extends CoreModel implements IModel
 	 */
 	protected $response;
 
+
+	/**
+	 * Generic methods prefixes
+	 */
+	const ACT = 'act';
+	const VALIDATE = 'validate';
 	
 
 	/**
-	 * Perform operation
+	 * Handle model's acts flow calls
 	 * 
-	 * @param string $act
-	 * @param array $input
+	 * The method name will trigger the model to perform an act flow process,
+	 * which includes input parsing, validation, execution & response.
+	 * 
+	 * e.g :
+	 * Model::activate($id) will initiate 
+	 * static::self($class)->setAct($act)->setInput($input)->validate()->execute()->response(); 
+	 * which trigger generic methods: validateActivate() & actActivate()     
+	 * 
+	 * @param string $method
+	 * @param mixed $input
+	 * @throws Exception
 	 * @return void
 	 */	
-    public static function perform($act, $input=[])
+    public static function __callStatic($method, $input)
 	{
-		try 
+		$input = $input[0];
+		
+		// act flow exist, perform it
+		if(static::init($method, $input)) 
 		{
-			$valid = static::self()->setAct($act)->setInput($input)->validate();
-			
-			if($valid) 
+			try 
 			{
-				static::$self->execute();//->response();
+				static::$self->validate() ? static::$self->execute() : null;
+				
+				return static::$self->response();
 			}
-			
-			return static::$self->response;
-		}
-		catch(\Exception $e) 
-		{			
-			return [
-				'exception' => get_class($e),
-				'message' 	=> $e->getMessage(),
-				'file' 		=> $e->getFile(),
-				'line' 		=> $e->getLine()
-			];
-		}										
+			catch(\Exception $e) 
+			{			
+				return [
+					'exception' => get_class($e),
+					'message' 	=> $e->getMessage(),
+					'file' 		=> $e->getFile(),
+					'line' 		=> $e->getLine()
+				];
+			}	
+
+		} // else { other native static method with non-act flow called, ignore ot optional log}										
 	}	
 
 
 	/**
-	 * Set act
+	 * Check if flow exist for the called method
+	 * if exits, will init the instance with necessary setters
 	 * 
-	 * @param string $act
+	 * @param string $method
+	 * @param mixed $input
+	 * @return bool
+	 */
+	public static function init($method, $input) 
+	{
+		$class = get_called_class();
+				
+		if(!method_exists($class, static::ACT . ucwords($method))) 
+		{
+			return false;	
+		}
+		
+		static::self($class)->setMethod($method)->setInput($input);
+		
+		return true;
+	}
+
+
+	/**
+	 * Set method
+	 * 
+	 * @param string $method
 	 * @return void
 	 */
-	protected function setAct($act) 
+	protected function setMethod($method) 
 	{
-		$this->act = ucwords($act);
-		
+		$this->method = $method;
+
 		return static::$self;
 	}
-	
+
 
 	/**
 	 * Set input
@@ -118,10 +158,10 @@ abstract class BaseModel extends CoreModel implements IModel
 	 */	
 	public function validate() 
 	{
-		$method = 'validate' . $this->act;
+		$method = static::VALIDATE . $this->method;
 
 		$rules = $this->{$method}();
-
+		
 		$this->validator = Validator::make($this->input, $rules);	
 		
 		if($this->validator->fails()) 
@@ -142,9 +182,11 @@ abstract class BaseModel extends CoreModel implements IModel
 	 */		
 	public function execute() 
 	{
-		$this->input = (object) $this->input;
+		$this->input = (object) $this->input; 
+		
+		$method = static::ACT . $this->method;
 
-		$this->{$this->act}();
+		$this->{$method}();
 
 		return static::$self;		
 	}
