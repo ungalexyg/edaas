@@ -23,7 +23,7 @@ class StorageCategoryController extends BaseController
      */
     public function activate($id) 
     {   
-        $result = StorageCategory::perform('activate', ['id' => $id]);
+        $result = StorageCategory::perform(StorageCategory::ACTIVATE, ['id' => $id]);
         
         return $result;
     } 
@@ -34,7 +34,7 @@ class StorageCategoryController extends BaseController
      */
     public function publish($id) 
     {   
-        $result = StorageCategory::publish(['id' => $id]);
+        $result = StorageCategory::publish(StorageCategory::PUBLISH, ['id' => $id]);
 
         return $result;
     }     

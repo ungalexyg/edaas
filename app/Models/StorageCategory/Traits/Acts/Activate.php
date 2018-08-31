@@ -17,7 +17,7 @@ trait Activate
      * 
      * @return self
      */
-    public function actActivate()
+    protected function actActivate()
     {
         $storage_category = $this->entity ?? (isset($this->input->id) ? $this->find($this->input->id) : null) ;
         
@@ -29,11 +29,13 @@ trait Activate
 
             $storage_category->save();
 
-            $this->response[] = 'Storage category ' . $storage_category->id . ' activated.';            
+            $this->messages[] = 'Storage category ' . $storage_category->id . ' activated.';            
+
+            $this->affected[] = $storage_category;            
         }
         else 
         {
-            $this->response[] = 'Storage category ' . $storage_category->id . ' is already active.';            
+            $this->messages[] = 'Storage category ' . $storage_category->id . ' is already active.';            
         }
 
         return $this;
@@ -45,9 +47,8 @@ trait Activate
      * 
      * @return self
      */
-    public function actActivateAll()
+    protected function actActivateAll()
     {
         dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
     }
-
 }

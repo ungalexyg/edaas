@@ -52,11 +52,19 @@ abstract class BaseModel extends CoreModel implements IModel
 	
 
 	/**
-	 * Response bag
+	 * Messages bag
 	 * 
 	 * @var array
 	 */
-	protected $response;
+	protected $messages=[];
+
+
+	/**
+	 * Affected bag
+	 * 
+	 * @var array
+	 */
+	protected $affected=[];
 
 
 	/**
@@ -84,25 +92,23 @@ abstract class BaseModel extends CoreModel implements IModel
 	 */	
     public static function perform($method, $input)
 	{		
-		// act flow exist, perform it
-		if(static::init($method, $input)) 
+		try 
 		{
-			try 
-			{
-				static::$self->validate() ? static::$self->execute() : null;
-				
-				return static::$self->response();
-			}
-			catch(\Exception $e) 
-			{			
-				return [
-					'exception' => get_class($e),
-					'message' 	=> $e->getMessage(),
-					'file' 		=> $e->getFile(),
-					'line' 		=> $e->getLine()
-				];
-			}	
-		} // else { other native static method with non-act flow called, ignore ot optional log}										
+			static::init($method, $input);
+
+			static::$self->validate() ? static::$self->execute() : null;
+			
+			return static::$self->response();
+		}
+		catch(\Exception $e) 
+		{			
+			return [
+				'exception' => get_class($e),
+				'message' 	=> $e->getMessage(),
+				'file' 		=> $e->getFile(),
+				'line' 		=> $e->getLine()
+			];
+		}	
 	}	
 
 
@@ -120,7 +126,7 @@ abstract class BaseModel extends CoreModel implements IModel
 				
 		if(!method_exists($class, static::ACT . ucwords($method))) 
 		{
-			return false;	
+			throw new Exception(Exception::INVALID_METHOD . ' | called method: '. $method);
 		}
 		
 		static::self($class)->setMethod($method)->setInput($input);
@@ -230,7 +236,8 @@ abstract class BaseModel extends CoreModel implements IModel
 	public function response() 
 	{
 		return [
-			'messages' => $this->response
+			'messages' => $this->messages,
+			'affected' => $this->affected
 		];
 	}	
 }

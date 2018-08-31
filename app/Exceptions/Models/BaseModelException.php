@@ -11,5 +11,6 @@ use App\Exceptions\BaseException;
 class BaseModelException extends BaseException
 {
     const INVALID_INPUT     = 'Invalid input';        
+    const INVALID_METHOD    = 'Failed to init instance, invalid method';        
     const ENTITY_NOT_FOUND  = 'Entity not found';        
 }

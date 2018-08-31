@@ -6,7 +6,7 @@ use App\Models\Category;
 
 
 /**
- * Storage Category Actions Trait
+ * Storage Category Relations 
  */
 trait Relations
 {
