@@ -2,12 +2,10 @@
 
 namespace App\Models\StorageCategory;
 
-//use App\Models\Category;
 use App\Models\Base\BaseModel;
-use App\Models\StorageCategory\Traits\Acts;
-use App\Models\StorageCategory\Traits\Scopes;
-use App\Models\StorageCategory\Traits\Relations;
-use App\Models\StorageCategory\Traits\Validations;
+use App\Models\StorageCategory\Traits\{
+    Relations, Scopes, Validations, Acts\Acts
+};
 
 
 /**

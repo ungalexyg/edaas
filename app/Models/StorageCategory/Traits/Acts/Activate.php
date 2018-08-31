@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Models\StorageCategory\Traits;
+namespace App\Models\StorageCategory\Traits\Acts;
 
 use App\Exceptions\Models\StorageCategoryException as Exception; 
 
 
 /**
- * Storage Category Acts
+ * Activate Trait 
+ * 
+ * Storage category activate acts
  */
-trait Acts
+trait Activate
 {
     /**
      * Activate Storage Category
@@ -37,28 +39,15 @@ trait Acts
         return $this;
     }
 
-
-    public function actPublish($id) 
-    {   
-        static::perform('publish', $id);
+  
+    /**
+     * Activate Storage Category
+     * 
+     * @return self
+     */
+    public function actActivateAll()
+    {
+        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
     }
 
-
-	/**
-	 * Publish Storage Category
-	 * 
-	 */
-    public function actPublishAll() 
-    {
-        $storages = StorageCategory::unpublished()->get(); 
-
-        foreach($storages as $storage_category) 
-        {
-            $this->publishSingle($storage_category);
-        }
-
-        $this->publishLinkParents(); 
-
-        Log::channel(Log::CATEGORIES_PUBLISHER)->info('categories publisher completed publish process', ['in' => __METHOD__ .':'.__LINE__]);                
-    }    
 }

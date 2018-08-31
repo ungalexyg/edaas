@@ -23,8 +23,6 @@ class StorageCategoryController extends BaseController
      */
     public function activate($id) 
     {   
-        //$storage_category = StorageCategory::find($id);
-
         $result = StorageCategory::perform('activate', ['id' => $id]);
         
         return $result;
