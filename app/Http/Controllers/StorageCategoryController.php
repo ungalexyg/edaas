@@ -8,6 +8,7 @@ namespace App\Http\Controllers;
 // use App\Lib\Helpers\LaraHelpers as Lara;
 use App\Http\Controllers\Traits\ResourceBoilerplate;
 use App\Models\StorageCategory\StorageCategory;
+use App\Models\Category\Category;
 
 class StorageCategoryController extends BaseController
 {
@@ -22,8 +23,10 @@ class StorageCategoryController extends BaseController
      */
     public function activate($id) 
     {   
-        $result = StorageCategory::activate(['id' => $id], 12);
+        //$storage_category = StorageCategory::find($id);
 
+        $result = StorageCategory::perform('activate', ['id' => $id]);
+        
         return $result;
     } 
 
@@ -33,7 +36,7 @@ class StorageCategoryController extends BaseController
      */
     public function publish($id) 
     {   
-        $result = StorageCategory::publish($id);
+        $result = StorageCategory::publish(['id' => $id]);
 
         return $result;
     }     

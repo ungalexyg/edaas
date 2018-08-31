@@ -10,10 +10,6 @@ use App\Exceptions\Models\StorageCategoryException as Exception;
  */
 trait Acts
 {
-
-
-
-
     /**
      * Activate Storage Category
      * 
@@ -21,11 +17,9 @@ trait Acts
      */
     public function actActivate()
     {
-        $id = $this->input->id;
-
-        $storage_category = $this->find($id);
+        $storage_category = $this->entity ?? (isset($this->input->id) ? $this->find($this->input->id) : null) ;
         
-        if(!isset($storage_category->id)) throw new Exception(Exception::ENTITY_NOT_FOUND . ' | act: ' . $this->act . ' | id:' . $id);
+        if(!isset($storage_category->id)) throw new Exception(Exception::ENTITY_NOT_FOUND . ' | act: ' . $this->method . ' | id:' . $id);
 
         if($storage_category->active != 1) 
         {
@@ -33,11 +27,11 @@ trait Acts
 
             $storage_category->save();
 
-            $this->response[] = 'Storage category ' . $id . ' activated.';            
+            $this->response[] = 'Storage category ' . $storage_category->id . ' activated.';            
         }
         else 
         {
-            $this->response[] = 'Storage category ' . $id . ' is already active.';            
+            $this->response[] = 'Storage category ' . $storage_category->id . ' is already active.';            
         }
 
         return $this;

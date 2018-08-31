@@ -10,5 +10,6 @@ use App\Exceptions\BaseException;
  */
 class BaseModelException extends BaseException
 {
-    const ENTITY_NOT_FOUND = 'Entity not found';        
+    const INVALID_INPUT     = 'Invalid input';        
+    const ENTITY_NOT_FOUND  = 'Entity not found';        
 }
