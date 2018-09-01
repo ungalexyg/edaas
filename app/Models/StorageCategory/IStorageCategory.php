@@ -9,17 +9,69 @@ namespace App\Models\StorageCategory;
 interface IStorageCategory 
 {
     /**
-     * Storage Category Acts
+     * Publish all storage category records
+     * 
+     * @return mixed
      */
-    const ACTIVATE          = 'activate';           // Activate storage category record for items process
-    const ACTIVATE_ALL      = 'activate_all';       // Aactivate all inactive storage category records
+    public function publishAll();
     
-    const DEACTIVATE        = 'deactivate';         // Deactivate storage category record for items process
-    const DEACTIVATE_ALL    = 'deactivate_all';     // Deactivate all active storage category records
 
-    const PUBLISH           = 'publish';            // Publish storage category record
-    const PUBLISH_ALL       = 'publish_all';        // Publish all storage category records
+    /**
+     * Publish storage category record
+     * 
+     * @param int $id
+     * @return mixed
+     */
+    public function publish($id);
 
-    const UNPUBLISH         = 'unpublish';          // Unpublish published storage category record
-    const UNPUBLISH_ALL     = 'unpublish_all';      // Unpublish all published storage category records
+
+    /**
+     * Unpublish all published storage category records
+     * 
+     * @return mixed
+     */
+    public function unpublishAll();    
+
+
+    /**
+     * Unpublish published storage category record
+     * 
+     * @param int $id
+     * @return mixed
+     */
+    public function unpublish($id);    
+    
+    
+    /**
+     * Aactivate all inactive storage category records
+     * 
+     * @return mixed
+     */
+    public function activateAll();    
+    
+    
+    /**
+     * Activate storage category record 
+     * 
+     * @param int $id
+     * @return mixed
+     */
+    public function activate($id);    
+    
+    
+    /**
+     * Deactivate all active storage category records
+     * 
+     * @return mixed
+     */
+    public function deactivateAll();    
+    
+    
+    /**
+     * Deactivate storage category record
+     * 
+     * @param int $id
+     * @return mixed
+     */
+    public function deactivate($id);        
 }
