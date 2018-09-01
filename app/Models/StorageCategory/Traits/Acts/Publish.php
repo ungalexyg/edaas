@@ -19,13 +19,13 @@ trait Publish
      * 
      * @return void
 	 */
-    final public function publishAll() 
+    public function publishAll() 
     {
         $storages = StorageCategory::unpublished()->get(); 
 
-        foreach($storages as $storage_category) 
+        foreach($storages as $storageCategory) 
         {
-            $this->publish($storage_category);
+            $this->publish($storageCategory);
         }
 
         $this->publishLinkParents(); 
@@ -38,33 +38,55 @@ trait Publish
     /**
      * Publish storage category record
      * 
-     * @param StorageCategory $storage_category
+     * @param StorageCategory $storageCategory
      * @return void 
      */
-    final public function publish(StorageCategory $storage_category) 
+    public function publish(StorageCategory $storageCategory) 
     {   
         // if there's a Category with the given storage_category_id, set the rest of the data to the 2nd given array, otherwise create it.
         $category = Category::updateOrCreate(
             [
-                'storage_category_id' => $storage_category->id
+                'storage_category_id' => $storageCategory->id
             ], [
-                'title' => $storage_category->title, 
-                'description' => $storage_category->description
+                'title' => $storageCategory->title, 
+                'description' => $storageCategory->description
             ]
         );
 
         // link the fresh category to the storage_category 
-        $storage_category->category_id = $category->id;
+        $storageCategory->category_id = $category->id;
 
         // mark the storage record as published to updated the sourced category with the latest fetched items
-        $storage_category->published = 1;
+        $storageCategory->published = 1;
 
         // save the updates
-        $storage_category->save();
+        $storageCategory->save();
 
-        $this->affected[] = [$storage_category, $category];            
-
+        $this->affected[] = [$storageCategory, $category];            
     }
+
+
+    /**
+     * Unpublish all published storage category records
+     * 
+     * @return void
+     */
+    public function unpublishAll()
+    {
+        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);        
+    }    
+
+
+    /**
+     * Unpublish published storage category record
+     * 
+     * @param StorageCategory $storageCategory
+     * @return void
+     */
+    public function unpublish(StorageCategory $storageCategory)
+    {
+        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);                
+    }    
 
 
     /**
@@ -81,12 +103,12 @@ trait Publish
 
         foreach($categories as $category) 
         {
-            $storage_category = StorageCategory::withParent($category->storage_category_id)->first();
+            $storageCategory = StorageCategory::withParent($category->storage_category_id)->first();
             
-            if(isset($storage_category->parent->id)) // if it has a parent
+            if(isset($storageCategory->parent->id)) // if it has a parent
             {
                 // check if the parent already published
-                $parent_category = Category::where('storage_category_id', '=', $storage_category->parent->id)->first();
+                $parent_category = Category::where('storage_category_id', '=', $storageCategory->parent->id)->first();
 
                 // if it's published, assign it to the child now
                 if(isset($parent_category->id)) 
@@ -96,7 +118,7 @@ trait Publish
                     $category->save();
                 }
             }
-            elseif($storage_category->parent_channel_category_id == 0) // if the storage record is parent category in the channel
+            elseif($storageCategory->parent_channel_category_id == 0) // if the storage record is parent category in the channel
             {
                 $category->parent_category_id = 0; // update the published category also as parent category
     

@@ -2,6 +2,7 @@
 
 namespace App\Models\StorageCategory\Traits\Acts;
 
+use App\Models\StorageCategory\StorageCategory;
 use App\Exceptions\Models\StorageCategoryException as Exception; 
 
 
@@ -15,9 +16,21 @@ trait Activate
     /**
      * Activate Storage Category
      * 
-     * @return self
+     * @return void
      */
-    protected function activate()
+    public function activateAll()
+    {
+        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+    }
+
+
+    /**
+     * Activate Storage Category
+     * 
+     * @param StorageCategory $StorageCategory
+     * @return void
+     */
+    public function activate(StorageCategory $storage_category)
     {
         $storage_category = $this->entity();
         
@@ -37,18 +50,28 @@ trait Activate
         {
             $this->messages[] = 'Storage category ' . $storage_category->id . ' is already active.';            
         }
-
-        return $this;
     }
 
-  
+
     /**
-     * Activate Storage Category
+     * Deactivate all active storage category records
      * 
-     * @return self
+     * @return void
      */
-    protected function activateAll()
+    public function deactivateAll() 
     {
         dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
-    }
+    }    
+    
+    
+    /**
+     * Deactivate storage category record
+     * 
+     * @param StorageCategory $StorageCategory
+     * @return void
+     */
+    public function deactivate(StorageCategory $StorageCategory)
+    {
+        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+    }            
 }

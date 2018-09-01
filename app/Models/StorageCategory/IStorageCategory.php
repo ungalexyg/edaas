@@ -11,7 +11,7 @@ interface IStorageCategory
     /**
      * Publish all storage category records
      * 
-     * @return mixed
+     * @return void
      */
     public function publishAll();
     
@@ -19,16 +19,16 @@ interface IStorageCategory
     /**
      * Publish storage category record
      * 
-     * @param StorageCategory $StorageCategory
-     * @return mixed
+     * @param StorageCategory $storageCategory
+     * @return void
      */
-    public function publish(StorageCategory $StorageCategory);
+    public function publish(StorageCategory $storageCategory);
 
 
     /**
      * Unpublish all published storage category records
      * 
-     * @return mixed
+     * @return void
      */
     public function unpublishAll();    
 
@@ -36,16 +36,16 @@ interface IStorageCategory
     /**
      * Unpublish published storage category record
      * 
-     * @param StorageCategory $StorageCategory
-     * @return mixed
+     * @param StorageCategory $storageCategory
+     * @return void
      */
-    public function unpublish(StorageCategory $StorageCategory);    
+    public function unpublish(StorageCategory $storageCategory);    
     
     
     /**
      * Aactivate all inactive storage category records
      * 
-     * @return mixed
+     * @return void
      */
     public function activateAll();    
     
@@ -53,16 +53,16 @@ interface IStorageCategory
     /**
      * Activate storage category record 
      * 
-     * @param StorageCategory $StorageCategory
-     * @return mixed
+     * @param StorageCategory $storageCategory
+     * @return void
      */
-    public function activate(StorageCategory $StorageCategory);    
+    public function activate(StorageCategory $storageCategory);    
     
     
     /**
      * Deactivate all active storage category records
      * 
-     * @return mixed
+     * @return void
      */
     public function deactivateAll();    
     
@@ -70,8 +70,8 @@ interface IStorageCategory
     /**
      * Deactivate storage category record
      * 
-     * @param StorageCategory $StorageCategory
-     * @return mixed
+     * @param StorageCategory $storageCategory
+     * @return void
      */
-    public function deactivate(StorageCategory $StorageCategory);        
+    public function deactivate(StorageCategory $storageCategory);        
 }
