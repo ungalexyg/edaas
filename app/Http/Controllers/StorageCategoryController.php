@@ -19,7 +19,69 @@ class StorageCategoryController extends BaseController
 
 
     /**
-     * Activate storage category
+     * Publish all storage category records
+     * 
+     * @return mixed
+     */
+    public function publishAll() 
+    {   
+        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+    }     
+
+
+    /**
+     * Publish storage category record
+     * 
+     * @param int $id
+     * @return mixed
+     */
+    public function publish($id) 
+    {   
+        $result = StorageCategory::publish(StorageCategory::PUBLISH, ['id' => $id, 'active' => 1]);
+
+        return $result;
+    }     
+
+
+    /**
+     * Unpublish all published storage category records
+     * 
+     * @return mixed
+     */
+    public function unpublishAll() 
+    {   
+        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+    } 
+
+
+    /**
+     * Unpublish published storage category record
+     * 
+     * @param int $id
+     * @return mixed
+     */
+    public function unpublish($id) 
+    {   
+        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+    }
+    
+    
+    /**
+     * Aactivate all inactive storage category records
+     * 
+     * @return mixed
+     */
+    public function activateAll() 
+    {   
+        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+    } 
+
+
+    /**
+     * Activate storage category record 
+     * 
+     * @param int $id
+     * @return mixed
      */
     public function activate($id) 
     {   
@@ -30,12 +92,23 @@ class StorageCategoryController extends BaseController
 
 
     /**
-     * Publish storage category
+     * Deactivate all active storage category records
+     * 
+     * @return mixed
      */
-    public function publish($id) 
+    public function deactivateAll() 
     {   
-        $result = StorageCategory::publish(StorageCategory::PUBLISH, ['id' => $id]);
-
-        return $result;
+        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
     }     
+    
+    /**
+     * Deactivate storage category record for items process
+     * 
+     * @param int $id
+     * @return mixed
+     */
+    public function deactivate($id) 
+    {   
+        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+    }  
 }
