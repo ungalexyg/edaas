@@ -17,7 +17,7 @@ trait Publish
 	/**
 	 * Publish all storage category records
      * 
-     * @return array
+     * @return void
 	 */
     final public function publishAll() 
     {
@@ -31,8 +31,7 @@ trait Publish
         $this->publishLinkParents(); 
 
         Log::channel(Log::STORAGE_CATEGORY)->info('StorageCategory@publishAll completed', ['in' => __METHOD__ .':'.__LINE__]);                
-
-        return $this->response();         
+   
     } 
 
 
@@ -40,7 +39,7 @@ trait Publish
      * Publish storage category record
      * 
      * @param StorageCategory $storage_category
-     * @return array 
+     * @return void 
      */
     final public function publish(StorageCategory $storage_category) 
     {   
@@ -65,7 +64,6 @@ trait Publish
 
         $this->affected[] = [$storage_category, $category];            
 
-        return $this->response();           
     }
 
 
