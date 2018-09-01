@@ -3,8 +3,9 @@
 namespace App\Models\StorageCategory\Traits\Acts;
 
 use App\Models\Category\Category;
+use App\Models\StorageCategory\StorageCategory;
 use App\Exceptions\Models\StorageCategoryException as Exception; 
-
+use Log;
 
 /**
  * Publish Trait 
@@ -13,15 +14,36 @@ use App\Exceptions\Models\StorageCategoryException as Exception;
  */
 trait Publish
 {
+	/**
+	 * Publish all storage category records
+     * 
+     * @return array
+	 */
+    final public function publishAll() 
+    {
+        $storages = StorageCategory::unpublished()->get(); 
+
+        foreach($storages as $storage_category) 
+        {
+            $this->publish($storage_category);
+        }
+
+        $this->publishLinkParents(); 
+
+        Log::channel(Log::STORAGE_CATEGORY)->info('StorageCategory@publishAll completed', ['in' => __METHOD__ .':'.__LINE__]);                
+
+        return $this->response();         
+    } 
+
+
     /**
      * Publish storage category record
      * 
-     * @return self
+     * @param StorageCategory $storage_category
+     * @return array 
      */
-    protected function actPublish() 
+    final public function publish(StorageCategory $storage_category) 
     {   
-        $storage_category = $this->entity ?? (isset($this->input->id) ? $this->find($this->input->id) : null) ;
-
         // if there's a Category with the given storage_category_id, set the rest of the data to the 2nd given array, otherwise create it.
         $category = Category::updateOrCreate(
             [
@@ -38,31 +60,52 @@ trait Publish
         // mark the storage record as published to updated the sourced category with the latest fetched items
         $storage_category->published = 1;
 
-        // mark the storage record as active for items process
-        $storage_category->active = (($this->config['auto_active'] ?? false) ? 1 : 0); 
-
         // save the updates
         $storage_category->save();
 
-        return $this;           
+        $this->affected[] = [$storage_category, $category];            
+
+        return $this->response();           
     }
 
 
-	/**
-	 * Publish Storage Category
-	 */
-    protected function actPublishAll() 
+    /**
+     * Link published cateogires parents 
+     * based on channel's hirarchy in storage category
+     * 
+     * @see App\Models\Category
+     * @return void
+     */
+    protected function publishLinkParents() 
     {
-        $storages = StorageCategory::unpublished()->get(); 
+        // get organic & orphan categories
+        $categories = Category::organic()->orphan()->get();
 
-        foreach($storages as $storage_category) 
+        foreach($categories as $category) 
         {
-            $this->publishSingle($storage_category);
-        }
+            $storage_category = StorageCategory::withParent($category->storage_category_id)->first();
+            
+            if(isset($storage_category->parent->id)) // if it has a parent
+            {
+                // check if the parent already published
+                $parent_category = Category::where('storage_category_id', '=', $storage_category->parent->id)->first();
 
-        $this->publishLinkParents(); 
-
-        Log::channel(Log::CATEGORIES_PUBLISHER)->info('categories publisher completed publish process', ['in' => __METHOD__ .':'.__LINE__]);                
-    } 
-
+                // if it's published, assign it to the child now
+                if(isset($parent_category->id)) 
+                {
+                    $category->parent_category_id = $parent_category->id;
+    
+                    $category->save();
+                }
+            }
+            elseif($storage_category->parent_channel_category_id == 0) // if the storage record is parent category in the channel
+            {
+                $category->parent_category_id = 0; // update the published category also as parent category
+    
+                $category->save();                
+            }
+        }  
+        
+        Log::channel(Log::STORAGE_CATEGORY)->info('StorageCategory@publishLinkParents completed', ['in' => __METHOD__ .':'.__LINE__]);                
+    }  
 }

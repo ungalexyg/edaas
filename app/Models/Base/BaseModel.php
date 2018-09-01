@@ -75,22 +75,27 @@ abstract class BaseModel extends CoreModel implements IModel
 	
 
 	/**
-	 * Handle model's acts flow calls
+	 * Handle model's acts flow 
 	 * 
-	 * The method name will trigger the model to perform an act flow process,
+	 * The method perform full act flow process,
 	 * which includes input parsing, validation, execution & response.
 	 * 
+	 * The input can be array or eloquent model instance when performing action on specific instance
 	 * e.g :
-	 * Model::activate($id) will initiate 
-	 * static::self($class)->setAct($act)->setInput($input)->validate()->execute()->response(); 
-	 * which trigger generic methods: validateActivate() & actActivate()     
+	 * array when perform general action : 
+	 * StorageCategory::perform('customAct', ['key' => $value]) 
+	 * StorageCategory::perform('activate', $StorageCategory)
+	 * 
+	 * Regular usage of act methods is also allowed, e.g :
+	 * StorageCategory::activate($StorageCategory);
+	 * However, it won't perform the full flow  
 	 * 
 	 * @param string $method
 	 * @param mixed $input
 	 * @throws \Exception
 	 * @return void
 	 */	
-    public static function perform($method, $input)
+    public static function perform($method, $input=[])
 	{		
 		try 
 		{
@@ -124,11 +129,6 @@ abstract class BaseModel extends CoreModel implements IModel
 	{
 		$class = get_called_class();
 				
-		if(!method_exists($class, static::ACT . ucwords($method))) 
-		{
-			throw new Exception(Exception::INVALID_METHOD . ' | called method: '. $method);
-		}
-		
 		static::self($class)->setMethod($method)->setInput($input);
 		
 		return true;
@@ -143,6 +143,8 @@ abstract class BaseModel extends CoreModel implements IModel
 	 */
 	protected function setMethod($method) 
 	{
+		if(!method_exists(static::$self, $method)) throw new Exception(Exception::INVALID_METHOD . ' | called method: '. $method);
+
 		$this->method = $method;
 
 		return static::$self;
@@ -152,8 +154,7 @@ abstract class BaseModel extends CoreModel implements IModel
 	/**
 	 * Set input
 	 * 
-	 * To add some flexibility, the input can be 
-	 * array or eloquent model instance (helpful for mass model updates)
+	 * the input can be array or eloquent model instance
 	 * 
 	 * e.g :
 	 * StorageCategory::perform('activate', ['id' => $id])
@@ -164,23 +165,28 @@ abstract class BaseModel extends CoreModel implements IModel
 	 */	
 	protected function setInput($input) 
 	{
-		if(is_array($input)) 
-		{
-			$this->input = $input;			
-		}
-		elseif($input instanceof static::$self) 
-		{
-			$this->entity = $input;
-		}
-		else 
-		{
-			throw new Exception(Exception::INVALID_INPUT . ' | input must be an array of instance of ' .  get_class(static::$self) . ' | given input: ' . var_export($input, 1));
-		}
+		is_array($input) ? $this->input = $input : $this->setEntity($input); 		
 
 		return static::$self;		
 	}	
 
 	
+	/**
+	 * Set entity
+	 * 
+	 * @param array|Illuminate\Database\Eloquent\Model $entity
+	 * @return self
+	 */
+	protected function setEntity($entity) 
+	{
+		if(!$entity instanceof static::$self) throw new Exception(Exception::INVALID_ENTITY . ' | the entity must be an instance of ' .  get_class(static::$self) . ' | given entity: ' . var_export($entity, 1));
+
+		$this->entity = $entity;		
+
+		return static::$self;		
+	}		
+
+
 	/**
 	 * Validate action
 	 *
@@ -220,13 +226,24 @@ abstract class BaseModel extends CoreModel implements IModel
 	{
 		$this->input = (object) $this->input; 
 		
-		$method = static::ACT . $this->method;
-
-		$this->{$method}();
+		$this->{$this->method}($this->entity); // if the act not requires entity, it shoudln't be set & will pass null which will be ignored  
 
 		return static::$self;		
 	}
 	
+
+	// /**
+	//  * Get treated entity
+	//  * 
+	//  * Return the given entity to perform an act on or find the entity using given id
+	//  * 
+	//  * @return Illuminate\Database\Eloquent\Model
+	//  */
+	// protected function entity() 
+	// {
+	// 	return $this->entity ?? (isset($this->input->id) ? $this->find($this->input->id) : null) ;		
+	// }
+
 
 	/**
 	 * Response action's resulta
@@ -239,5 +256,5 @@ abstract class BaseModel extends CoreModel implements IModel
 			'messages' => $this->messages,
 			'affected' => $this->affected
 		];
-	}	
+	}		
 }

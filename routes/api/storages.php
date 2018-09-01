@@ -9,9 +9,20 @@ Route::group(['prefix' => 'storages',], function(){
     /**
      * Storage Category Routes
      */
-    Route::group(['prefix' => 'categories',], function(){
-        Route::get('/', 'StorageCategoryController@index');        
-        Route::get('/{id}/activate', 'StorageCategoryController@activate');        
+    //Route::resource('categories', 'StorageCategoryController');                
+    Route::group(['prefix' => 'categories',], function() {
+
+        Route::any('/activate'          , 'StorageCategoryController@activateAll');    
+        Route::any('/{id}/activate'     , 'StorageCategoryController@activate');        
+        
+        Route::any('/deactivate'        , 'StorageCategoryController@deactivateAll');        
+        Route::any('/{id}/deactivate'   , 'StorageCategoryController@deactivate');        
+        
+        Route::any('/publish'           , 'StorageCategoryController@publishAll');        
+        Route::any('/{id}/publish'      , 'StorageCategoryController@publish');
+        
+        Route::any('/unpublish'         , 'StorageCategoryController@unpublishAll');        
+        Route::any('/{id}/unpublish'    , 'StorageCategoryController@unpublish');        
     }); 
 
 
@@ -19,7 +30,7 @@ Route::group(['prefix' => 'storages',], function(){
      * Storage Item Routes
      */    
     Route::group(['prefix' => 'items',], function(){
-        Route::get('/{id}', 'StorageItemController@index');   
+       // Route::get('/{id}', 'StorageItemController@index');   
     });    
 }); 
 

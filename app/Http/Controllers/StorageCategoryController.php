@@ -25,7 +25,9 @@ class StorageCategoryController extends BaseController
      */
     public function publishAll() 
     {   
-        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+        $result = StorageCategory::perform('publishAll');
+
+        return $result;
     }     
 
 
@@ -37,7 +39,8 @@ class StorageCategoryController extends BaseController
      */
     public function publish($id) 
     {   
-        $result = StorageCategory::publish(StorageCategory::PUBLISH, ['id' => $id, 'active' => 1]);
+        $result = StorageCategory::perform('publish', StorageCategory::find($id)); // full flow
+        $result = StorageCategory::publish(StorageCategory::find($id)); // minimal action
 
         return $result;
     }     
@@ -50,7 +53,9 @@ class StorageCategoryController extends BaseController
      */
     public function unpublishAll() 
     {   
-        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+        $result = StorageCategory::perform('unpublishAll');
+
+        return $result;
     } 
 
 
@@ -62,7 +67,9 @@ class StorageCategoryController extends BaseController
      */
     public function unpublish($id) 
     {   
-        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+        $result = StorageCategory::perform('unpublish', StorageCategory::find($id));
+
+        return $result;
     }
     
     
@@ -73,7 +80,9 @@ class StorageCategoryController extends BaseController
      */
     public function activateAll() 
     {   
-        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+        $result = StorageCategory::perform('activateAll');
+
+        return $result;
     } 
 
 
@@ -85,7 +94,7 @@ class StorageCategoryController extends BaseController
      */
     public function activate($id) 
     {   
-        $result = StorageCategory::perform(StorageCategory::ACTIVATE, ['id' => $id]);
+        $result = StorageCategory::perform('activate', StorageCategory::find($id));
         
         return $result;
     } 
@@ -98,7 +107,9 @@ class StorageCategoryController extends BaseController
      */
     public function deactivateAll() 
     {   
-        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+        $result = StorageCategory::perform('deactivateAll');
+
+        return $result;
     }     
     
     /**
@@ -109,6 +120,8 @@ class StorageCategoryController extends BaseController
      */
     public function deactivate($id) 
     {   
-        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+        $result = StorageCategory::perform('deactivate', StorageCategory::find($id));
+
+        return $result;
     }  
 }

@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\{File, Route};
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
+
+/**
+ * Route Service Provider
+ */
 class RouteServiceProvider extends ServiceProvider
 {
     /**
@@ -67,10 +70,10 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::group([
-            'prefix' => 'api',
-            'middleware' => 'api',
-            'namespace' => $this->namespace,
-        ], function(){
+            'prefix'        => 'api',
+            'middleware'    => 'api',
+            'namespace'     => $this->namespace,
+        ], function() {
 
             $files = File::files(base_path('routes/api'));
 

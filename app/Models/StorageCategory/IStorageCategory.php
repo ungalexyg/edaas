@@ -19,10 +19,10 @@ interface IStorageCategory
     /**
      * Publish storage category record
      * 
-     * @param int $id
+     * @param StorageCategory $StorageCategory
      * @return mixed
      */
-    public function publish($id);
+    public function publish(StorageCategory $StorageCategory);
 
 
     /**
@@ -36,10 +36,10 @@ interface IStorageCategory
     /**
      * Unpublish published storage category record
      * 
-     * @param int $id
+     * @param StorageCategory $StorageCategory
      * @return mixed
      */
-    public function unpublish($id);    
+    public function unpublish(StorageCategory $StorageCategory);    
     
     
     /**
@@ -53,10 +53,10 @@ interface IStorageCategory
     /**
      * Activate storage category record 
      * 
-     * @param int $id
+     * @param StorageCategory $StorageCategory
      * @return mixed
      */
-    public function activate($id);    
+    public function activate(StorageCategory $StorageCategory);    
     
     
     /**
@@ -70,8 +70,8 @@ interface IStorageCategory
     /**
      * Deactivate storage category record
      * 
-     * @param int $id
+     * @param StorageCategory $StorageCategory
      * @return mixed
      */
-    public function deactivate($id);        
+    public function deactivate(StorageCategory $StorageCategory);        
 }

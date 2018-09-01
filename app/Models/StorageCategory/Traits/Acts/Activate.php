@@ -17,9 +17,9 @@ trait Activate
      * 
      * @return self
      */
-    protected function actActivate()
+    protected function activate()
     {
-        $storage_category = $this->entity ?? (isset($this->input->id) ? $this->find($this->input->id) : null) ;
+        $storage_category = $this->entity();
         
         if(!isset($storage_category->id)) throw new Exception(Exception::ENTITY_NOT_FOUND . ' | act: ' . $this->method . ' | id:' . $id);
 
@@ -47,7 +47,7 @@ trait Activate
      * 
      * @return self
      */
-    protected function actActivateAll()
+    protected function activateAll()
     {
         dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
     }

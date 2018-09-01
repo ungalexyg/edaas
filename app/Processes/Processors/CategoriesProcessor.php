@@ -108,6 +108,11 @@ class CategoriesProcessor extends BaseProcessor
      */
 	public function publish() 
 	{
-
+        StorageCategory::perform('publishAll');
+        
+        if(($this->config['auto_active'] ?? false)) 
+        {
+            StorageCategory::perform('activateAll');            
+        }
 	}			
 }

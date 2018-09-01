@@ -42,6 +42,13 @@ interface ILogEnum
     const ITEMS_KEEPER          =  Processes::ITEMS . '_keepers';
     const ITEMS_OBSERVER        =  Processes::ITEMS . '_observer';
     const ITEMS_PUBLISHER       =  Processes::ITEMS . '_publisher';
+
+
+    /**
+     * Logging channels keyes - Models 
+     */
+    const STORAGE_CATEGORY      =  'storage_category';
+
 }
 
 
