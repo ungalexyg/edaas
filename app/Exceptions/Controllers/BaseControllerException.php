@@ -8,7 +8,7 @@ use App\Exceptions\BaseException;
 /**
  * Controller Exception
  */
-class ControllerException extends BaseException
+class BaseControllerException extends BaseException
 {
 
 }

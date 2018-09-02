@@ -53,16 +53,25 @@ trait Publish
             ]
         );
 
-        // link the fresh category to the storage_category 
-        $storageCategory->category_id = $category->id;
+        if($storageCategory->published != 1) 
+        {
+            // link the fresh category to the storage_category 
+            $storageCategory->category_id = $category->id;
 
-        // mark the storage record as published to updated the sourced category with the latest fetched items
-        $storageCategory->published = 1;
+            // mark the storage record as published to updated the sourced category with the latest fetched items
+            $storageCategory->published = 1;
 
-        // save the updates
-        $storageCategory->save();
+            // save the updates
+            $storageCategory->save();
 
-        $this->affected[] = [$storageCategory, $category];            
+            $this->messages[] = 'Storage category ' . $storageCategory->id . ' has been published successfully';            
+
+            $this->affected[] = [$storageCategory, $category]; 
+        }
+        else 
+        {
+            $this->messages[] = 'Storage category ' . $storageCategory->id . ' is already published';            
+        }           
     }
 
 

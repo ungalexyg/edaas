@@ -4,7 +4,7 @@
  * Process Routes
  */
 
-Route::group(['prefix' => 'processes',], function(){
-    Route::get('/categories'    , 'ProcessController@categories');        
-    Route::get('/items'         , 'ProcessController@items');        
-}); 
+// Route::group(['namespaces' => 'Process', 'prefix' => 'processes',], function(){
+//     Route::get('/categories'    , 'ProcessController@categories');        
+//     Route::get('/items'         , 'ProcessController@items');        
+// }); 

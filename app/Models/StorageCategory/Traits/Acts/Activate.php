@@ -27,28 +27,26 @@ trait Activate
     /**
      * Activate Storage Category
      * 
-     * @param StorageCategory $StorageCategory
+     * @param StorageCategory $storageCategory
      * @return void
      */
-    public function activate(StorageCategory $storage_category)
-    {
-        $storage_category = $this->entity();
-        
-        if(!isset($storage_category->id)) throw new Exception(Exception::ENTITY_NOT_FOUND . ' | act: ' . $this->method . ' | id:' . $id);
+    public function activate(StorageCategory $storageCategory)
+    {        
+        if(!isset($storageCategory->id)) throw new Exception(Exception::ENTITY_NOT_FOUND . ' | act: ' . $this->method . ' | id:' . $id);
 
-        if($storage_category->active != 1) 
+        if($storageCategory->active != 1) 
         {
-            $storage_category->active = 1;
+            $storageCategory->active = 1;
 
-            $storage_category->save();
+            $storageCategory->save();
 
-            $this->messages[] = 'Storage category ' . $storage_category->id . ' activated.';            
+            $this->messages[] = 'Storage category ' . $storageCategory->id . ' has been activated successfully.';            
 
-            $this->affected[] = $storage_category;            
+            $this->affected[] = $storageCategory;            
         }
         else 
         {
-            $this->messages[] = 'Storage category ' . $storage_category->id . ' is already active.';            
+            $this->messages[] = 'Storage category ' . $storageCategory->id . ' is already active.';            
         }
     }
 

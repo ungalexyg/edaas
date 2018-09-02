@@ -1,14 +1,14 @@
 <?php 
 
-namespace App\Http\Controllers\Traits;
+namespace App\Http\Controllers\StorageCategory;
 
 use App\Exceptions\Controllers\ControllerException as Exception;
-
+use App\Models\StorageCategory\StorageCategory;
 
 /**
- * Resource Controller Boilerplate
+ * Storage Category resource methods
  */ 
-trait ResourceBoilerplate 
+trait StorageCategoryResource 
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ trait ResourceBoilerplate
      */
     public function index()
     {
-        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+        return StorageCategory::simplePaginate(10);
     }
 
     /**
@@ -49,7 +49,7 @@ trait ResourceBoilerplate
      */
     public function show($id)
     {
-        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+        return StorageCategory::find($id);
     }
 
     /**
