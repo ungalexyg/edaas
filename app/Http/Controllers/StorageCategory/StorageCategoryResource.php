@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\StorageCategory;
 
-use App\Exceptions\Controllers\ControllerException as Exception;
+use Illuminate\Http\Request;
 use App\Models\StorageCategory\StorageCategory;
+use App\Exceptions\Controllers\ControllerException as Exception;
+
 
 /**
  * Storage Category resource methods
@@ -15,9 +17,9 @@ trait StorageCategoryResource
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return StorageCategory::simplePaginate(10);
+        return StorageCategory::paginate(($request->input('per_page') ?? 10));
     }
 
     /**

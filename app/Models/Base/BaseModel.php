@@ -68,13 +68,6 @@ abstract class BaseModel extends CoreModel implements IModel
 
 
 	/**
-	 * Generic methods prefixes
-	 */
-	const ACT = 'act';
-	const VALIDATE = 'validate';
-	
-
-	/**
 	 * Handle model's acts flow 
 	 * 
 	 * The method perform full act flow process,
@@ -197,7 +190,7 @@ abstract class BaseModel extends CoreModel implements IModel
 	 */	
 	public function validate() 
 	{
-		$method = static::VALIDATE . $this->method;
+		$method = 'validate' . $this->method;
 
 		$rules = $this->{$method}();
 		

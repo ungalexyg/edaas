@@ -27,7 +27,7 @@ use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
 use App\Lib\Vendor\Goutte\GoutteExtension as Spider;
 use Symfony\Component\DomCrawler\Crawler as CoreCrawler;
 use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
-use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
+use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException as Exception;
 
 
 
@@ -136,9 +136,9 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException;
         $category_id    = $parts[2] ?? null;
 
         // proper check
-        if(!$prefix == 'category')      throw new AliexpressCategoriesAdapterException(AliexpressCategoriesAdapterException::INVALID_CATEGORY_URL . ' | ' . print_r(['url' => $url], 1));
-        if(!is_numeric($category_id))   throw new AliexpressCategoriesAdapterException(AliexpressCategoriesAdapterException::INVALID_CATEGORY_URL_ID . ' | ' . print_r(['url' => $url], 1));
-        if(!$path)                      throw new AliexpressCategoriesAdapterException(AliexpressCategoriesAdapterException::INVALID_CATEGORY_URL_PATH . ' | ' . print_r(['url' => $url], 1));
+        if(!$prefix == 'category')      throw new Exception(Exception::INVALID_CATEGORY_URL . ' | ' . print_r(['url' => $url], 1));
+        if(!is_numeric($category_id))   throw new Exception(Exception::INVALID_CATEGORY_URL_ID . ' | ' . print_r(['url' => $url], 1));
+        if(!$path)                      throw new Exception(Exception::INVALID_CATEGORY_URL_PATH . ' | ' . print_r(['url' => $url], 1));
 
         // return
         return [

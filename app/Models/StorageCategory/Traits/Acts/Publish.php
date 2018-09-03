@@ -30,7 +30,7 @@ trait Publish
 
         $this->publishLinkParents(); 
 
-        Log::channel(Log::STORAGE_CATEGORY)->info('StorageCategory@publishAll completed', ['in' => __METHOD__ .':'.__LINE__]);                
+        Log::channel(Log::STORAGE_CATEGORY)->info('StorageCategory@publishAll completed', []);                
    
     } 
 
@@ -107,6 +107,8 @@ trait Publish
      */
     protected function publishLinkParents() 
     {
+        $affected = [];
+
         // get organic & orphan categories
         $categories = Category::organic()->orphan()->get();
 
@@ -133,8 +135,10 @@ trait Publish
     
                 $category->save();                
             }
+
+            $affected[] = ['storage_category_id' => $storageCategory->id , 'category_id' => $category->id];
         }  
         
-        Log::channel(Log::STORAGE_CATEGORY)->info('StorageCategory@publishLinkParents completed', ['in' => __METHOD__ .':'.__LINE__]);                
+        Log::channel(Log::STORAGE_CATEGORY)->info('StorageCategory@publishLinkParents completed', ['affected' => $affected]);                
     }  
 }

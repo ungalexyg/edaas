@@ -6,7 +6,7 @@ use Log;
 use App\Models\Channel;
 use App\Models\StorageCategory;
 use App\Processes\Processors\Base\BaseProcessor;
-use App\Exceptions\Processors\CategoriesProcessorException;
+use App\Exceptions\Processors\CategoriesProcessorException as Exception;
 
 
 /**
@@ -43,7 +43,7 @@ class CategoriesProcessor extends BaseProcessor
             $this->bag[$this->process][$channel->key] = $this->loadAdapter($channel->key)->adapter->fetch();
         }            
        
-        Log::channel(Log::CATEGORIES_SCANNER)->info('scan categories completed ' . (!empty($this->bag) ? 'successfully with full bag :)' : 'with empty bag :/') , ['in' => __METHOD__ .':'.__LINE__]);
+        Log::channel(Log::PROCESSOR_CATEGORIES)->info('CategoriesProcessor@scan completed ' . (!empty($this->bag) ? 'successfully with full bag :)' : 'with empty bag :/') , []);
 
         return $this;
 	}
@@ -73,19 +73,19 @@ class CategoriesProcessor extends BaseProcessor
     {
         $categories = $this->bag[$this->process] ?? null;
         
-        if(!is_array($categories)) throw new CategoriesProcessorException(CategoriesProcessorException::INVALID_BAG_CONTENTS . ' | ' . print_r(['bag' => $this->bag], 1));
+        if(!is_array($categories)) throw new Exception(Exception::INVALID_BAG_CONTENTS . ' | ' . print_r(['bag' => $this->bag], 1));
 
         foreach($categories as $channel_key => $channel_categories) 
         {
             $channel = Channel::where('key', $channel_key)->first();
 
-            if(!isset($channel->id)) throw new CategoriesProcessorException(CategoriesProcessorException::INVALID_CHANNEL_KEY . ' | key: ' .  $channel_key);            
+            if(!isset($channel->id)) throw new Exception(Exception::INVALID_CHANNEL_KEY . ' | key: ' .  $channel_key);            
 
             foreach($channel_categories as $k => $category_data) 
             {                
                 $channel_category_id = $category_data['channel_category_id'] ?? null;
 
-                if(!is_numeric($channel_category_id)) throw new CategoriesProcessorException(CategoriesProcessorException::INVALID_CHANNEL_CATEGORY_ID . ' | channel_category_id : ' . var_export($channel_category_id, 1));
+                if(!is_numeric($channel_category_id)) throw new Exception(Exception::INVALID_CHANNEL_CATEGORY_ID . ' | channel_category_id : ' . var_export($channel_category_id, 1));
 
                 unset($category_data['channel_category_id']); // adjustment for updateOrCreate
 
@@ -96,10 +96,11 @@ class CategoriesProcessor extends BaseProcessor
             }
         }
 
-        Log::channel(Log::CATEGORIES_KEEPER)->info('categories keeper completed store process', ['in' => __METHOD__ .':'.__LINE__]);
+        Log::channel(Log::PROCESSOR_CATEGORIES)->info('CategoriesProcessor@store completed', ['categories' => count($categories)]);
 
         return $this;
     }
+
 
     /**
 	 *  Publish data from the storage 
@@ -114,5 +115,7 @@ class CategoriesProcessor extends BaseProcessor
         {
             StorageCategory::perform('activateAll');            
         }
+
+        Log::channel(Log::PROCESSOR_CATEGORIES)->info('CategoriesProcessor@publish done!', []);        
 	}			
 }

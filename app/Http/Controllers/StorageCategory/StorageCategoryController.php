@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\StorageCategory;
 
-//use Illuminate\Http\Request;
-//use App\Models\Category\Category;
 use App\Http\Controllers\Base\BaseController;
 use App\Models\StorageCategory\StorageCategory;
 use App\Exceptions\Controllers\StorageCategoryControllerException as Exception;

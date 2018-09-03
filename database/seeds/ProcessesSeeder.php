@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Models\Process;
+use App\Models\Process\Process;
 
 
 /**

@@ -1,18 +1,15 @@
 <?php
+namespace App\Models\channel;
 
-namespace App\Models;
-
-
-use App\Models\Process;
+use App\Models\Base\BaseModel;
+use App\Models\Process\Process;
 
 
 /**
  * Channel Model
- * 
  */
 class Channel extends BaseModel
 {
-
     /**
      * Indicates if the model should be timestamped.
      *
@@ -20,14 +17,6 @@ class Channel extends BaseModel
      */
     public $timestamps = false;
 
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    //protected $fillable = ['domain', 'name', 'description', 'key'];    
-    
 
     /**
      * The attributes that aren't mass assignable.
@@ -44,5 +33,4 @@ class Channel extends BaseModel
     {
         return $this->belongsToMany(Process::class, 'processes_channels', 'channel_id', 'process_id')->withPivot('last_process');
     }    
-
 }

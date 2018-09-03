@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Process;
 
-use App\Models\Channel;
+use App\Models\Channel\Channel;
 use Illuminate\Support\Carbon;
 
 
@@ -11,7 +11,6 @@ use Illuminate\Support\Carbon;
  */
 class Process extends BaseModel
 {
-    
     /**
      * Indicates if the model should be timestamped.
      *
@@ -19,15 +18,7 @@ class Process extends BaseModel
      */
     public $timestamps = false;    
 
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    //protected $fillable = ['name', 'description', 'key'];    
     
-
     /**
      * The attributes that aren't mass assignable.
      *

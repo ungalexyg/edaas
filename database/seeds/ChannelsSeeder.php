@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Models\Channel;
+use App\Models\Channel\Channel;
 
 /**
  * Channel Seeder

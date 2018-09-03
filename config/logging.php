@@ -4,16 +4,11 @@ use App\Lib\Vendor\Laravel\Log;
 use Monolog\Handler\StreamHandler;
 use App\Enums\ProcessEnum as Processes;
 
-// process categories log path
-$process_categories_path = 'logs/processes/'.Processes::CATEGORIES; 
-
-// process  items log path
-$process_items_path = 'logs/processes/'.Processes::ITEMS;
+// global logs path
+$logs_path = storage_path('logs');
 
 // default process log days old to be deleted 
-$default_log_days = 7;
-
-
+$log_days = 7;
 
 
 return [
@@ -60,146 +55,78 @@ return [
     |                    "errorlog", "monolog",
     |                    "custom", "stack"
     |
+    |
+    | Sample channel usage :
+    |
+    | Log::channel(Log::PROCESSOR_MAIN)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+    |
     */
 
     'channels' => [
 
-
-        ##############################################
-        # Actions Logs
-        ##############################################   
-
-
         /**
-         * Main processor log
-         * 
-         * Log::channel(Log::ACTS)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         * Models channels
          */        
-        Log::ACTS => [
-            'driver' => 'daily',
-            'path' => storage_path('logs/acts/acts.log'),
-            'days' => $default_log_days, // after how many the log days theoldest will be deleted
-            'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
+        Log::STORAGE_CATEGORY => [
+            'driver'    => 'daily',
+            'path'      => $logs_path . '/models/storage_category/model.log',
+            'days'      => $log_days, 
+            'level'     => 'debug', 
         ],        
 
-
-        ##############################################
-        # Processor logs
-        ##############################################    
-
-
+   
         /**
-         * Main processor log
-         * 
-         * Log::channel(Log::MAIN_PROCESSOR)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         * Processors channels 
          */        
-        Log::MAIN_PROCESSOR => [
-            'driver' => 'daily',
-            'path' => storage_path('logs/processes/main/processor.log'),
-            'days' => $default_log_days, // after how many the log days theoldest will be deleted
-            'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
+        Log::PROCESSOR_MAIN => [
+            'driver'    => 'daily',
+            'path'      => $logs_path . '/processors/main/processor.log',
+            'days'      => $log_days,
+            'level'     => 'debug', 
+        ],
+
+        Log::PROCESSOR_CATEGORIES => [
+            'driver'    => 'daily',
+            'path'      => $logs_path . '/processors/categories/processor.log',
+            'days'      => $log_days, 
+            'level'     => 'debug', 
+        ],
+
+        Log::PROCESSOR_ITEMS => [
+            'driver'    => 'daily',
+            'path'      => $logs_path . '/processors/items/processor.log',
+            'days'      => $log_days, 
+            'level'     => 'debug', 
         ],
 
 
-        ##############################################
-        # Process Categories Logs
-        ##############################################        
-
-
         /**
-         * Categories processor log
-         * 
-         * Log::channel(Log::CATEGORIES_PROCESSOR)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
+         * Adapters channels
          */        
-        Log::CATEGORIES_PROCESSOR => [
-            'driver' => 'daily',
-            'path' => storage_path($process_categories_path . '/'.Log::CATEGORIES_PROCESSOR.'.log'),
-            'days' => $default_log_days, // after how many the log days theoldest will be deleted
-            'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
-        ],
-
-        /**
-         * Categories adapters log
-         * 
-         * Log::channel(Log::CATEGORIES_ADAPTERS)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
-         */        
-        Log::CATEGORIES_ADAPTERS => [
-            'driver' => 'daily',
-            'path' => storage_path($process_categories_path . '/adapters.log'),
-            'days' => $default_log_days, 
-            'level' => 'debug', 
+        Log::ADAPTERS_CATEGORIES => [
+            'driver'    => 'daily',
+            'path'      => $logs_path . '/adapters//categories/adapters.log',
+            'days'      => $log_days, 
+            'level'     => 'debug', 
         ],        
-        
+
+        Log::ADAPTERS_ITEMS => [
+            'driver'    => 'daily',
+            'path'      => $logs_path . '/adapters/items/adapters.log',
+            'days'      => $log_days, 
+            'level'     => 'debug', 
+        ],           
+
 
         /**
-         * Categories observers log
-         * 
-         * Log::channel(Log::CATEGORIES_OBSERVER)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
-         */        
-        Log::CATEGORIES_OBSERVER => [
-            'driver' => 'daily',
-            'path' => storage_path($process_categories_path . '/observer.log'),
-            'days' => $default_log_days, 
-            'level' => 'debug', 
+         * Observers channels
+         */
+        Log::OBSERVER_STORAGE_CATEGORY => [
+            'driver'    => 'daily',
+            'path'      => $logs_path . '/observers/storage_category/observer.log',
+            'days'      => $log_days, 
+            'level'     => 'debug', 
         ],   
-  
-
-
-
-        ##############################################
-        # Process Items Logs
-        ##############################################
-
-
-        /**
-         * Categories processor log
-         * 
-         * Log::channel(Log::ITEMS_PROCESSOR)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
-         */        
-        Log::ITEMS_PROCESSOR => [
-            'driver' => 'daily',
-            'path' => storage_path($process_items_path . '/processor.log'),
-            'days' => $default_log_days, // after how many the log days theoldest will be deleted
-            'level' => 'debug', // determines the minimum "level" a message must be in order to be logged by the channel
-        ],
-
-
-        /**
-         * Categories adapters log
-         * 
-         * Log::channel(Log::ITEMS_ADAPTERS)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
-         */        
-        Log::ITEMS_ADAPTERS => [
-            'driver' => 'daily',
-            'path' => storage_path($process_items_path . '/adapters.log'),
-            'days' => $default_log_days, 
-            'level' => 'debug', 
-        ],        
-        
-
-        /**
-         * Categories observers log
-         * 
-         * Log::channel(Log::ITEMS_OBSERVER)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
-         */        
-        Log::ITEMS_OBSERVER => [
-            'driver' => 'daily',
-            'path' => storage_path($process_items_path . '/observer.log'),
-            'days' => $default_log_days, 
-            'level' => 'debug', 
-        ],   
-
-        /**
-         * Categories publishers log
-         * 
-         * Log::channel(Log::ITEMS_PUBLISHER)->info('Message...', ['in' => __METHOD__ .':'.__LINE__]);
-         */        
-        Log::ITEMS_PUBLISHER => [
-            'driver' => 'daily',
-            'path' => storage_path($process_items_path . '/publishers.log'),
-            'days' => $default_log_days, 
-            'level' => 'debug', 
-        ],          
 
 
         #############################################
@@ -221,13 +148,13 @@ return [
          */
         'single' => [
             'driver' => 'single',
-            'path' => storage_path('logs/laravel.log'),
+            'path' => $log_days . '/laravel.log',
             'level' => 'debug',
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/laravel.log'),
+            'path' => $log_days . '/laravel.log',
             'level' => 'debug',
             'days' => 7,
         ],

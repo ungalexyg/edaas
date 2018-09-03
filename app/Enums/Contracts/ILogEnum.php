@@ -2,54 +2,37 @@
 
 namespace App\Enums\Contracts;
 
-use App\Enums\ProcessEnum as Processes;
-
 
 /**
  * Logs Enum Interface
+ * 
+ * Holds logging channels keyes per component
  */ 
 interface ILogEnum
 {
     /**
-     * Logging channels keyes - Acts 
+     * Models channels
      */
-    const ACTS                  =  'acts';
+    const STORAGE_CATEGORY              =  'storage_category';
 
+    
+    /**
+     * Processors channels 
+     */
+    const PROCESSOR_MAIN                =  'processor_main';    
+    const PROCESSOR_CATEGORIES          =  'processor_categories';
+    const PROCESSOR_ITEMS               =  'processor_items';
+    
 
     /**
-     * Logging channels keyes - main processor 
-     */
-    const MAIN_PROCESSOR        =  'main_processor';
-
-
-    /**
-     * Logging channels keyes - categories process 
-     */
-    const CATEGORIES_PROCESSOR  =  Processes::CATEGORIES . '_processor';
-    const CATEGORIES_SCANNER    =  Processes::CATEGORIES . '_scanner';
-    const CATEGORIES_ADAPTERS   =  Processes::CATEGORIES . '_adapters';
-    const CATEGORIES_KEEPER     =  Processes::CATEGORIES . '_keepers';
-    const CATEGORIES_OBSERVER   =  Processes::CATEGORIES . '_observer';
-    const CATEGORIES_PUBLISHER  =  Processes::CATEGORIES . '_publisher';
-
-
-    /**
-     * Logging channels keyes - items process 
+     * Adapters channels
      */    
-    const ITEMS_PROCESSOR       =  Processes::ITEMS . '_processor';
-    const ITEMS_SCANNER         =  Processes::ITEMS . '_scanner';    
-    const ITEMS_ADAPTERS        =  Processes::ITEMS . '_adapters';
-    const ITEMS_KEEPER          =  Processes::ITEMS . '_keepers';
-    const ITEMS_OBSERVER        =  Processes::ITEMS . '_observer';
-    const ITEMS_PUBLISHER       =  Processes::ITEMS . '_publisher';
+    const ADAPTERS_CATEGORIES           =  'adapters_categories';    
+    const ADAPTERS_ITEMS                =  'adapters_items';
 
 
     /**
-     * Logging channels keyes - Models 
+     * Observers channels
      */
-    const STORAGE_CATEGORY      =  'storage_category';
-
+    const OBSERVER_STORAGE_CATEGORY     =  'observer_storage_category';
 }
-
-
-
