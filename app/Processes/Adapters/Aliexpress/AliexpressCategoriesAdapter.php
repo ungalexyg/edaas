@@ -23,10 +23,12 @@
 namespace App\Processes\Adapters\Aliexpress;
 
 use Log;
-use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
-use App\Lib\Vendor\Goutte\GoutteExtension as Spider;
+use App\Lib\Vendor\{
+    Guzzle\GuzzleExtension as Web,
+    Goutte\GoutteExtension as Spider,
+    Symfony\DomCrawler\CrawlerExtension as Crawler
+};
 use Symfony\Component\DomCrawler\Crawler as CoreCrawler;
-use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
 use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException as Exception;
 
 
@@ -108,7 +110,7 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException as E
             });
         }); 
                 
-        Log::channel(Log::CATEGORIES_ADAPTERS)->info($this->domain . ' - returned ' . (!empty($this->fetch) ? 'full fetch :)' : 'empty fetch :/'), ['in' => __METHOD__ .':'.__LINE__]);
+        Log::channel(Log::ADAPTERS_CATEGORIES)->info($this->domain . ' - returned ' . (!empty($this->fetch) ? 'full fetch :)' : 'empty fetch :/'), ['in' => __METHOD__ .':'.__LINE__]);
             
         return $this->fetch;
     }

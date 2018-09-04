@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Models\StorageCategory\Traits;
 
 use App\Exceptions\Models\StorageCategoryException as Exception;
+
 
 /**
  * Storage Category Validations 

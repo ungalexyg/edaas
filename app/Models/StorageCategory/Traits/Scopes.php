@@ -2,7 +2,10 @@
 
 namespace App\Models\StorageCategory\Traits;
 
-use App\Models\Category;
+use App\Models\{
+    Category\Category,
+    StorageCategory\StorageCategory
+};
 
 
 /**

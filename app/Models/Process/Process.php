@@ -2,8 +2,9 @@
 
 namespace App\Models\Process;
 
-use App\Models\Channel\Channel;
+use App\Models\Base\BaseModel;
 use Illuminate\Support\Carbon;
+use App\Models\Channel\Channel;
 
 
 /**

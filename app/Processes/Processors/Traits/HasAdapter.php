@@ -1,8 +1,8 @@
 <?php 
 
-namespace App\Processes\Traits;
+namespace App\Processes\Processors\Traits;
 
-use App\Exceptions\Processors\MainProcessorException;
+use App\Exceptions\Processors\BaseProcessorException as Exception;
 
 
 /**
@@ -12,7 +12,6 @@ use App\Exceptions\Processors\MainProcessorException;
  */ 
 trait HasAdapter 
 {
-
 	/**
 	 * Adapter instance
 	 * 
@@ -25,14 +24,16 @@ trait HasAdapter
 	 * Load Adapter
 	 * 
 	 * @param string $channel
-	 * @throws MainProcessorException
+	 * @throws BaseProcessorException
 	 * @return self
 	 */	
 	public function loadAdapter($channel) 
 	{			
 		$adapter = 'App\Processes\Adapters\\' . ucwords($channel) . '\\' . ucwords($channel) . ucwords($this->process) . 'Adapter';
 
-		if (!class_exists($adapter))  throw new MainProcessorException(MainProcessorException::UNDEFINED_ADAPTER . ' | adapter : ' . $adapter);
+		//dd($adapter);
+
+		if (!class_exists($adapter))  throw new Exception(Exception::UNDEFINED_ADAPTER . ' | adapter : ' . $adapter);
 
 		$this->adapter = new $adapter();		
 
@@ -40,5 +41,4 @@ trait HasAdapter
 
 		return $this;
 	}		    
-
 }

@@ -3,9 +3,9 @@
 namespace App\Processes\Processors\Base;
 
 use Log;
-use Act;
-use App\Models\Process;
-use App\Processes\Traits\ProcessSetter;
+use App\Models\Process\Process;
+use App\Processes\Processors\Traits\ProcessorSetter;
+
 
 /**
  * Base Processor 
@@ -15,7 +15,7 @@ abstract class BaseProcessor implements IProcessor
 	/**
 	 * Processes traits
 	 */
-	use ProcessSetter;
+	use ProcessorSetter;
 
 
 	/**
@@ -85,12 +85,12 @@ abstract class BaseProcessor implements IProcessor
 	{
 		if(!$this->message) 
 		{
-			$this->message = 'the '.$this->process.' processor completed the process with ' . (!empty($this->bag) ? 'full bag :)': 'empty bag :/');
+			$this->message = ucwords($this->process).'Processor completed with ' . (!empty($this->bag) ? 'full bag :)': 'empty bag :/');
 		}
 
-		$log_channel = ( $this->process ? $this->process . '_processor' :  Log::MAIN_PROCESSOR);
+		$log_channel = ( $this->process ? 'processor_' . $this->process :  Log::PROCESSOR_MAIN);
 
-		Log::channel($log_channel)->info($this->message, ['in' => __METHOD__ .':'.__LINE__]);
+		Log::channel($log_channel)->info($this->message, ['in' => 'BaseProcessor@response:'.__LINE__]);
 
 		return [
 			'message' => $this->message,

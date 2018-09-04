@@ -148,13 +148,13 @@ return [
          */
         'single' => [
             'driver' => 'single',
-            'path' => $log_days . '/laravel.log',
+            'path' => $logs_path . '/laravel.log',
             'level' => 'debug',
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path' => $log_days . '/laravel.log',
+            'path' => $logs_path . '/laravel.log',
             'level' => 'debug',
             'days' => 7,
         ],

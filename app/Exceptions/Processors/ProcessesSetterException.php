@@ -6,9 +6,9 @@ use App\Exceptions\BaseException;
 
 
 /**
- * Process Setter Exception
+ * Processes Setter Exception
  */
-class ProcessorSetterException extends BaseException
+class ProcessesSetterException extends BaseException
 {
-    //
+
 }

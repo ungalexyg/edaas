@@ -223,7 +223,7 @@ return [
         /**
          * Application
          */        
-        'Act'           => App\Acts\Base\MainAct::class,
+        //'Act'           => App\Acts\Base\MainAct::class,
         'Log'           => App\Lib\Vendor\Laravel\Log::class, // extend 'Log' => Illuminate\Support\Facades\Log::class,
     ],
 

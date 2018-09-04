@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Processes\Processors\Setter\ProcessesSetter;
-
+use App\Processes\Setter\ProcessesSetter;
 
 /**
  * Processes Channels Seeder

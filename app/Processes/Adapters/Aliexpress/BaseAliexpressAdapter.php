@@ -2,7 +2,7 @@
 
 namespace App\Processes\Adapters\Aliexpress;
 
-use App\Enums\Channels;
+use App\Enums\ChannelEnum as Channels;
 use App\Processes\Adapters\Base\BaseAdapter;
 
 

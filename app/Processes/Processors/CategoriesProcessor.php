@@ -3,9 +3,14 @@
 namespace App\Processes\Processors;
 
 use Log;
-use App\Models\Channel;
-use App\Models\StorageCategory;
-use App\Processes\Processors\Base\BaseProcessor;
+use App\Models\{
+    Channel\Channel, 
+    StorageCategory\StorageCategory
+};
+use App\Processes\Processors\{
+    Base\BaseProcessor,
+    Traits\HasAdapter
+};
 use App\Exceptions\Processors\CategoriesProcessorException as Exception;
 
 
@@ -16,6 +21,12 @@ use App\Exceptions\Processors\CategoriesProcessorException as Exception;
  */ 
 class CategoriesProcessor extends BaseProcessor 
 {	
+	/**
+	 * Use process traits
+	 */    
+    use HasAdapter;
+
+    
 	/**
 	 * Manage the process
 	 * 

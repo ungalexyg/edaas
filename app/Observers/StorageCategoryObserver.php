@@ -29,41 +29,60 @@ class StorageCategoryObserver
     /**
      * Handle to the storage category "created" event.
      *
-     * @param App\Models\StorageCategory $storage_category
+     * @param App\Models\StorageCategory $storageCategory
      * @return void
      */
-    public function created(StorageCategory $storage_category)
+    public function created(StorageCategory $storageCategory)
     {
-        Log::channel(Log::CATEGORIES_OBSERVER)->info('observed created storageCategory', [
-            'in' => __METHOD__ .':'.__LINE__ , 
-            'storage_category' => $storage_category->getAttributes()
+        Log::channel(Log::OBSERVER_STORAGE_CATEGORY)->info('observed created storageCategory', [
+            'in' => 'StorageCategoryObserver@:created:'.__LINE__ , 
+            'storageCategory' => $storageCategory->getAttributes()
         ]);
     }
+
+
+    /**
+     * Handle to the storage category "updating" event.
+     *
+     * @param App\Models\StorageCategory $storageCategory
+     * @return void
+     */
+    public function updating(StorageCategory $storageCategory)
+    {        
+        Log::channel(Log::OBSERVER_STORAGE_CATEGORY)->info('observed updated storageCategory', [
+            'in' => 'StorageCategoryObserver@:updating:'.__LINE__ , 
+            'id' => $storageCategory->id, 
+            'changes' => $storageCategory->getDirty()
+        ]);        
+    }     
+
 
     /**
      * Handle the storage category "updated" event.
      * 
-     * TODO: $storageCategory->confirmed logic ...
-     * 
-     * @param  App\Models\StorageCategory $storage_category
+     * @param  App\Models\StorageCategory $storageCategory
      * @return void
      */
-    public function updated(StorageCategory $storage_category)
-    {
-        Log::channel(Log::CATEGORIES_OBSERVER)->info('observed updated storageCategory', [
-            'in' => __METHOD__ .':'.__LINE__ , 
-            'storage_category' => $storage_category->getAttributes()
-        ]);
-    }
+    // public function updated(StorageCategory $storageCategory)
+    // {
+    //     Log::channel(Log::OBSERVER_STORAGE_CATEGORY)->info('observed updated storageCategory', [
+    //         'in' => __METHOD__ .':'.__LINE__ , 
+    //         'storage_category' => $storageCategory->getAttributes()
+    //     ]);
+    // }
+
 
     /**
      * Handle the storage category "deleted" event.
      *
-     * @param  App\Models\StorageCategory $storage_category
+     * @param  App\Models\StorageCategory $storageCategory
      * @return void
      */
-    // public function deleted(StorageCategory $storage_category)
+    // public function deleted(StorageCategory $storageCategory)
     // {
     //     //
     // }
+
+
+   
 }

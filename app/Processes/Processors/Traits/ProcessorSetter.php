@@ -1,15 +1,16 @@
 <?php 
 
-namespace App\Processes\Traits;
+namespace App\Processes\Processors\Traits;
 
-use App\Models\Process;
-use App\Exceptions\Processors\ProcessSetterException;
+use App\Models\Process\Process;
+use App\Exceptions\Processors\BaseProcessorException as Exception;
 use App\Enums\ProcessEnum as Processes;
+
 
 /**
  * Process Setter Trait 
  */ 
-trait ProcessSetter 
+trait ProcessorSetter 
 {
 	/**
 	 * The current process
@@ -55,12 +56,12 @@ trait ProcessSetter
 	 * Set process
 	 * 
 	 * @param string Processes::$process 
-	 * @throws MainProcessorException
+	 * @throws BaseProcessorException
 	 * @return self
 	 */	
-	private function setProcess($process) 
+	public function setProcess($process) 
 	{
-		if(!in_array($process, Processes::getConstants())) throw new ProcessSetterException(ProcessSetterException::UNDEFINED_PROCESS);
+		if(!in_array($process, Processes::getConstants())) throw new Exception(Exception::UNDEFINED_PROCESS);
 		
 		$this->process = $process;
 		
@@ -71,18 +72,18 @@ trait ProcessSetter
 	/**
 	 * Set mature channels for process
 	 * 
-	 * @throws MainProcessorException
+	 * @throws BaseProcessorException
 	 * @return self
 	 */	
-	private function setChannels() 
+	public function setChannels() 
 	{
 		$process = Process::matureChannels($this->process)->first(); // 1st process should be single result for $this->process anyway
 
 		if(!$process->channels->count()) 
 		{
-			Log::channel(Log::MAIN_PROCESSOR)->info(ProcessSetterException::MATURE_CHANNELS_NOT_FOUND, ['in' => __METHOD__ .':'.__LINE__]);
+			Log::channel(Log::MAIN_PROCESSOR)->info(Exception::MATURE_CHANNELS_NOT_FOUND, ['in' => __METHOD__ .':'.__LINE__]);
 			
-			throw new ProcessSetterException(ProcessSetterException::MATURE_CHANNELS_NOT_FOUND);
+			throw new Exception(Exception::MATURE_CHANNELS_NOT_FOUND);
 		} 
 
 		$this->channels = $process->channels;		
@@ -96,7 +97,7 @@ trait ProcessSetter
 	 * 
 	 * @return self
 	 */
-	private function setConfig() 
+	public function setConfig() 
 	{
 		$this->config = config('processes.settings.' . $this->process) ?? [];
 

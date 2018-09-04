@@ -6,7 +6,7 @@ namespace App\Processes\Processors\Base;
 /**
  * Processor Interface 
  */ 
-interface IProcessor extends IProcess 
+interface IProcessor 
 {
 	/**
 	 * Perform the process
