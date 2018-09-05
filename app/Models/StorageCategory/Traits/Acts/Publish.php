@@ -30,7 +30,7 @@ trait Publish
 
         $this->publishLinkParents(); 
 
-        Log::channel(Log::STORAGE_CATEGORY)->info('StorageCategory@publishAll completed', []);                
+        Log::channel(Log::STORAGE_CATEGORY)->info('StorageCategory@publishAll completed', ['published' => count($storages)]);                
    
     } 
 

@@ -54,7 +54,7 @@ class CategoriesProcessor extends BaseProcessor
             $this->bag[$this->process][$channel->key] = $this->loadAdapter($channel->key)->adapter->fetch();
         }            
        
-        Log::channel(Log::PROCESSOR_CATEGORIES)->info('CategoriesProcessor@scan completed ' . (!empty($this->bag) ? 'successfully with full bag :)' : 'with empty bag :/') , []);
+        Log::channel(Log::PROCESSOR_CATEGORIES)->info('CategoriesProcessor@scan completed ' . (!empty($this->bag) ? 'successfully with contents' : 'without contents') , []);
 
         return $this;
 	}
@@ -63,7 +63,7 @@ class CategoriesProcessor extends BaseProcessor
 	/**
 	 * Store fresh scanned data in the storage
      *
-     * At this stage $this->bag shouldhave the following contents:
+     * At this stage $this->bag should have the following contents:
      *  
      * [categories] => Array
      *   (
@@ -77,37 +77,15 @@ class CategoriesProcessor extends BaseProcessor
      *                       [parent_channel_category_id] => 100003222
      *                   )
 	 * 
-	 * @see App\Observers\StorageCategoryObserver
      * @return self
 	 */
 	public function store()
     {
         $categories = $this->bag[$this->process] ?? null;
         
-        if(!is_array($categories)) throw new Exception(Exception::INVALID_BAG_CONTENTS . ' | ' . print_r(['bag' => $this->bag], 1));
+        StorageCategory::perform('storeBatch', $categories);
 
-        foreach($categories as $channel_key => $channel_categories) 
-        {
-            $channel = Channel::where('key', $channel_key)->first();
-
-            if(!isset($channel->id)) throw new Exception(Exception::INVALID_CHANNEL_KEY . ' | key: ' .  $channel_key);            
-
-            foreach($channel_categories as $k => $category_data) 
-            {                
-                $channel_category_id = $category_data['channel_category_id'] ?? null;
-
-                if(!is_numeric($channel_category_id)) throw new Exception(Exception::INVALID_CHANNEL_CATEGORY_ID . ' | channel_category_id : ' . var_export($channel_category_id, 1));
-
-                unset($category_data['channel_category_id']); // adjustment for updateOrCreate
-
-                $category_data['channel_id'] = $channel->id;
-                                
-                // if there's a StorageCategory with the given channel_category_id, set the rest of the data to the given $category_data, otherwise create it.
-                StorageCategory::updateOrCreate(['channel_category_id' => $channel_category_id], $category_data);
-            }
-        }
-
-        Log::channel(Log::PROCESSOR_CATEGORIES)->info('CategoriesProcessor@store completed', ['categories' => count($categories)]);
+        Log::channel(Log::PROCESSOR_CATEGORIES)->info('CategoriesProcessor@store completed', []);
 
         return $this;
     }

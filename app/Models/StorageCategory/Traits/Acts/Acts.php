@@ -10,5 +10,5 @@ trait Acts
     /**
      * Use model's acts traits
      */
-    use Activate, Publish;       
+    use Activate, Publish, Store;       
 }

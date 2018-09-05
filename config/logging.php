@@ -78,9 +78,9 @@ return [
         /**
          * Processors channels 
          */        
-        Log::PROCESSOR_MAIN => [
+        Log::PROCESSOR_BASE => [
             'driver'    => 'daily',
-            'path'      => $logs_path . '/processors/main/processor.log',
+            'path'      => $logs_path . '/processors/base/processor.log',
             'days'      => $log_days,
             'level'     => 'debug', 
         ],

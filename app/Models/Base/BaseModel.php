@@ -2,8 +2,7 @@
 
 namespace App\Models\Base;
 
-use Log;
-use Validator;
+use Log, Validator;
 use App\Exceptions\Models\BaseModelException as Exception;
 use Illuminate\Database\Eloquent\Model as CoreModel;
 
@@ -189,21 +188,24 @@ abstract class BaseModel extends CoreModel implements IModel
 	 * @return bool
 	 */	
 	public function validate() 
-	{
-		$method = 'validate' . $this->method;
-
-		$rules = $this->{$method}();
-		
+	{		
 		if(!$this->entity) 
 		{
-			$this->validator = Validator::make($this->input, $rules);	
-		
-			if($this->validator->fails()) 
+			$method = 'validate' . $this->method;
+
+			$rules = $this->{$method}();
+
+			if(!empty($rules)) 
 			{
-				$this->response['validation_errors'][] = $this->validator->errors();
-	
-				return false;
-			}	
+				$this->validator = Validator::make($this->input, $rules);	
+		
+				if($this->validator->fails()) 
+				{
+					$this->response['validation_errors'][] = $this->validator->errors();
+		
+					return false;
+				}	
+			}
 		}
 
 		return true;
@@ -211,32 +213,40 @@ abstract class BaseModel extends CoreModel implements IModel
 	
 
 	/**
-	 * Execute action
+	 * Execute act
+	 * Handle optional inputs cases
 	 * 
 	 * @return self
 	 */		
 	public function execute() 
 	{
-		$this->input = (object) $this->input; 
-		
-		$this->{$this->method}($this->entity); // if the act not requires entity, it shoudln't be set & will pass null which will be ignored  
+		// execute general act without input & without entity - e.g : publishAll()
+		if(!$this->entity && !$this->input) 
+		{
+			$this->{$this->method}();  
+		}	
+
+		// execute general act with input & without entity - e.g : storeBatch($categories)
+		if(!$this->entity && $this->input) 
+		{
+			$this->{$this->method}($this->input);  
+		}				
+
+		// execute custom act on entity, without input - e.g: activate($entity), publish($entity)
+		if($this->entity && !$this->input) 
+		{
+			$this->{$this->method}($this->entity);
+		}
+
+		// execute update act on entity, with input - e.g: update($entity, $updates) 
+		if($this->entity && $this->input) 
+		{
+			$this->{$this->method}($this->entity, $this->input);  
+		}	
 
 		return static::$self;		
 	}
 	
-
-	// /**
-	//  * Get treated entity
-	//  * 
-	//  * Return the given entity to perform an act on or find the entity using given id
-	//  * 
-	//  * @return Illuminate\Database\Eloquent\Model
-	//  */
-	// protected function entity() 
-	// {
-	// 	return $this->entity ?? (isset($this->input->id) ? $this->find($this->input->id) : null) ;		
-	// }
-
 
 	/**
 	 * Response action's resulta

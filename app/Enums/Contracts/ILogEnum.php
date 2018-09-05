@@ -19,7 +19,7 @@ interface ILogEnum
     /**
      * Processors channels 
      */
-    const PROCESSOR_MAIN                =  'processor_main';    
+    const PROCESSOR_BASE                =  'processor_base';    
     const PROCESSOR_CATEGORIES          =  'processor_categories';
     const PROCESSOR_ITEMS               =  'processor_items';
     

@@ -9,6 +9,24 @@ namespace App\Models\StorageCategory;
 interface IStorageCategory 
 {
     /**
+     * Store a batch of storage categories records
+     * 
+     * @param array $categories
+     * @return void
+     */
+    public function storeBatch($categories);
+
+
+    /**
+     * Store single storage category
+     * 
+     * @param array $input
+     * @return void
+     */
+    public function store($input);
+
+    
+    /**
      * Publish all storage category records
      * 
      * @return void

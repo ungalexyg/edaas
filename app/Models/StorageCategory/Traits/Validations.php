@@ -6,9 +6,22 @@ use App\Exceptions\Models\StorageCategoryException as Exception;
 
 /**
  * Storage Category Validations 
+ * 
+ * - Each method should be prefixed with 'validate' - validateMethodName() 
+ * - The methods should return relevant validation rules 
+ * - When empty array returned it will skip the validations 
  */
 trait Validations
 {
+    /**
+     * Validate store batch
+     */
+    public function validateStoreBatch() 
+    {
+        return []; // custom rule can be added here
+    }
+
+
     /**
      * Validate publishAll act
      * 

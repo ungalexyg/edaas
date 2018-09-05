@@ -95,7 +95,7 @@ return [
             'auto_publish' => true,             
 
             // activate published storage_category records automatically so the ItemsProcessor will fetch from them items ?
-            'auto_active' => false,                         
+            'auto_active' => true,                         
         ] 
     ],
 
