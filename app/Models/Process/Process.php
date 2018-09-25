@@ -83,6 +83,5 @@ class Process extends BaseModel
             ->take($limit_channels);
 
         }])->where('key', $process);   
-        
     }    
 }
