@@ -1,5 +1,5 @@
 <?php
-namespace App\Models\channel;
+namespace App\Models\Channel;
 
 use App\Models\Base\BaseModel;
 use App\Models\Process\Process;

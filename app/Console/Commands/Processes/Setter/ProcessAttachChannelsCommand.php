@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Console\Commands\Processes;
+namespace App\Console\Commands\Processes\Setter;
 
 use App\Console\Commands\Base\BaseCommand;
-use App\Processes\Processors\Setter\ProcessesSetter;
+use App\Processes\Setter\ProcessesSetter;
 
 
 
 /**
- * Process Set Command
+ * Process Attach Command
  * 
- * Set channels for each process based on processes config
+ * Attach processes on each channel based on processes config
  */
-class ProcessSetChannelsCommand extends BaseCommand
+class ProcessAttachChannelsCommand extends BaseCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'process:set-channels';
+    protected $signature = 'process:attach';
 
     
     /**
@@ -27,7 +27,7 @@ class ProcessSetChannelsCommand extends BaseCommand
      *
      * @var string
      */
-    protected $description = 'Set channels for each process based on processes config';
+    protected $description = 'Attach processes on each channel based on processes config';
 
 
     /**

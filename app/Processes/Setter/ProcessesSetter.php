@@ -1,7 +1,9 @@
 <?php 
 namespace App\Processes\Setter;
 
-use App\Processes\Setter\Traits\{ ChannelsAttacher, StorageMigrator };
+use App\Processes\Setter\Traits\ProcessesSeeder;
+use App\Processes\Setter\Traits\ChannelsMigrator;
+use App\Processes\Setter\Traits\ChannelsAttacher;
 
 
 /**
@@ -14,8 +16,5 @@ class ProcessesSetter
     /**
      * Use processes setter traits
      */
-    use ChannelsAttacher, StorageMigrator;
+    use ProcessesSeeder, ChannelsMigrator, ChannelsAttacher;
 }
-
-
-

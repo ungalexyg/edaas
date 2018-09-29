@@ -39,6 +39,8 @@ class ItemsProcessor extends BaseProcessor
 	 */
 	protected function setCategoiries($channel_id) 
 	{
+		dd($channel_id);
+
 		//StorageCategory::
 
 	}
@@ -60,6 +62,8 @@ class ItemsProcessor extends BaseProcessor
 		{
 			$this->setCategoiries($channel->id);
 		}
+
+		return $this;
 	}
 
 

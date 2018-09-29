@@ -12,7 +12,7 @@ use Illuminate\Database\Schema\Blueprint;
  * 
  * Handle generic storage tables migrations for the processes based on processes config
  */ 
-trait StorageMigrator  
+trait ChannelsMigrator  
 {
     /**
      * Storage items table prefix
@@ -20,6 +20,20 @@ trait StorageMigrator
      * @var string
      */
     protected $table_prefix_items = 'storage_items_';
+    
+    
+    /**
+     * Migration, create generic storage categories table
+     * 
+     * TODO: implemented method with considertion to generic storage categories...
+     * 
+     * @param int $channel_id
+     * @return void
+     */
+    public function createStorageCategoriesTable($channel_id) 
+    {
+        
+    }
 
 
     /**
