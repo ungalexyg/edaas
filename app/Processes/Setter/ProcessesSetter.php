@@ -11,7 +11,7 @@ use App\Processes\Setter\Traits\ChannelsAttacher;
  * 
  * Handle Processor logistics.
  */ 
-class ProcessesSetter  
+class ProcessesSetter implements IProcessesSetter 
 {
     /**
      * Use processes setter traits

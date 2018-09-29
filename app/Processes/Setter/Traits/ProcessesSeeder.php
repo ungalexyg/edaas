@@ -32,7 +32,7 @@ trait ProcessesSeeder
      * 
      * @return void
      */
-    public function seedProcesses() 
+    protected function seedProcesses() 
     {
         $seeds = config('processes.processes');
 
@@ -48,7 +48,7 @@ trait ProcessesSeeder
      * 
      * @return void
      */
-    public function seedChannels() 
+    protected function seedChannels() 
     {
         $seeds = config('processes.channels');
 

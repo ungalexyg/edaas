@@ -25,12 +25,12 @@ trait ChannelsAttacher
     protected $process_age_days = 1;
 
 	/**
-	 * Set processes channels 
+	 * Attach processes to channels 
 	 * 
 	 * @throws ProcessorSetterException
 	 * @return void
 	 */
-	public function setProcessesChannels() 
+	public function attach() 
 	{
         $seeds = config('processes.processes_channels');
 
