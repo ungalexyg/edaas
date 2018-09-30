@@ -2,12 +2,11 @@
 
 namespace App\Processes\Processors;
 
+use App\Models\Process\Process;
+use App\Enums\DBColumnsEnum as Column;
+use App\Models\StorageCategory\StorageCategory;
 use App\Processes\Processors\Base\BaseProcessor;
-use App\Models\{
-	Process\Process,
-	StorageCategory\StorageCategory
-};
-
+use App\Exceptions\Processors\ItemsProcessorException as Exception;
 
 /**
  * Items Processor 
@@ -39,10 +38,21 @@ class ItemsProcessor extends BaseProcessor
 	 */
 	protected function setCategoiries($channel_id) 
 	{
-		dd($channel_id);
+		$storageCategories = StorageCategory::matureStorageCategories($channel_id);
+		
+		if(!$storageCategories->count()) 
+		{
+			Log::channel(Log::PROCESSOR_ITEMS)->info(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND, ['in' => 'ItemsProcessor@setCategoiries:' . __LINE__]);
+			
+			throw new Exception(Exception::MATURE_CHANNELS_NOT_FOUND);
+		} 
 
-		//StorageCategory::
+		$this->categories = $storageCategories;		
 
+
+		//dd($this->categories);
+
+		return $this;
 	}
 
 

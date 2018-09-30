@@ -5,6 +5,7 @@ namespace App\Models\Process;
 use App\Models\Base\BaseModel;
 use Illuminate\Support\Carbon;
 use App\Models\Channel\Channel;
+use App\Enums\DBColumnsEnum as Column;
 
 
 /**
@@ -26,13 +27,6 @@ class Process extends BaseModel
      * @var array
      */
     protected $guarded = []; // if $guarded is empty, all the cols are $fillable
-
-
-    /**
-     * Fileds constants
-     */
-    const LAST_PROCESS  = 'last_process';
-    const PROCESS_COUNT = 'process_count';
 
 
     /**
@@ -68,19 +62,19 @@ class Process extends BaseModel
      */
     public function scopeMatureChannels($query, $process)
     {
-        $config = config('processes.settings');
+        $config     = config('processes.settings.'. $process);
 
-        $min_age = $config['min_age'] ?? (60*24); // 24 hours in minutes
+        $min_age    = $config['mature_channel'] ?? (60*24); // 24 hours in minutes
         
-        $limit_channels = $config['limit_channels'] ?? 1; 
+        $limit      = $config['limit_channels'] ?? 1; 
         
-        $datetime = Carbon::now()->subMinutes($min_age)->toDateTimeString();
+        $datetime   = Carbon::now()->subMinutes($min_age)->toDateTimeString();
         
-        $query->with(['channels' => function($q) use ($datetime, $limit_channels){
+        $query->with(['channels' => function($q) use ($datetime, $limit){
 
-            $q->wherePivot(static::LAST_PROCESS,'<=', $datetime)
-            ->orderBy('processes_channels.'.static::LAST_PROCESS, 'asc')
-            ->take($limit_channels);
+            $q->wherePivot(Column::LAST_PROCESS,'<=', $datetime)
+            ->orderBy($this->table . '.' . Column::LAST_PROCESS, 'asc')
+            ->take($limit);
 
         }])->where('key', $process);   
     }    

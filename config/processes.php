@@ -82,22 +82,39 @@ return [
      */
     'settings' => [
 
-        // what should be the minimum age of a process in order to run it by MINUTES ?
-        // the age of the process checked by : channels_processes.last_process.            
-        // if several processes are 'mature' enough, the processor will start to run from the oldest
-        'min_age' => (60*24), // 24 hours in minutes, 
-
-        // how many from the 'mature' process_channels should be processed in each process ?            
-        'limit_channels' => 2,         
-
         Processes::ITEMS => [
-        ],
-        Processes::CATEGORIES => [
+            // what should be the minimum age of a process on channel in order to re-run it, by MINUTES ?
+            // the age of the process checked in db by : processes_channels.last_process           
+            // if several processes are 'mature' enough, the processor will start to run from the oldest
+            'mature_channel'    => 10, // the channel can be scanned up to every 10 minutes
+
+            // how many channels from the 'mature' processes_channels should be processed in each process ?            
+            'limit_channels'    => 1,    
+            
+            // what should be the minimum age of a scanning process on a storage category in order to re-run it, by MINUTES ?
+            // the age checked in db by : storage_categories.last_process           
+            // if several processes are 'mature' enough, the processor will start to run from the oldest
+            'mature_category'   => 60, // each category in channel can be scanned every 1 hour(s), 
+
+            // how many storage categories from the 'mature' storage_categories should be processed in each process ?            
+            'limit_categories'  => 1,                
+
             // publish fetched storage_category records automatically to the public category table ?
-            'auto_publish' => true,             
+            'auto_publish'      => true,             
 
             // activate published storage_category records automatically so the ItemsProcessor will fetch from them items ?
-            'auto_active' => true,                         
+            'auto_active'       => true,                     
+        ],
+        
+        Processes::CATEGORIES => [
+
+            'mature_channel'    => (60*24), // channel's categories can be scanned every 24 hours
+
+            'limit_channels'    => 1,         
+
+            'auto_publish'      => true,             
+
+            'auto_active'       => true,                         
         ] 
     ],
 

@@ -21,7 +21,6 @@ class CreateTableStorageItems extends Migration
      */
     public function up()
     {
-
         if(!Schema::hasTable($this->table)) 
         {
             Schema::create($this->table, function (Blueprint $table) 
@@ -35,8 +34,10 @@ class CreateTableStorageItems extends Migration
                 $table->unsignedInteger('channel_item_id')->comment('The external item id in the channel');
                 $table->unsignedTinyInteger('active')->default(0)->comment('If the storage record is active, the processors will fetch updates for this row & update it. [active = 1 | not active = 0]');
                 $table->unsignedTinyInteger('published')->default(0)->comment('If the record marked as published, the processors will update the related public record [published = 1 | not published = 0]');
+                $table->unsignedInteger('process_count')->comment('Count how many times the scanning process launched on this item');                                
+                $table->dateTime('last_process')->nullable()->comment('Last scanning process time on this item');
                 $table->timestamps();     
-                
+
                 $table->foreign('storage_category_id')->references('id')->on('storage_categories');//->onDelete('cascade');                                
             });
         }

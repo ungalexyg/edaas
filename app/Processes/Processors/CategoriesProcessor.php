@@ -3,14 +3,10 @@
 namespace App\Processes\Processors;
 
 use Log;
-use App\Models\{
-    Channel\Channel, 
-    StorageCategory\StorageCategory
-};
-use App\Processes\Processors\{
-    Base\BaseProcessor,
-    Traits\HasAdapter
-};
+use App\Models\Channel\Channel;
+use App\Models\StorageCategory\StorageCategory;
+use App\Processes\Processors\Base\BaseProcessor;
+use App\Processes\Processors\Traits\HasAdapter;
 use App\Exceptions\Processors\CategoriesProcessorException as Exception;
 
 

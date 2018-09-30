@@ -27,7 +27,7 @@ class CreateTableProcessesChannels extends Migration
                 $table->unsignedInteger('process_id');
                 $table->unsignedInteger('channel_id');                                
                 $table->unsignedInteger('process_count')->comment('Count of how many times this process has been launched');
-                $table->dateTime('last_process')->nullable()->comment('Last activity time');
+                $table->dateTime('last_process')->nullable()->comment('Last process time');
                 
                 $table->foreign('process_id')->references('id')->on('processes')->onDelete('cascade');
                 $table->foreign('channel_id')->references('id')->on('channels')->onDelete('cascade');

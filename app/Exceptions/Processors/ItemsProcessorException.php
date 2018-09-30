@@ -10,5 +10,5 @@ use App\Exceptions\BaseException;
  */
 class ItemsProcessorException extends BaseException
 {
-
+    const MATURE_STORAGE_CATEGORIES_NOT_FOUND     = 'Mature storage categories not found';
 }

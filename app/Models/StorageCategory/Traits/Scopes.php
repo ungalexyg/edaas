@@ -2,10 +2,10 @@
 
 namespace App\Models\StorageCategory\Traits;
 
-use App\Models\{
-    Category\Category,
-    StorageCategory\StorageCategory
-};
+use App\Models\Category\Category;
+use App\Enums\DBColumnsEnum as Column;
+use App\Enums\ProcessEnum as Processes;
+use App\Models\StorageCategory\StorageCategory;
 
 
 /**
@@ -107,5 +107,31 @@ trait Scopes
     public function scopeUnactive($query) 
     {
         $query->where('active', '=', 0);
+    }  
+    
+    
+    /**
+     * Scope mature storage category records
+     *  
+     * @see config('processes.settings')
+     * @param Illuminate\Database\Query\Builder // injected natively
+     * @param int $channel_id
+     * @return void
+     */
+    public function scopeMatureStorageCategories($query, $channel_id)
+    {
+        $config     = config('processes.settings.'. Processes::ITEMS);
+
+        $min_age    = $config['mature_category'] ?? 60; // 1 hour 
+        
+        $limit      = $config['limit_categories'] ?? 1; 
+        
+        $datetime   = Carbon::now()->subMinutes($min_age)->toDateTimeString();
+        
+        $query
+            ->where('channel_id', '=', $channel_id)
+            ->where(Column::LAST_PROCESS,'<=', $datetime)
+            ->orderBy($this->table . '.' . Column::LAST_PROCESS, 'asc')
+            ->take($limit);
     }       
 }

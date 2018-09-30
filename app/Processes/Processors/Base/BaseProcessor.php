@@ -4,6 +4,7 @@ namespace App\Processes\Processors\Base;
 
 use Log;
 use App\Models\Process\Process;
+use App\Enums\DBColumnsEnum as Column;
 use App\Enums\ProcessEnum as Processes;
 use App\Exceptions\Processors\BaseProcessorException as Exception;
 
@@ -42,7 +43,7 @@ abstract class BaseProcessor implements IProcessor
 	 * 
 	 * @var array
 	 */
-	public $bag=[];	
+	public $bag = [];	
 
 
 	/**
@@ -50,7 +51,7 @@ abstract class BaseProcessor implements IProcessor
 	 * 
 	 * @var array
 	 */
-	public $config=[];	
+	public $config = [];	
 
 
 	#########################################
@@ -155,22 +156,20 @@ abstract class BaseProcessor implements IProcessor
 	 */
 	public function stamp() 
 	{
-		//dd("stamping...");
-
-		// $process = Process::with('channels')->where('key', $this->process)->first();
+		$process = Process::with('channels')->where('key', $this->process)->first();
 		
-		// $processed_channels = $this->bag[$this->process] ?? [];
+		$processed_channels = $this->bag[$this->process] ?? [];
 		
-		// foreach($process->channels as $channel) 
-		// {
-		// 	if(array_key_exists($channel->key, $processed_channels)) 
-		// 	{
-		// 		$process->channels()->updateExistingPivot($channel->id, [
-		// 			Process::LAST_PROCESS => date("Y-m-d H:i:s"),
-		// 			Process::PROCESS_COUNT => ($channel->pivot->process_count + 1),
-		// 		]);
-		// 	}
-		// }
+		foreach($process->channels as $channel) 
+		{
+			if(array_key_exists($channel->key, $processed_channels)) 
+			{
+				$process->channels()->updateExistingPivot($channel->id, [
+					Column::LAST_PROCESS => date("Y-m-d H:i:s"),
+					Column::PROCESS_COUNT => ($channel->pivot->process_count + 1),
+				]);
+			}
+		}
 
 		return $this;
 	}	
@@ -185,7 +184,8 @@ abstract class BaseProcessor implements IProcessor
 	{
 		if(!$this->message) 
 		{
-			$this->message = ucwords($this->process).'Processor completed with ' . (!empty($this->bag) ? 'full bag :)': 'empty bag :/');
+			//TODO: extend message details, bag with contents does not means successful fetch
+			$this->message = ucwords($this->process).'Processor completed' . (empty($this->bag) ? ' with empty bag :/' : '');
 		}
 
 		$log_channel = ( $this->process ? 'processor_' . $this->process :  Log::PROCESSOR_MAIN);
