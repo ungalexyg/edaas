@@ -100,10 +100,10 @@ class CategoriesProcessor extends BaseProcessor
 	{
         StorageCategory::perform('publishAll');
         
-        if(($this->config['auto_active'] ?? false)) 
-        {
-            StorageCategory::perform('activateAll');            
-        }
+        // if(($this->config['auto_active'] ?? false)) 
+        // {
+        //     StorageCategory::perform('activateAll');            
+        // }
 
         Log::channel(Log::PROCESSOR_CATEGORIES)->info('CategoriesProcessor@publish done!', []);        
 	}			

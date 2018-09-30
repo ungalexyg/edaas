@@ -26,7 +26,7 @@ interface IProcessesSetter
      * 
      * @return void
      */
-    public function migrate();    
+    //public function migrate();    
 
 
     /**

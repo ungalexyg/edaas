@@ -2,7 +2,6 @@
 namespace App\Processes\Setter;
 
 use App\Processes\Setter\Traits\ProcessesSeeder;
-use App\Processes\Setter\Traits\ChannelsMigrator;
 use App\Processes\Setter\Traits\ChannelsAttacher;
 
 
@@ -16,5 +15,5 @@ class ProcessesSetter implements IProcessesSetter
     /**
      * Use processes setter traits
      */
-    use ProcessesSeeder, ChannelsMigrator, ChannelsAttacher;
+    use ProcessesSeeder, ChannelsAttacher;
 }

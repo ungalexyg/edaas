@@ -41,7 +41,9 @@ final class MainProcessor
 		{
 			return [
 				'exception' => get_class($e),
-				'message' => $e->getMessage()
+				'message' 	=> $e->getMessage(),
+				'file' 		=> $e->getFile(),
+				'line' 		=> $e->getLine()				
 			];
 		}
 	}

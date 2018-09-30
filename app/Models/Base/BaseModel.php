@@ -5,7 +5,7 @@ namespace App\Models\Base;
 use Log, Validator;
 use App\Exceptions\Models\BaseModelException as Exception;
 use Illuminate\Database\Eloquent\Model as CoreModel;
-
+use App\Models\Base\Traits\Singelton;
 
 /**
  * Base Model

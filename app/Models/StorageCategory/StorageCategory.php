@@ -18,14 +18,14 @@ class StorageCategory extends BaseModel implements IStorageCategory
      */
     use Relations, Scopes, Validations, Acts; 
 
-
+    
     /**
      * The table associated with the model.
      *
      * @var string
      */
     protected $table = 'storage_categories';    
-    
+
 
     /**
      * The attributes that aren't mass assignable.

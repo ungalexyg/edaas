@@ -45,14 +45,10 @@ class ProcessSetCommand extends BaseCommand
         {
             case 'all': 
                 $setter->seed(); 
-                $setter->migrate(); 
                 $setter->attach(); 
                 break;                                                            
             case 'seed': 
                 $setter->seed(); 
-                break;
-            case 'migrate': 
-                $setter->migrate();             
                 break;                   
             case 'attach': 
                 $setter->attach();             
