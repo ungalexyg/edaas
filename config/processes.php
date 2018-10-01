@@ -81,12 +81,24 @@ return [
      * Processes settings
      */
     'settings' => [
+        Processes::CATEGORIES => [
 
-        Processes::ITEMS => [
             // what should be the minimum age of a process on channel in order to re-run it, by MINUTES ?
             // the age of the process checked in db by : processes_channels.last_process           
             // if several processes are 'mature' enough, the processor will start to run from the oldest
-            'mature_channel'    => 10, // the channel can be scanned up to every 10 minutes
+            'mature_channel'    => (60*12), // the categories in the channel can be scanned every 12 hours
+
+            'limit_channels'    => 1,         
+
+            'auto_publish'      => true,             
+
+            'auto_active'       => true,                         
+        ],
+
+        Processes::ITEMS => [
+
+            //TODO: change it to 10 minutes 
+            'mature_channel'    => 1, // the items in the channel can be scanned every 10 minutes
 
             // how many channels from the 'mature' processes_channels should be processed in each process ?            
             'limit_channels'    => 1,    
@@ -99,23 +111,12 @@ return [
             // how many storage categories from the 'mature' storage_categories should be processed in each process ?            
             'limit_categories'  => 1,                
 
-            // publish fetched storage_category records automatically to the public category table ?
+            // publish fetched storage_items records automatically to the public items table ?
             'auto_publish'      => true,             
 
-            // activate published storage_category records automatically so the ItemsProcessor will fetch from them items ?
+            // activate published storage_items records automatically so the ItemsProcessor will fetch from them items ?
             'auto_active'       => true,                     
-        ],
-        
-        Processes::CATEGORIES => [
-
-            'mature_channel'    => (60*24), // channel's categories can be scanned every 24 hours
-
-            'limit_channels'    => 1,         
-
-            'auto_publish'      => true,             
-
-            'auto_active'       => true,                         
-        ] 
+        ]
     ],
 
 ];

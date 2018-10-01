@@ -2,7 +2,7 @@
 
 namespace App\Processes\Adapters\Base;
 
-use App\Exceptions\Adapters\BaseAdapterException;
+use App\Exceptions\Adapters\BaseAdapterException as Exception;
 
 
 /**
@@ -67,7 +67,7 @@ use App\Exceptions\Adapters\BaseAdapterException;
         }
         else 
         {
-            if(!$this->domain) throw new BaseAdapterException(BaseAdapterException::UNDEFINED_DOMAIN);
+            if(!$this->domain) throw new Exception(Exception::UNDEFINED_DOMAIN);
     
             $this->query = (!empty($this->query) ? '?' . http_build_query($this->query) : '');
     

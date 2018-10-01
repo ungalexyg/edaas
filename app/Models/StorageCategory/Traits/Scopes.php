@@ -2,11 +2,11 @@
 
 namespace App\Models\StorageCategory\Traits;
 
+use Illuminate\Support\Carbon;
 use App\Models\Category\Category;
 use App\Enums\DBColumnsEnum as Column;
 use App\Enums\ProcessEnum as Processes;
 use App\Models\StorageCategory\StorageCategory;
-
 
 /**
  * Storage Category Scopes 
@@ -113,6 +113,15 @@ trait Scopes
     /**
      * Scope mature storage category records
      *  
+     * Bsed on processes config, generate similar to the following query : 
+     * 
+     *  select * from `storage_categories` 
+     *  where `channel_id` = ? 
+     *  and `last_process` <= ? 
+     *  and `active` = 1 
+     *  order by `storage_categories`.`last_process` asc 
+     *  limit 2
+     * 
      * @see config('processes.settings')
      * @param Illuminate\Database\Query\Builder // injected natively
      * @param int $channel_id
@@ -131,7 +140,8 @@ trait Scopes
         $query
             ->where('channel_id', '=', $channel_id)
             ->where(Column::LAST_PROCESS,'<=', $datetime)
+            ->where('active','=', 1)
             ->orderBy($this->table . '.' . Column::LAST_PROCESS, 'asc')
-            ->take($limit);
+            ->take($limit);        
     }       
 }

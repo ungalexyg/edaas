@@ -2,11 +2,15 @@
 
 namespace App\Processes\Processors;
 
+use Log;
 use App\Models\Process\Process;
 use App\Enums\DBColumnsEnum as Column;
+use App\Models\StorageItem\StorageItem;
 use App\Models\StorageCategory\StorageCategory;
+use App\Processes\Processors\Traits\HasAdapter;
 use App\Processes\Processors\Base\BaseProcessor;
 use App\Exceptions\Processors\ItemsProcessorException as Exception;
+//use Illuminate\Support\Facades\DB;
 
 /**
  * Items Processor 
@@ -17,6 +21,12 @@ use App\Exceptions\Processors\ItemsProcessorException as Exception;
  */ 
 class ItemsProcessor extends BaseProcessor
 {
+	/**
+	 * Use process traits
+	 */    
+    use HasAdapter;
+
+
 	/**
 	 * The categories for process scan
 	 */
@@ -37,20 +47,17 @@ class ItemsProcessor extends BaseProcessor
 	 * 3 - process these categories
 	 */
 	protected function setCategoiries($channel_id) 
-	{
-		$storageCategories = StorageCategory::matureStorageCategories($channel_id);
-		
+	{		
+		$storageCategories = StorageCategory::matureStorageCategories($channel_id)->get();
+
 		if(!$storageCategories->count()) 
 		{
 			Log::channel(Log::PROCESSOR_ITEMS)->info(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND, ['in' => 'ItemsProcessor@setCategoiries:' . __LINE__]);
 			
-			throw new Exception(Exception::MATURE_CHANNELS_NOT_FOUND);
+			throw new Exception(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND);
 		} 
 
 		$this->categories = $storageCategories;		
-
-
-		//dd($this->categories);
 
 		return $this;
 	}
@@ -70,7 +77,11 @@ class ItemsProcessor extends BaseProcessor
 	{
 		foreach($this->channels as $channel) 
 		{
-			$this->setCategoiries($channel->id);
+			$this->setCategoiries($channel->id)->loadAdapter($channel->key)->scan()->store();
+
+			// TODO: 
+			//($this->config['auto_publish'] ?? false) ? $this->publish() : null;			
+
 		}
 
 		return $this;
@@ -84,18 +95,46 @@ class ItemsProcessor extends BaseProcessor
      */
 	public function scan() 
 	{
+		foreach($this->categories as $storageCategory) 
+		{
+			$this->bag[$this->process][$channel->key][$storageCategory->id] = $this->adapter->fetch();			
+		}
 
+		return $this;
 	}
 
     
 	/**
 	 * Store fresh scanned data in the storage
 	 * 
-	 * @return self
+     * At this stage $this->bag should have the following contents:
+     *  
+     * [items] => Array // process name
+     *   (
+     *       [aliexpress] => Array // channel key
+     *           (
+     *               [123] => Array // storage_category_id
+     *                   ( 
+	 * 						 [0] => Array // item data
+	 * 							(
+	 *                       		[title] => Women's Watch
+     *                       		[price] => 12.13$
+     *                       		[orders] => 5
+	 * 							)	
+	 *
+     *                   )
+	 * 
+     * @return self
 	 */
 	public function store() 
 	{
+        $items = $this->bag[$this->process] ?? null;
+        
+        StorageItem::perform('storeBatch', $items);
 
+        Log::channel(Log::PROCESSOR_ITEMS)->info('ItemsProcessor@store completed', []);
+
+        return $this;
 	}
 
 

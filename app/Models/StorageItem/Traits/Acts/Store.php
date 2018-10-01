@@ -2,67 +2,67 @@
 
 namespace App\Models\StorageCategory\Traits\Acts;
 
-use App\Models\{
-    Channel\Channel,
-    StorageCategory\StorageCategory
-};
-use App\Exceptions\Models\StorageCategoryException as Exception; 
+use App\Models\StorageCategory\StorageItem;
+use App\Exceptions\Models\StorageItemException as Exception; 
 
 
 /**
  * Store Trait 
  * 
- * Storage category store acts
+ * Storage item store acts
  */
 trait Store
 {
     /**
      * Store a batch of Storage Categories records
      * 
-     * The $categories should have the following contents:
+     * The $items should have the following contents:
      *  
-     * [categories] => Array
+     * [items] => Array // process name
      *   (
-     *       [aliexpress] => Array
+     *       [aliexpress] => Array // channel key
      *           (
-     *               [0] => Array
-     *                   (
-     *                       [title] => Women's Clothing & Accessories
-     *                       [path] => /women-clothing-accessories.html
-     *                       [channel_category_id] => 100003109
-     *                       [parent_channel_category_id] => 100003222
+     *               [123] => Array // storage_category_id
+     *                   ( 
+	 * 						 [0] => Array // item data
+	 * 							(
+	 *                       		[title] => Women's Watch
+     *                       		[price] => 12.13$
+     *                       		[orders] => 5
+	 * 							)	
+	 *
      *                   )
 	 * 
-	 * @see App\Observers\StorageCategoryObserver
-     * @param array $categories
+     * @param array $items
      * @return void
      */
-    public function storeBatch($categories)
+    public function storeBatch($items)
     {
-        if(!is_array($categories)) throw new Exception(Exception::INVALID_INPUT . ' | storeBatch requires array | given input: ' . print_r($categories, 1));
+        if(!is_array($items)) throw new Exception(Exception::INVALID_INPUT . ' | storeBatch requires array | given input: ' . print_r($items, 1));
 
-        $this->affected['storage_categories'] = [];
+        $this->affected['storage_items'] = [];
 
-        foreach($categories as $channel_key => $channel_categories) 
+        foreach($items as $channel_key => $channel_categories) 
         {
-            $channel = Channel::where('key', $channel_key)->first();
-
             if(!isset($channel->id)) throw new Exception(Exception::STORE_INVALID_CHANNEL_KEY . ' | key: ' .  $channel_key);            
 
-            foreach($channel_categories as $k => $category_data) 
+            foreach($channel_categories as $storage_category_id => $storage_category_items) 
             {                
-                $channel_category_id = $category_data['channel_category_id'] ?? null;
+                if(!is_array($storage_category_items)) throw new Exception(Exception::INVALID_INPUT . ' | storeBatch requires array in category items level | given input: ' . print_r($storage_category_items, 1));    
 
-                if(!is_numeric($channel_category_id)) throw new Exception(Exception::INVALID_CHANNEL_CATEGORY_ID . ' | channel_category_id : ' . var_export($channel_category_id, 1));
+                foreach($storage_category_items as $item_data) 
+                {
+                    $channel_item_id = $category_data['channel_item_id'] ?? null;
 
-                unset($category_data['channel_category_id']); // adjustment for updateOrCreate
-
-                $category_data['channel_id'] = $channel->id;
-                                
-                // if there's a StorageCategory with the given channel_category_id, set the rest of the data to the given $category_data, otherwise create it.
-                $storageCategory = StorageCategory::updateOrCreate(['channel_category_id' => $channel_category_id], $category_data);
-
-                $this->affected['storage_categories'][] = $storageCategory->id;            
+                    if(!is_numeric($channel_item_id)) throw new Exception(Exception::INVALID_CHANNEL_ITEM_ID . ' | channel_item_id : ' . var_export($channel_item_id, 1));
+    
+                    unset($item_data['channel_item_id']); // adjustment for updateOrCreate
+                                        
+                    // if there's a StorageItem record with the given channel_item_id, update it with the given data, otherwise create it.
+                    $storageItem = StorageCategory::updateOrCreate(['channel_item_id' => $channel_item_id], $item_data);
+    
+                    $this->affected['storage_items'][] = $storageItem->id;            
+                }
             }
         }
     }

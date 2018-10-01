@@ -5,6 +5,7 @@ namespace App\Processes\Setter\Traits;
 use App\Models\Channel\Channel;
 use App\Models\Process\Process;
 use Illuminate\Support\Carbon;
+use App\Enums\DBColumnsEnum as Column;
 use App\Exceptions\Processors\ProcessesSetterException as Exception;
 
 
@@ -101,8 +102,8 @@ trait ChannelsAttacher
                 var_dump('+ attaching channel | id: ' . $channel->id . ' | key: ' . $channel->key);
 
                 $process->channels()->attach($channel->id, [
-                    Process::LAST_PROCESS => Carbon::now()->subDays($this->process_age_days), 
-                    Process::PROCESS_COUNT => 0,
+                    Column::LAST_PROCESS => Carbon::now()->subDays($this->process_age_days), 
+                    Column::PROCESS_COUNT => 0,
                 ]);  
 
                 $this->process_age_days++;
@@ -110,6 +111,3 @@ trait ChannelsAttacher
         }      
     } 
 }
-
-
-
