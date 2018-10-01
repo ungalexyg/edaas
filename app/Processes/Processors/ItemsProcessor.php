@@ -29,8 +29,18 @@ class ItemsProcessor extends BaseProcessor
 
 	/**
 	 * The categories for process scan
+	 * 
+	 * @var array
 	 */
 	protected $categories; 
+
+	
+	/**
+	 * Channel key
+	 * 
+	 * @var string
+	 */
+	protected $channel_key; 	
 
 
 	#########################################
@@ -77,7 +87,11 @@ class ItemsProcessor extends BaseProcessor
 	{
 		foreach($this->channels as $channel) 
 		{
-			$this->setCategoiries($channel->id)->loadAdapter($channel->key)->scan()->store();
+			$this->setCategoiries($channel->id)->loadAdapter($channel->key);
+
+			$this->channel_key = $channel->key;
+
+			$this->scan()->store();
 
 			// TODO: 
 			//($this->config['auto_publish'] ?? false) ? $this->publish() : null;			
@@ -97,7 +111,7 @@ class ItemsProcessor extends BaseProcessor
 	{
 		foreach($this->categories as $storageCategory) 
 		{
-			$this->bag[$this->process][$channel->key][$storageCategory->id] = $this->adapter->fetch();			
+			$this->bag[$this->process][$this->channel_key][$storageCategory->id] = $this->adapter->fetch($storageCategory);			
 		}
 
 		return $this;

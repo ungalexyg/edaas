@@ -30,11 +30,8 @@ use App\Processes\Adapters\Base\BaseAdapter;
 	/**
 	 * Fetch targets
 	 * 
+	 * @param mixed $reference
      * @return mixed
 	 */        
-    abstract public function fetch(); 
+	abstract public function fetch($reference=null); 
  }
-
-
-
-

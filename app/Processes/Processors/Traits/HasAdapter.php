@@ -31,11 +31,9 @@ trait HasAdapter
 	{			
 		$adapter = 'App\Processes\Adapters\\' . ucwords($channel) . '\\' . ucwords($channel) . ucwords($this->process) . 'Adapter';
 
-		if (!class_exists($adapter))  throw new Exception(Exception::UNDEFINED_ADAPTER . ' | adapter : ' . $adapter);
+		if (!class_exists($adapter)) throw new Exception(Exception::UNDEFINED_ADAPTER . ' | adapter : ' . $adapter);
 
 		$this->adapter = new $adapter();		
-
-		$this->adapter->setUrl();
 
 		return $this;
 	}		    

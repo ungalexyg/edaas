@@ -8,13 +8,13 @@ namespace App\Processes\Adapters\Base;
   */
  interface IAdapter 
  {
-
 	/**
 	 * Fetch destenation
      * 
+     * @param mixed $reference
      * @return array
 	 */    
-    public function fetch();
+    public function fetch($reference=null);
     
     
 	/**
@@ -24,10 +24,4 @@ namespace App\Processes\Adapters\Base;
      * @return self
 	 */  
     public function setUrl($url=null) ; 
-
  }
-
-
-
-
-

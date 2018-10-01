@@ -11,26 +11,14 @@
  */
 
 
-/**
- * --------------------------------------------------------------------------
- *  TODO:
- * --------------------------------------------------------------------------
- * - visit each category in Ali
- * - grab products by newest with orders count 
- * - store the 'category-newest' dataset
- */
-
 namespace App\Processes\Adapters\Aliexpress;
 
 use Log;
-use App\Lib\Vendor\{
-    Guzzle\GuzzleExtension as Web,
-    Goutte\GoutteExtension as Spider,
-    Symfony\DomCrawler\CrawlerExtension as Crawler
-};
+use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
+use App\Lib\Vendor\Goutte\GoutteExtension as Spider;
 use Symfony\Component\DomCrawler\Crawler as CoreCrawler;
+use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
 use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException as Exception;
-
 
 
 /**
@@ -41,14 +29,6 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException as E
  class AliexpressCategoriesAdapter extends BaseAliexpressAdapter 
  {
     /**
-     * URL scheme
-     * 
-     * @var string
-     */
-    protected $scheme = 'https';
-
-
-    /**
      * Categories URL path
      * 
      * All categories URL:
@@ -58,15 +38,19 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException as E
      */
     protected $path = '/all-wholesale-products.html';
 
+
 	/**
 	 * Fetch destenation
 	 * 
      * //TODO: single point of $this->fetch build for all adapters
      * 
+     * @param mixed $reference
      * @return array
 	 */        
-    public function fetch() 
+    public function fetch($reference=null) 
     {
+        $this->setUrl();
+
         $spider = new Spider();
      
         $web = new web(['timeout' => 60]);
@@ -149,7 +133,3 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException as E
         ];
     }
  }
-
-
-
-

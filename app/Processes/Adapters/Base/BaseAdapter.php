@@ -10,27 +10,44 @@ use App\Exceptions\Adapters\BaseAdapterException as Exception;
  */
  abstract class BaseAdapter implements IAdapter 
  {
-
     /**
-     * Adapter url
-     */
-    protected $url;
-
-
-    /**
-     * URL scheme
+     * Target URL scheme
      * 
      * @var string
      */
-    protected $scheme = 'http';
+    protected $scheme = 'https';
 
 
     /**
-     * URL domain
+     * Target URL domain
      * 
      * @var string
      */
     protected $domain;
+
+
+    /**
+     * Target URL path
+     * 
+     * @var string 
+     */
+    protected $path;
+    
+
+    /**
+     * Target URL query string
+     * 
+     * @var array
+     */
+    protected $query = [];
+
+
+    /**
+     * Full Target URL
+     * 
+     * @var string
+     */
+    protected $url;
 
 
     /**
@@ -44,13 +61,70 @@ use App\Exceptions\Adapters\BaseAdapterException as Exception;
 	/**
 	 * Fetch adapter's targets
      * 
+     * @param mixed $reference
      * @return mixed
 	 */        
-    abstract public function fetch(); 
+    abstract public function fetch($reference=null); 
 
 
 	/**
-	 * Set URL
+	 * Set Target URL scheme
+     * 
+     * @param string|null $scheme
+     * @return self
+	 */ 
+    public function setScheme($scheme=null) 
+    {
+        $this->scheme = $scheme;
+
+        return $this;
+    }    
+
+
+	/**
+	 * Set Target URL domain
+     * 
+     * @param string|null $domain
+     * @return self
+	 */ 
+    public function setDomain($domain=null) 
+    {
+        $this->domain = $domain;
+
+        return $this;
+    }    
+
+
+	/**
+	 * Set Target URL path
+     * 
+     * @param string|null $path
+     * @return self
+	 */ 
+    public function setPath($path=null) 
+    {
+        $this->path = $path;
+
+        return $this;
+    }  
+
+
+	/**
+	 * Set Target URL query
+     * 
+     * @param array $query
+     * @return self
+	 */ 
+    public function setQuery($query=[]) 
+    {
+        $this->query = $query;
+
+        return $this;
+    }     
+
+    
+	/**
+	 * Set Target URL
      * 
      * @notes
      * $this->path should start with '/' this is the 1st slash aster the domain  
@@ -76,8 +150,4 @@ use App\Exceptions\Adapters\BaseAdapterException as Exception;
 
         return $this;
     }
-    
  }
-
-
-
