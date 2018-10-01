@@ -48,112 +48,129 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressItemsAdapterException as Except
     {
         if(!($storageCategory instanceof StorageCategory)) throw new Exception(Exception::INVALID_STORAGE_CATEORY_INSTANCE);
 
+        // prep target url
         $this->setPath($storageCategory->path)->setUrl();
 
+        // prep clients
         $spider = new Spider();
-     
-        $web = new web(['timeout' => 60]);
-     
+        $web    = new web(['timeout' => 60]);
         $spider->setClient($web);
-
         $crawler = $spider->request('GET', $this->url);  
         
-        
-        # item basic data
-        // title
-        // path
-        // path
-        // price
-        // orders
-        // img_src
-
-        # item system data
-        // storage_category_id
-        // channel_item_id
-
-        # helpers
-        //$url = $node->attr('href'); 
-        // $node->text()        
-
-
         // get items
         $crawler->filter('body ul#list-items li.list-item')->each(function (CoreCrawler $subcrawler) 
         {
             $this->channel_item_id = 0;  // ensure reset to avoid data assginement for wrong rcord
 
-            // get product channel id
+            // get channel_item_id
             $subcrawler->filter('input.atc-product-id')->each(function($node) use($subcrawler) 
             {
                 $this->channel_item_id = intval(trim($node->attr('value')));
-
-                
-                            
             });  
 
             if($this->channel_item_id) 
             {
-                // get title
+                // get title, path
                 $subcrawler->filter('h3 a.product')->each(function($node) use($subcrawler) 
                 {
                     $this->fetch[$this->channel_item_id]['title'] = $node->attr('title');
-                    $url = $node->attr('href');                                
-                    $this->fetch[$this->channel_item_id]['path'] = $this->parseUrl($url);        
-                    
+                    $item_url = $node->attr('href');                                
+                    $this->fetch[$this->channel_item_id]['path'] = $this->parseUrl($item_url);         
                 });  
 
-
-                // $this->fetch['pro'] = 
-                // $url = $node->attr('href');                                
-                // $this->fetch['path'] = $this->parseUrl($url);    
-
-                // // get img_src
-                // $subcrawler->filter('div.img img.picCore')->each(function($node) use($subcrawler) 
-                // {
-                //     $this->fetch['img_src'] = $node->attr('src');                               
-                // });                
+                // get img_src
+                $subcrawler->filter('div.img img.picCore')->each(function($node) use($subcrawler) 
+                {
+                    $this->fetch[$this->channel_item_id]['img_src'] = $node->attr('src');                               
+                });
+                
+                // get price 
+                $subcrawler->filter('span[itemprop="price"]')->each(function($node) use($subcrawler) 
+                {
+                    $this->fetch[$this->channel_item_id]['price'] = $this->parsePrice($node->text());                               
+                });  
+                
+                // get orders
+                $subcrawler->filter('a.order-num-a')->each(function($node) use($subcrawler) 
+                {
+                    $this->fetch[$this->channel_item_id]['orders'] = $this->parseOrders($node->text());                               
+                });                  
             }
         }); 
-                
+            
+        // log results 
         Log::channel(Log::ADAPTERS_ITEMS)->info($this->domain . ' - returned ' . (!empty($this->fetch) ? 'full fetch :)' : 'empty fetch :/'), ['in' => __METHOD__ .':'.__LINE__]);
             
-        dd($this->fetch);
-
         return $this->fetch;        
     }
 
 
     /**
-     * Convert item URL item path
+     * Check if proper url returned and extract the path 
      * 
-     * TODO: ...
+     * Sample returned raw item urls :
+     *  //www.aliexpress.com/item/2M-LED-Garland-Copper-Wire-Corker-String-Fairy-Lights-for-Glass-Craft-Bottle-New-Year-Christmas/32884789078.html?ws_ab_test=searchweb0_0,searchweb201602_4_10065_10068_318_10546_10059_10884_10548_10887_10696_100031_10084_10083_10103_452_10618_10307_532,searchweb201603_60,ppcSwitch_0&algo_expid=fc703309-0f99-4346-be65-61bc3757112f-0&algo_pvid=fc703309-0f99-4346-be65-61bc3757112f&transAbTest=ae803_5&priceBeautifyAB=0
      * 
-     * @param string $url
-     * @return array // url parts
+     * @param string $url // item url in the channel
+     * @return string // url path
      */
     private function parseUrl($url) 
     {
+        // parse
+        $path   = str_replace($this->domain, '', strstr($url, $this->domain));
+        $path   = explode('?' , $path)[0]; // remove the query string
+        $parts  = explode('/', $path);
 
-        return $url;
+        // catch vars
+        $prefix         = $parts[1] ?? null;
+        $slug           = $parts[2] ?? null;
+        $item_html_file = $parts[3] ?? null;
+        $item_id        = explode('.', $item_html_file)[0];
 
-        // // parse
-        // $path   = str_replace($this->domain, '', strstr($url, $this->domain));
-        // $path   = explode('?' , $path)[0]; // remove the query string
-        // $parts  = explode('/', $path);
+        // proper check
+        if(!$prefix == 'item')      throw new Exception(Exception::INVALID_ITEM_URL         . ' | ' . print_r(['url' => $url], 1));
+        if(!$slug)                  throw new Exception(Exception::INVALID_ITEM_URL_SLUG    . ' | ' . print_r(['url' => $url], 1));
+        if(!is_numeric($item_id))   throw new Exception(Exception::INVALID_ITEM_URL_ID      . ' | ' . print_r(['url' => $url], 1));
 
-        // // catch vars
-        // $prefix         = $parts[1] ?? null;
-        // $category_id    = $parts[2] ?? null;
+        // build back path
+        $path = implode('/' , $parts);
 
-        // // proper check
-        // if(!$prefix == 'category')      throw new Exception(Exception::INVALID_CATEGORY_URL . ' | ' . print_r(['url' => $url], 1));
-        // if(!is_numeric($category_id))   throw new Exception(Exception::INVALID_CATEGORY_URL_ID . ' | ' . print_r(['url' => $url], 1));
-        // if(!$path)                      throw new Exception(Exception::INVALID_CATEGORY_URL_PATH . ' | ' . print_r(['url' => $url], 1));
+        return $path;
+    }
 
-        // // return
-        // return [
-        //     'path' => $path,
-        //     'channel_category_id' => intval($category_id),
-        // ];
+
+
+    /**
+     * TODO: ... 
+     * 
+     * Parse text price to min & max prices
+     * 
+     * Sample returned raw price str :
+     * "US $0.18 - 0.89"
+     * 
+     * @param string $price
+     * @return array 
+     */
+    private function parsePrice($price) 
+    {
+        return $price;
+    }
+
+
+    /**
+     * TODO: ... 
+     * 
+     * Parse orders price text to int value
+     * 
+     * Sample returned raw price str :
+     * "Orders (1805)"
+     * 
+     * @param string $orders
+     * @return int 
+     */
+    private function parseOrders($orders) 
+    {
+        return $orders;
     }
  }
  

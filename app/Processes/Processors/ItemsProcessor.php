@@ -114,6 +114,9 @@ class ItemsProcessor extends BaseProcessor
 			$this->bag[$this->process][$this->channel_key][$storageCategory->id] = $this->adapter->fetch($storageCategory);			
 		}
 
+
+		dd($this->bag);
+
 		return $this;
 	}
 

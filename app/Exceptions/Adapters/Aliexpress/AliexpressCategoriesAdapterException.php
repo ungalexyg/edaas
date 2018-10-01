@@ -10,7 +10,7 @@ use App\Exceptions\BaseException;
  */
 class AliexpressItemsAdapterException extends BaseException
 {
-    const INVALID_CATEGORY_URL      = 'Failed to parse url2id(), invalid url stracutre given, the \'category\' offset not found.';
-    const INVALID_CATEGORY_URL_ID   = 'Failed to parse url2id(), not numeric id found in the expected id offset.';
-    const INVALID_CATEGORY_URL_PATH = 'Failed to parse url2id(), unexpected path value.';
+    const INVALID_ITEM_URL      = 'Failed to parse to item url, invalid url stracutre.';
+    const INVALID_ITEM_URL_SLUG = 'Failed to parse to item url, invalid slug.';
+    const INVALID_ITEM_URL_ID   = 'Failed to parse to item url, invalid item id.';
 }
