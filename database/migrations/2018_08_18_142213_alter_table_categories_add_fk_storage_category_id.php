@@ -40,6 +40,8 @@ class AlterTableCategoriesAddFkStorageCategoryId extends Migration
      */
     public function down()
     {
-        $table->dropForeign(['storage_category_id']);
+        Schema::table($this->table, function (Blueprint $table) {
+            $table->dropForeign(['storage_category_id']);
+        });              
     }
 }

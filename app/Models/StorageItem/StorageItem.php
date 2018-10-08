@@ -24,4 +24,12 @@ class StorageItem extends BaseModel implements IStorageItem
      * @var array
      */
     protected $guarded = []; // if $guarded is empty, all the cols are $fillable
+
+
+    /*
+$url = "http://www.google.co.in/intl/en_com/images/srpr/logo1w.png";
+$contents = file_get_contents($url);
+$name = substr($url, strrpos($url, '/') + 1);
+Storage::put($name, $contents);    
+    */    
 }

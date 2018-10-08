@@ -12,18 +12,6 @@ use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
 use App\Exceptions\Adapters\Aliexpress\AliexpressItemsAdapterException as Exception;
 
 
-/**
- * --------------------------------------------------------------------------
- *  TODO:
- * --------------------------------------------------------------------------
- * - visit each category in Ali
- * - grab products by newest with orders count 
- * - store the 'category-newest' dataset
- * - run the process every 4 hours to compare changes per item
- * - products with X orders increased will be stored as 'Prospects' for forther treatment  
- */
-
-
  /**
   * Aliexpress Items Adapter
   */
@@ -61,7 +49,7 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressItemsAdapterException as Except
         $crawler->filter('body ul#list-items li.list-item')->each(function (CoreCrawler $subcrawler) 
         {
             $this->channel_item_id = 0;  // ensure reset to avoid data assginement for wrong rcord
-
+            
             // get channel_item_id
             $subcrawler->filter('input.atc-product-id')->each(function($node) 
             {
@@ -70,37 +58,35 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressItemsAdapterException as Except
 
             if($this->channel_item_id) 
             {
-                $fetch = [];
+                $this->fetch[$this->channel_item_id]['channel_item_id'] = $this->channel_item_id;
 
                 // get title, path
                 $subcrawler->filter('h3 a.product')->each(function($node) 
                 {
-                    $fetch['title'] = $node->attr('title');
+                    $this->fetch[$this->channel_item_id]['title'] = $node->attr('title');
                     $item_url       = $node->attr('href');                                
-                    $fetch['path']  = $this->parseUrl($item_url);         
+                    $this->fetch[$this->channel_item_id]['path']  = $this->parseUrl($item_url);         
                 });  
 
                 // get img_src
                 $subcrawler->filter('div.img img.picCore')->each(function($node) 
                 {
-                    $fetch['img_src'] = $node->attr('src');                               
+                    $this->fetch[$this->channel_item_id]['img_src'] = $node->attr('src');                               
                 });
                 
                 // get price 
                 $subcrawler->filter('span[itemprop="price"]')->each(function($node)
                 {
                     $prices = $this->parsePrice($node->text());                               
-                    $fetch['price_min'] = $prices['min'];
-                    $fetch['price_max'] = $prices['max'];
+                    $this->fetch[$this->channel_item_id]['price_min'] = $prices['min'];
+                    $this->fetch[$this->channel_item_id]['price_max'] = $prices['max'];
                 });  
                 
                 // get orders
                 $subcrawler->filter('a.order-num-a')->each(function($node) 
                 {
-                    $fetch['orders'] = $this->parseOrders($node->text());                               
+                    $this->fetch[$this->channel_item_id]['orders'] = $this->parseOrders($node->text());                               
                 });                  
-
-                $this->fetch[$this->channel_item_id] = $fetch;
             }
         }); 
             
@@ -145,9 +131,8 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressItemsAdapterException as Except
     }
 
 
-
     /**
-     * Parse text prices to min & max prices
+     * Parse prices
      * 
      * Sample returned raw prices str :
      * "US $0.18 - 0.89"
@@ -169,9 +154,7 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressItemsAdapterException as Except
 
 
     /**
-     * TODO: ... 
-     * 
-     * Parse orders price text to int value
+     * Parse orders 
      * 
      * Sample returned raw price str :
      * "Orders (1805)"
@@ -182,9 +165,9 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressItemsAdapterException as Except
     private function parseOrders($orders) 
     {
         // extract numbers from string
-        // $matches = filter_var($s, FILTER_SANITIZE_NUMBER_INT); // option - extracted digits, plus and minus sign 
+        $matches = filter_var($orders, FILTER_SANITIZE_NUMBER_INT); // option - extracted digits, plus and minus sign 
         
-        preg_match_all('!\d+!', $orders, $matches);  // option - extracted only digits
+        //preg_match_all('!\d+!', $orders, $matches);  // option - extracted only digits
 
         return trim(intval($matches));
     }

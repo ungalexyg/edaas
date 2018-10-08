@@ -106,7 +106,7 @@ return [
             // what should be the minimum age of a scanning process on a storage category in order to re-run it, by MINUTES ?
             // the age checked in db by : storage_categories.last_process           
             // if several processes are 'mature' enough, the processor will start to run from the oldest
-            'mature_category'   => 60, // each category in channel can be scanned every 1 hour(s), 
+            'mature_category'   => 1, // each category in channel can be scanned every 1 hour(s), 
 
             // how many storage categories from the 'mature' storage_categories should be processed in each process ?            
             'limit_categories'  => 1,                

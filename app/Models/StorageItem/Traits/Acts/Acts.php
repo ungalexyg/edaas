@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\StorageCategory\Traits\Acts;
+namespace App\Models\StorageItem\Traits\Acts;
 
 /**
  * Aggregate Storage Category Acts

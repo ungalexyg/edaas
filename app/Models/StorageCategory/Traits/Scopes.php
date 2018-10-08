@@ -139,8 +139,8 @@ trait Scopes
         
         $query
             ->where('channel_id', '=', $channel_id)
-            ->where(Column::LAST_PROCESS,'<=', $datetime)
             ->where('active','=', 1)
+            ->where(Column::LAST_PROCESS,'<=', $datetime)
             ->orderBy($this->table . '.' . Column::LAST_PROCESS, 'asc')
             ->take($limit);        
     }       

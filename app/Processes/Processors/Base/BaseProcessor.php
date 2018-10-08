@@ -190,7 +190,7 @@ abstract class BaseProcessor implements IProcessor
 
 		$log_channel = ( $this->process ? 'processor_' . $this->process :  Log::PROCESSOR_MAIN);
 
-		Log::channel($log_channel)->info($this->message, ['in' => 'BaseProcessor@response:'.__LINE__]);
+		Log::channel($log_channel)->info($this->message, ['in' => __METHOD__.':'.__LINE__]);
 
 		return [
 			'message' => $this->message,

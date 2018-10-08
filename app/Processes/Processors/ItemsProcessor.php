@@ -85,6 +85,7 @@ class ItemsProcessor extends BaseProcessor
 			$this->bag[$this->process][$this->channel_key][$storageCategory->id] = $this->adapter->fetch($storageCategory);			
 		}
 
+		Log::channel(Log::PROCESSOR_ITEMS)->info('ItemsProcessor@scan completed', ['in' => __METHOD__ .':'. __LINE__]);
 
 		dd($this->bag);
 
@@ -115,12 +116,10 @@ class ItemsProcessor extends BaseProcessor
      * @return self
 	 */
 	public function store() 
-	{
-        $items = $this->bag[$this->process] ?? null;
-        
-        StorageItem::perform('storeBatch', $items);
+	{        
+        StorageItem::perform('storeBatch', $this->bag);
 
-        Log::channel(Log::PROCESSOR_ITEMS)->info('ItemsProcessor@store completed', []);
+        Log::channel(Log::PROCESSOR_ITEMS)->info('ItemsProcessor@store completed', ['in' => __METHOD__ .':'. __LINE__]);
 
         return $this;
 	}
