@@ -43,35 +43,6 @@ class ItemsProcessor extends BaseProcessor
 	protected $channel_key; 	
 
 
-	#########################################
-	# Setters
-	#########################################	
-
-
-	/**
-	 * Set categories to scan items from
-	 * 
-	 * TODO:
-	 * 
-	 * 2 - get mature storage categories from mature channels
-	 * 3 - process these categories
-	 */
-	protected function setCategoiries($channel_id) 
-	{		
-		$storageCategories = StorageCategory::matureStorageCategories($channel_id)->get();
-
-		if(!$storageCategories->count()) 
-		{
-			Log::channel(Log::PROCESSOR_ITEMS)->info(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND, ['in' => 'ItemsProcessor@setCategoiries:' . __LINE__]);
-			
-			throw new Exception(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND);
-		} 
-
-		$this->categories = $storageCategories;		
-
-		return $this;
-	}
-
 
 	#########################################
 	# Implementations 
@@ -163,5 +134,36 @@ class ItemsProcessor extends BaseProcessor
 	public function publish() 
 	{
 
-	}		
+	}	
+	
+	
+	#########################################
+	# Setters
+	#########################################	
+
+
+	/**
+	 * Set categories to scan items from
+	 * 
+	 * TODO:
+	 * 
+	 * 2 - get mature storage categories from mature channels
+	 * 3 - process these categories
+	 */
+	protected function setCategoiries($channel_id) 
+	{		
+		$storageCategories = StorageCategory::matureStorageCategories($channel_id)->get();
+
+		if(!$storageCategories->count()) 
+		{
+			Log::channel(Log::PROCESSOR_ITEMS)->info(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND, ['in' => 'ItemsProcessor@setCategoiries:' . __LINE__]);
+			
+			throw new Exception(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND);
+		} 
+
+		$this->categories = $storageCategories;		
+
+		return $this;
+	}	
+
 }

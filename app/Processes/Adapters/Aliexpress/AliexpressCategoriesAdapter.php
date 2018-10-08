@@ -103,7 +103,7 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException as E
     /**
      * Convert category URL to category ID
      * 
-     * Sample returned category urls :
+     * Sample returned raw category urls :
      * //www.aliexpress.com/category/18/sports-entertainment.html?g=y
      * //www.aliexpress.com/category/34/automobiles-motorcycles.html?g=y 
      * 

@@ -63,38 +63,44 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressItemsAdapterException as Except
             $this->channel_item_id = 0;  // ensure reset to avoid data assginement for wrong rcord
 
             // get channel_item_id
-            $subcrawler->filter('input.atc-product-id')->each(function($node) use($subcrawler) 
+            $subcrawler->filter('input.atc-product-id')->each(function($node) 
             {
                 $this->channel_item_id = intval(trim($node->attr('value')));
             });  
 
             if($this->channel_item_id) 
             {
+                $fetch = [];
+
                 // get title, path
-                $subcrawler->filter('h3 a.product')->each(function($node) use($subcrawler) 
+                $subcrawler->filter('h3 a.product')->each(function($node) 
                 {
-                    $this->fetch[$this->channel_item_id]['title'] = $node->attr('title');
-                    $item_url = $node->attr('href');                                
-                    $this->fetch[$this->channel_item_id]['path'] = $this->parseUrl($item_url);         
+                    $fetch['title'] = $node->attr('title');
+                    $item_url       = $node->attr('href');                                
+                    $fetch['path']  = $this->parseUrl($item_url);         
                 });  
 
                 // get img_src
-                $subcrawler->filter('div.img img.picCore')->each(function($node) use($subcrawler) 
+                $subcrawler->filter('div.img img.picCore')->each(function($node) 
                 {
-                    $this->fetch[$this->channel_item_id]['img_src'] = $node->attr('src');                               
+                    $fetch['img_src'] = $node->attr('src');                               
                 });
                 
                 // get price 
-                $subcrawler->filter('span[itemprop="price"]')->each(function($node) use($subcrawler) 
+                $subcrawler->filter('span[itemprop="price"]')->each(function($node)
                 {
-                    $this->fetch[$this->channel_item_id]['price'] = $this->parsePrice($node->text());                               
+                    $prices = $this->parsePrice($node->text());                               
+                    $fetch['price_min'] = $prices['min'];
+                    $fetch['price_max'] = $prices['max'];
                 });  
                 
                 // get orders
-                $subcrawler->filter('a.order-num-a')->each(function($node) use($subcrawler) 
+                $subcrawler->filter('a.order-num-a')->each(function($node) 
                 {
-                    $this->fetch[$this->channel_item_id]['orders'] = $this->parseOrders($node->text());                               
+                    $fetch['orders'] = $this->parseOrders($node->text());                               
                 });                  
+
+                $this->fetch[$this->channel_item_id] = $fetch;
             }
         }); 
             
@@ -141,19 +147,24 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressItemsAdapterException as Except
 
 
     /**
-     * TODO: ... 
+     * Parse text prices to min & max prices
      * 
-     * Parse text price to min & max prices
-     * 
-     * Sample returned raw price str :
+     * Sample returned raw prices str :
      * "US $0.18 - 0.89"
      * 
      * @param string $price
      * @return array 
      */
-    private function parsePrice($price) 
+    private function parsePrice($prices) 
     {
-        return $price;
+		$parts = explode('-', $prices);
+
+		if(count($parts) > 2) throw new Exception(Exception::FETCHED_INVALID_PRICES_STR . ' | prices str: ' . var_export($prices, 1));
+
+		$min = (isset($parts[0]) ? (float) filter_var($parts[0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) : false);
+		$max = (isset($parts[1]) ? (float) filter_var($parts[1], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) : false);
+
+		return ['min' => $min, 'max' => $max]; 
     }
 
 
@@ -170,7 +181,12 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressItemsAdapterException as Except
      */
     private function parseOrders($orders) 
     {
-        return $orders;
+        // extract numbers from string
+        // $matches = filter_var($s, FILTER_SANITIZE_NUMBER_INT); // option - extracted digits, plus and minus sign 
+        
+        preg_match_all('!\d+!', $orders, $matches);  // option - extracted only digits
+
+        return trim(intval($matches));
     }
  }
  
