@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\StorageCategory\Traits;
+namespace App\Models\StorageItem\Traits;
 
-use App\Models\Category\Category;
-use App\Models\StorageCategory\StorageCategory;
+// use App\Models\Category\Category;
+// use App\Models\StorageCategory\StorageCategory;
 
 
 /**

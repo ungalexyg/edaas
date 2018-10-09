@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\StorageCategory\Traits\Acts;
+namespace App\Models\StorageItem\Traits\Acts;
 
 use App\Models\StorageItem\StorageItem;
 use App\Exceptions\Models\StorageItemException as Exception; 
@@ -42,6 +42,8 @@ trait Store
 
         $this->affected['storage_items'] = [];
 
+       // dd($items);
+
         foreach($items as $channel_key => $channel_categories) 
         {
             if(!is_array($channel_categories)) throw new Exception(Exception::INVALID_INPUT);            
@@ -52,15 +54,17 @@ trait Store
 
                 foreach($storage_category_items as $item_data) 
                 {
-                    $channel_item_id = $category_data['channel_item_id'] ?? null;
+                    $channel_item_id = $item_data['channel_item_id'] ?? null;
 
-                    if(!is_numeric($channel_item_id)) throw new Exception(Exception::INVALID_CHANNEL_ITEM_ID . ' | channel_item_id : ' . var_export($channel_item_id, 1));
+                    if(!is_numeric($channel_item_id)) throw new Exception(Exception::STORE_INVALID_CHANNEL_ITEM_ID . ' | channel_item_id : ' . var_export($channel_item_id, 1));
     
                     $item_data['storage_category_id'] = $storage_category_id;
 
                     unset($item_data['channel_item_id']); // adjustment for updateOrCreate
-                                        
-                    // if there's a StorageItem record with the given channel_item_id, update it with the given data, otherwise create it.
+                                    
+                    //dd($channel_item_id, $item_data);    
+
+                    // if there's a StorageItem record with the given channel_item_id, update it with the given dat a, otherwise create it.
                     $storageItem = StorageItem::updateOrCreate(['channel_item_id' => $channel_item_id], $item_data);
     
                     $this->affected['storage_items'][] = $storageItem->id;            

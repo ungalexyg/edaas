@@ -3,21 +3,15 @@
 namespace App\Processes\Processors;
 
 use Log;
-use App\Models\Process\Process;
-use App\Enums\DBColumnsEnum as Column;
 use App\Models\StorageItem\StorageItem;
 use App\Models\StorageCategory\StorageCategory;
 use App\Processes\Processors\Traits\HasAdapter;
 use App\Processes\Processors\Base\BaseProcessor;
 use App\Exceptions\Processors\ItemsProcessorException as Exception;
-//use Illuminate\Support\Facades\DB;
+
 
 /**
  * Items Processor 
- * 
- * Run items processes
- * 
- * @Yalla : https://www.aliexpress.com/category/100003084/hoodies-sweatshirts.html?spm=2114.search0101.1.18.378048b6i9vvAd&g=y
  */ 
 class ItemsProcessor extends BaseProcessor
 {
@@ -64,9 +58,7 @@ class ItemsProcessor extends BaseProcessor
 
 			$this->scan()->store();
 
-			// TODO: 
-			//($this->config['auto_publish'] ?? false) ? $this->publish() : null;			
-
+			($this->config['auto_publish'] ?? false) ? $this->publish() : null;			
 		}
 
 		return $this;
@@ -86,8 +78,6 @@ class ItemsProcessor extends BaseProcessor
 		}
 
 		Log::channel(Log::PROCESSOR_ITEMS)->info('ItemsProcessor@scan completed', ['in' => __METHOD__ .':'. __LINE__]);
-
-		dd($this->bag);
 
 		return $this;
 	}
@@ -117,7 +107,9 @@ class ItemsProcessor extends BaseProcessor
 	 */
 	public function store() 
 	{        
-        StorageItem::perform('storeBatch', $this->bag);
+		$items =& $this->bag[$this->process] ?? null;
+
+        StorageItem::perform('storeBatch', $items);
 
         Log::channel(Log::PROCESSOR_ITEMS)->info('ItemsProcessor@store completed', ['in' => __METHOD__ .':'. __LINE__]);
 
@@ -126,13 +118,15 @@ class ItemsProcessor extends BaseProcessor
 
 
     /**
-	 *  Publish data from the storage 
+	 * Publish data from the storage 
 	 * 
-	 * @return void
+	 * @return self
      */
 	public function publish() 
 	{
+		//TODO: ...
 
+		return $this;
 	}	
 	
 	

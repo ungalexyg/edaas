@@ -3,7 +3,7 @@
 namespace App\Models\StorageItem\Traits\Acts;
 
 /**
- * Aggregate Storage Category Acts
+ * Aggregate Storage Item Acts
  */
 trait Acts
 {

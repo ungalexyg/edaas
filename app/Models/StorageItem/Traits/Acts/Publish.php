@@ -6,6 +6,16 @@ use Log;
 use App\Models\StorageItem\StorageItem;
 use App\Exceptions\Models\StorageItemException as Exception; 
 
+//TODO: upload images during publish
+
+/*
+$url = "http://www.google.co.in/intl/en_com/images/srpr/logo1w.png";
+$contents = file_get_contents($url);
+$name = substr($url, strrpos($url, '/') + 1);
+Storage::put($name, $contents);    
+*/    
+
+
 
 /**
  * Publish Trait 
@@ -21,7 +31,7 @@ trait Publish
 	 */
     public function publishAll() 
     {
-   
+        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__); 
     } 
 
 
@@ -33,7 +43,7 @@ trait Publish
      */
     public function publish(StorageItem $storageItem) 
     {   
-        
+        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__); 
     }
 
 

@@ -1,7 +1,7 @@
 <?php
-namespace App\Models\StorageCategory\Traits;
+namespace App\Models\StorageItem\Traits;
 
-use App\Exceptions\Models\StorageCategoryException as Exception;
+//use App\Exceptions\Models\StorageItemException as Exception; 
 
 
 /**
@@ -13,5 +13,106 @@ use App\Exceptions\Models\StorageCategoryException as Exception;
  */
 trait Validations
 {
-     
+    /**
+     * Validate store batch
+     */
+    public function validateStoreBatch() 
+    {
+        return []; // custom rule can be added here
+    }
+
+
+    // /**
+    //  * Validate publishAll act
+    //  * 
+    //  * @return array
+    //  */
+    // public function validatePublishAll() 
+    // {   
+    //     return []; 
+    // }     
+
+
+    // /**
+    //  * Validate publish act
+    //  * 
+    //  * @return array
+    //  */
+    // public function validatePublish() 
+    // {   
+    //     return [
+    //         'id' => 'required|integer'
+    //     ];
+    // }     
+
+
+    // /**
+    //  * Validate unpublishAll act
+    //  * 
+    //  * @return array
+    //  */
+    // public function validateUnpublishAll() 
+    // {   
+    //     return [];
+    // } 
+
+
+    // /**
+    //  * Validate unpublish act
+    //  * 
+    //  * @return array
+    //  */
+    // public function validateUnpublish() 
+    // {   
+    //     return [
+    //         'id' => 'required|integer'
+    //     ];
+    // }
+    
+    
+    // /**
+    //  * Validate activateAll act
+    //  * 
+    //  * @return array
+    //  */
+    // public function validateActivateAll() 
+    // {   
+    //     return [];
+    // } 
+
+
+    // /**
+    //  * Validate activate act
+    //  * 
+    //  * @return array
+    //  */
+    // public function validateActivate() 
+    // {   
+    //     return [
+    //         'id' => 'required|integer'
+    //     ];
+    // } 
+
+
+    // /**
+    //  * Validate deactivateAll act
+    //  * 
+    //  * @return array
+    //  */
+    // public function validateDeactivateAll() 
+    // {   
+    //     return [];
+    // }     
+    
+    // /**
+    //  * Validate deactivate act
+    //  * 
+    //  * @return array
+    //  */
+    // public function validateDeactivate() 
+    // {   
+    //     return [
+    //         'id' => 'required|integer'
+    //     ];           
+    // }       
 }

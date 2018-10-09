@@ -45,10 +45,12 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressItemsAdapterException as Except
         $spider->setClient($web);
         $crawler = $spider->request('GET', $this->url);  
         
+
         // get items
-        $crawler->filter('body ul#list-items li.list-item')->each(function (CoreCrawler $subcrawler) 
+        $crawler->filter('body #list-items li.list-item')->each(function (CoreCrawler $subcrawler) 
         {
             $this->channel_item_id = 0;  // ensure reset to avoid data assginement for wrong rcord
+            
             
             // get channel_item_id
             $subcrawler->filter('input.atc-product-id')->each(function($node) 
@@ -91,8 +93,8 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressItemsAdapterException as Except
         }); 
             
         // log results 
-        Log::channel(Log::ADAPTERS_ITEMS)->info($this->domain . ' - returned ' . (!empty($this->fetch) ? 'full fetch :)' : 'empty fetch :/'), ['in' => __METHOD__ .':'.__LINE__]);
-            
+        Log::channel(Log::ADAPTERS_ITEMS)->info($this->domain . ' - returned ' . (!empty($this->fetch) ? 'full fetch :)' : 'empty fetch :/'), ['in' => __METHOD__ .':'.__LINE__]);  
+        
         return $this->fetch;        
     }
 
@@ -169,7 +171,7 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressItemsAdapterException as Except
         
         //preg_match_all('!\d+!', $orders, $matches);  // option - extracted only digits
 
-        return trim(intval($matches));
+        return intval(trim($matches));
     }
  }
  

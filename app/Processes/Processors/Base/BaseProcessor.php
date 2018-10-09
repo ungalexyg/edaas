@@ -184,11 +184,10 @@ abstract class BaseProcessor implements IProcessor
 	{
 		if(!$this->message) 
 		{
-			//TODO: extend message details, bag with contents does not means successful fetch
-			$this->message = ucwords($this->process).'Processor completed' . (empty($this->bag) ? ' with empty bag :/' : '');
+			$this->message = ucwords($this->process).'Processor@response completed';
 		}
 
-		$log_channel = ( $this->process ? 'processor_' . $this->process :  Log::PROCESSOR_MAIN);
+		$log_channel = ($this->process ? 'processor_' . $this->process :  Log::PROCESSOR_MAIN);
 
 		Log::channel($log_channel)->info($this->message, ['in' => __METHOD__.':'.__LINE__]);
 

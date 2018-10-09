@@ -31,12 +31,12 @@ class CreateTableStorageItems extends Migration
                 $table->string('path', 1060)->nullable();
                 $table->string('description', 1060)->nullable();
                 $table->integer('orders')->default(0)->comment('Item orders count in channel');
-                $table->integer('price_min')->nullable();
-                $table->integer('price_max')->nullable();
-                $table->integer('img_src')->nullable()->comment('Thumbnail image src');
+                $table->float('price_min', 8, 2)->nullable();
+                $table->float('price_max', 8, 2)->nullable();
+                $table->string('img_src')->nullable()->comment('Thumbnail image src');
                 $table->unsignedInteger('item_id')->nullable()->comment('The published item that sourced from this record.');                                 
                 $table->unsignedInteger('storage_category_id')->comment('Storage category id');
-                $table->unsignedInteger('channel_item_id')->comment('The external item id in the channel');
+                $table->unsignedBigInteger('channel_item_id')->comment('The external item id in the channel');
                 $table->unsignedTinyInteger('active')->default(0)->comment('If the storage record is active, the processors will fetch updates for this row & update it. [active = 1 | not active = 0]');
                 $table->unsignedTinyInteger('published')->default(0)->comment('If the record marked as published, the processors will update the related public record [published = 1 | not published = 0]');
                 $table->unsignedInteger('process_count')->nullable()->comment('Count how many times the scanning process launched on this item');                                
