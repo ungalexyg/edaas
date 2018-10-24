@@ -15,7 +15,15 @@ use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
  * Google shopping insights
  * https://shopping.thinkwithgoogle.com/
  * 
+ * http://www.googleguide.com/advanced_operators_reference.html
+ * 
+ * # Google Search Commands
+ * http://www.google.com/options/buttons.html 
+ * 
+ * # Google General Support
+ * https://support.google.com/websearch/#topic=3378866 
  */
+
 
 
 /**
@@ -60,9 +68,9 @@ use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
 
 
 /**
- * Google Custom Search Engine
+ * Google Custom Search Engine (gcse)
  * 
- * (properties prefix : gcse)
+ * Google's utility for personal predefined custom searches - cse.google.com/cse/all
  */
 trait GCustomSearch 
 {

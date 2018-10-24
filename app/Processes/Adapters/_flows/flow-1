@@ -1,0 +1,22 @@
+
+/* flow 1 :
+------------------------------------- */
+
+1) via google, get shopify domains from google
+query: 
+site:myshopify.com
+
+get links from each shopify store link get the cover domain
+e.g:
+https://jossoutlet.myshopify.com/ >> https://www.shopjoss.com.br/
+
+
+2) via google, search links to the domains in facebook
+query: 
+site:facebook.com link:shopjoss.com.br 
+
+
+
+
+
+

@@ -33,7 +33,7 @@ class CreateTableStorageItems extends Migration
                 $table->integer('orders')->default(0)->comment('Item orders count in channel');
                 $table->float('price_min', 8, 2)->nullable();
                 $table->float('price_max', 8, 2)->nullable();
-                $table->string('img_src')->nullable()->comment('Thumbnail image src');
+                $table->text('img_src')->nullable()->comment('Thumbnail image src');
                 $table->unsignedInteger('item_id')->nullable()->comment('The published item that sourced from this record.');                                 
                 $table->unsignedInteger('storage_category_id')->comment('Storage category id');
                 $table->unsignedBigInteger('channel_item_id')->comment('The external item id in the channel');

@@ -7,6 +7,8 @@ use App\Processes\Adapters\Google\Traits\GCustomSearch;
 use App\Processes\Adapters\Google\Traits\GReverseImage;
 
 
+// https://policies.google.com/terms
+
  /**
   * Google Adapter
   */

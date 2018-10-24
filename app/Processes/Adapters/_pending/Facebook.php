@@ -13,22 +13,19 @@
 # trems : 
 "site:facebook.com: Prismware Cutlery/Silverware Set (4 Pieces)"
 
+# search in inner path inside domain, use "inurl"
+inurl:pages/category site:www.facebook.com
 
+# related
+related:https://www.redbubble.com/
 
-#---------------------------
-# grab relevant sources
-#---------------------------
-
-grab relevant source and run with relevant adapters
 
 
 #---------------------------
 # FB get user's posts id's 
 #---------------------------
 
-
-
-# path : 
+# path (pg = "page"): 
 
 pg/britneyspears/posts/
 
@@ -68,7 +65,7 @@ html :
 
 
 
-# toehr paths : 
+# other paths : 
 
 https://www.facebook.com/look/best-microwave-egg-poacher/
 
