@@ -10,6 +10,10 @@ namespace App\Enums\Contracts;
  */ 
 interface ILogEnum
 {
+    #########################################
+    # Log channels
+    #########################################
+
     /**
      * Models channels
      */
@@ -35,4 +39,11 @@ interface ILogEnum
      * Observers channels
      */
     const OBSERVER_STORAGE_CATEGORY     =  'observer_storage_category';
+
+
+    #########################################
+    # Log messages
+    #########################################    
+
+    const ACTION_COMPLETED              =  'ACTION COMPLETED';    
 }
