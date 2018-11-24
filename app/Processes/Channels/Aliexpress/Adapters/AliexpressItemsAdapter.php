@@ -9,7 +9,7 @@ use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
 use App\Lib\Vendor\Goutte\GoutteExtension as Spider;
 use Symfony\Component\DomCrawler\Crawler as CoreCrawler;
 use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
-use App\Exceptions\Adapters\Aliexpress\AliexpressItemsAdapterException as Exception;
+use App\Processes\Channels\Aliexpress\Exceptions\AliexpressItemsAdapterException as Exception;
 
 
  /**

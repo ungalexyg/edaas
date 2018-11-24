@@ -81,7 +81,6 @@ class RouteServiceProvider extends ServiceProvider
             {
                 require $file->getPathname();
             }            
-
         });
     }
 }

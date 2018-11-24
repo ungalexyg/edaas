@@ -8,6 +8,7 @@ namespace App\Enums;
  */ 
 class ProcessEnum extends BaseEnum 
 {
-    const CATEGORIES = 'categories';
-    const ITEMS = 'items';
+    const SITES         = 'sites';
+    const CATEGORIES    = 'categories';
+    const ITEMS         = 'items';
 }

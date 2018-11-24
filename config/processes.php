@@ -19,25 +19,8 @@ use App\Enums\{
 
 return [
 
-
     /**
-     * Set available processes
-     */    
-    'processes' => [
-
-        Processes::CATEGORIES => [
-            'name'          => 'Categories',
-            'description'   => 'Scan categories in channel',       
-        ],        
-        Processes::ITEMS => [
-            'name'          => 'Items',
-            'description'   => 'Scan items in channel',      
-        ]
-    ],
-
-
-    /**
-     * Set available channels
+     * Set channels
      */
     'channels' => [
 
@@ -45,13 +28,18 @@ return [
             'domain'        => 'aliexpress.com',
             'name'          => 'Aliexpress',
             'description'   => 'The Aliexpress marketplace',            
-        ],         
-        Channels::AMAZON     => [
+        ],
+        Channels::SHOPIFY   => [
+            'domain'        => 'myshopify.com',
+            'name'          => 'Shopify',
+            'description'   => 'Shopify stores',            
+        ],                 
+        Channels::AMAZON    => [
             'domain'        => 'amazon.com',
             'name'          => 'Amazon',
             'description'   => 'The Amazon marketplace',            
         ],
-        Channels::EBAY       => [
+        Channels::EBAY      => [
             'domain'        => 'ebay.com',
             'name'          => 'Ebay',
             'description'   => 'The Ebay marketplace',            
@@ -60,21 +48,44 @@ return [
 
 
     /**
-     * Enable channels for each process
+     * Attach processes to channels
      */
     'processes_channels' => [
 
         Processes::CATEGORIES => [          
-            Channels::ALIEXPRESS,
-            // Channels::AMAZON,
-            // Channels::EBAY
+        
+            Channels::ALIEXPRESS => [
+                'name'          => 'Aliexpress Categories',
+                'description'   => 'Scan Aliexpress categories',                      
+            ],
+        
+            // Channels::AMAZON => [...],
+        
+            // Channels::EBAY => [...]            
         ], 
         Processes::ITEMS => [
-            Channels::ALIEXPRESS,
-            //Channels::AMAZON,
-            //Channels::EBAY
+        
+            Channels::ALIEXPRESS =>[
+                'name'          => 'Aliexpress Items',
+                'description'   => 'Scan Aliexpress items from category',                                                            
+            ]
         ], 
+        Processes::SITES => [
+        
+            Channels::SHOPIFY => [
+                'name'          => 'Shopify Sites',
+                'description'   => 'Scan Shopify stores',
+            ]
+        ]         
     ],
+
+    
+    /**
+     * Set other processable entities
+     */
+    // 'processes_processable' => [
+        // ...
+    // ],    
 
 
     /**

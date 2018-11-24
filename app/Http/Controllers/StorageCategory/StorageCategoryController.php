@@ -4,7 +4,7 @@ namespace App\Http\Controllers\StorageCategory;
 
 use App\Http\Controllers\Base\BaseController;
 use App\Models\StorageCategory\StorageCategory;
-use App\Exceptions\Controllers\StorageCategoryControllerException as Exception;
+use App\Exceptions\ControllerException as Exception;
 
 
 /**
