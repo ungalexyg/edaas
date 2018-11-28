@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Processes\Channels\Base;
+namespace App\Processes\Channels\Base\Adapters;
 
 
  /**

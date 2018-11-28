@@ -6,7 +6,7 @@ namespace App\Processes\Base;
 /**
  * Channel Processor Interface 
  */ 
-interface IChannelProcessor extends IProcessor
+interface IProcessor
 {
 	/**
 	 * Perform the process
@@ -21,5 +21,13 @@ interface IChannelProcessor extends IProcessor
 	 * 
 	 * @return self
 	 */
-	public function stamp();		
+	public function stamp();	
+	
+	
+	/**
+	 * Generate process response
+	 * 
+	 * @return array $response
+	 */
+	public function response();			
 }

@@ -1,8 +1,8 @@
 <?php 
 
-namespace App\Processes\Processors\Traits;
+namespace App\Processes\Channels\Base\Adapters;
 
-use App\Exceptions\Processors\BaseProcessorException as Exception;
+use App\Exceptions\Processors\BaseChannelAdapterException as Exception;
 
 
 /**

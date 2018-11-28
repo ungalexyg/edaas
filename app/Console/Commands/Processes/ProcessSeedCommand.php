@@ -7,9 +7,8 @@ use App\Processes\Seeder\ProcessesSeeder;
 
 
 /**
- * Process Set Command
- * 
- * Perform processes setter actions
+ * Process Seed Command
+ * Execute processes seeding based on the config
  */
 class ProcessSeedCommand extends BaseCommand
 {

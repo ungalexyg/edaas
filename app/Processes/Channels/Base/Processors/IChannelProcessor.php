@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Processes\Channels\Base;
+namespace App\Processes\Channels\Base\Processors;
 
 use App\Processes\Base\IProcessor;
 
@@ -32,12 +32,4 @@ interface IChannelProcessor extends IProcessor
 	 * @return void
      */
 	public function publish();	
-		
-
-	/**
-	 * Generate process response
-	 * 
-	 * @return array $response
-	 */
-	public function response();		
 }

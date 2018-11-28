@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\Processes;
 
-use App\Enums\ProcessEnum as Processes;
-use App\Models\StorageItem\StorageItem;
 use App\Http\Controllers\Base\BaseController;
-use App\Models\StorageCategory\StorageCategory;
-use App\Processes\Channels\Base\MainChannelProcessor as Processor;
+use App\Processes\Base\MainProcessor as Processor;
 
 
 /**
@@ -17,11 +14,10 @@ class ProcessesController extends BaseController
     /**
      * Process channels
      * 
-     * @param string $process
-     * @param string $channel
+     * @param string $process App\Enums\ProcessEnum
      * @return mixed $response
      */
-    public function channels($process) 
+    public function process($process) 
     {
        $response = (new Processor)->run($process);
 

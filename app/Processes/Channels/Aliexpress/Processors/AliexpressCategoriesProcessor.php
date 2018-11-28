@@ -5,8 +5,7 @@ namespace App\Processes\Channels\Aliexpress\Processors;
 use Log;
 use App\Models\Channel\Channel;
 use App\Models\StorageCategory\StorageCategory;
-use App\Processes\Channels\Traits\HasAdapter;
-use App\Processes\Channels\Base\BaseChannelProcessor;
+use App\Processes\Channels\Base\Processors\BaseChannelProcessor;
 use App\Processes\Channels\Aliexpress\Exceptions\AliexpressCategoriesProcessorException as Exception;
 
 
@@ -14,13 +13,7 @@ use App\Processes\Channels\Aliexpress\Exceptions\AliexpressCategoriesProcessorEx
  * Aliexpress Categories Processor 
  */ 
 class AliexpressCategoriesProcessor extends BaseChannelProcessor 
-{	
-	/**
-	 * Use process traits
-	 */    
-    use HasAdapter;
-
-    
+{	    
 	/**
 	 * Manage the process
 	 * 

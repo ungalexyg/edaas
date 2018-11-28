@@ -1,8 +1,8 @@
 <?php 
 
-namespace App\Processes\Channles\Base;
+namespace App\Processes\Channels\Base\Adapters;
 
-use App\Exceptions\BaseChannelAdapterException as Exception;
+use App\Exceptions\AdapterException as Exception;
 
 
 /**

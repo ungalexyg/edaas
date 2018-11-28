@@ -8,7 +8,7 @@ use App\Models\Process\Process;
 /**
  * Channel Model
  */
-class Channel extends BaseModel
+class Channel extends BaseModel 
 {
     /**
      * Indicates if the model should be timestamped.

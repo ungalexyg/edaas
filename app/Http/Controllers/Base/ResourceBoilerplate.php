@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Base;
 
-use App\Exceptions\Controllers\ControllerException as Exception;
+use Illuminate\Http\Request;
+use App\Exceptions\ControllerException as Exception;
 
 
 /**

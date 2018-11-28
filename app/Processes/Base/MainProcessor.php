@@ -3,7 +3,10 @@
 namespace App\Processes\Base;
 
 use Log;
-use BaseProcessorException as Exception;
+use App\Models\Process\Process;
+use App\Processes\Base\IProcessor;
+use App\Enums\ProcessEnum as Processes;
+use App\Exceptions\ProcessorException as Exception;
 
 
 /**
@@ -25,15 +28,14 @@ final class MainProcessor
 	/**
 	 * Run pre process operations
 	 * 
-	 * @param string $process
-	 * @param string|null $channel
-	 * @return array $response
+	 * @param string $process_key App\Enums\ProcessEnum
+	 * @return mixed
 	 */
-	public function run($channel, $process) 
+	public function run($process_key) 
 	{
 		try 
 		{
-			$this->loadProcessor($process);
+			$this->loadProcessor($process_key);
 
 			return $this->processor->process()->stamp()->response();
 		}
@@ -52,16 +54,27 @@ final class MainProcessor
 	/**
 	 * Load Processor
 	 * 
-	 * @throws MainProcessorException
+	 * @param string $process_key App\Enums\ProcessEnum
+	 * @throws BaseProcessorException
 	 * @return self
 	 */	
-	private function loadProcessor($process) 
-	{			
-		$processor = 'App\Processes\Processors\\' . ucwords($process) . 'Processor';
+	private function loadProcessor($process_key) 
+	{		
+		if(!in_array($process_key, Processes::getConstants())) throw new Exception(Exception::UNDEFINED_PROCESS . ' | $process_key: ' . $process_key);
+		
+		$process = Process::with('processable')->where(['key' => $process_key])->first();
+		
+		$parts = explode('\\' , $process->processable_type);
+		
+		$process_type = end($parts) . 's'; // option 1, save some overhead. // $type = Illuminate\Support\Pluralizer::plural($type); // option 2, use when really needed
+		
+		$processable_key = ucwords($process->processable->key);
 
-		if (!class_exists($processor))  throw new Exception(Exception::UNDEFINED_PROCESSOR);
+		$process_class = str_replace(' ', '', ucwords(str_replace('_', ' ', $process_key)).'Processor');
 
-		unset($processor->processor); // the processor using HasProcess trait that create extra unnecessary property when used by IProcessor instance, this property removed now to avoid misunderstoods 
+		$processor = "App\Processes\\$process_type\\$processable_key\Processors\\$process_class";
+
+		if(!class_exists($processor))  throw new Exception(Exception::UNDEFINED_PROCESSOR . ' | processor: ' . $processor);
 
 		$processor = new $processor();
 
