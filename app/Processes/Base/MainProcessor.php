@@ -2,9 +2,7 @@
 
 namespace App\Processes\Base;
 
-use Log;
 use App\Models\Process\Process;
-use App\Processes\Base\IProcessor;
 use App\Enums\ProcessEnum as Processes;
 use App\Exceptions\ProcessorException as Exception;
 
@@ -55,7 +53,7 @@ final class MainProcessor
 	 * Load Processor
 	 * 
 	 * @param string $process_key App\Enums\ProcessEnum
-	 * @throws BaseProcessorException
+	 * @throws ProcessorException
 	 * @return self
 	 */	
 	private function loadProcessor($process_key) 
@@ -85,6 +83,3 @@ final class MainProcessor
 		return $this;
 	}	
 }
-
-
-
