@@ -8,7 +8,7 @@ use App\Exceptions\AdapterException;
 /**
  * Adpter Exception
  */
-class AliexpressItemsAdapterException extends AdapterException
+class AliexpressCategoriesAdapterException extends AdapterException
 {
     const INVALID_ITEM_URL              = 'Failed to parse to item url, invalid url stracutre.';
     const INVALID_ITEM_URL_SLUG         = 'Failed to parse to item url, invalid slug.';

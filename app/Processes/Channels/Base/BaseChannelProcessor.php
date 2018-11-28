@@ -7,7 +7,6 @@ use App\Models\Process\Process;
 use App\Enums\DBColumnsEnum as Column;
 use App\Enums\ProcessEnum as Processes;
 use App\Exceptions\Processors\BaseProcessorException as Exception;
-
 use App\Processes\Base\BaseProcessor;
 
 

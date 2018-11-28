@@ -1,9 +1,9 @@
 <?php 
 
-namespace App\Processes\Processors\Base;
+namespace App\Processes\Base;
 
 use Log;
-use BaseChannelProcessorException as Exception;
+use BaseProcessorException as Exception;
 
 
 /**
@@ -11,7 +11,7 @@ use BaseChannelProcessorException as Exception;
  * 
  * Load the processors & run their process 
  */ 
-final class MainChannelProcessor
+final class MainProcessor
 {
 
 	/**

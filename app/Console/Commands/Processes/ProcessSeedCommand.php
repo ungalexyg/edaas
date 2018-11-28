@@ -6,13 +6,12 @@ use App\Console\Commands\Base\BaseCommand;
 use App\Processes\Seeder\ProcessesSeeder;
 
 
-
 /**
  * Process Set Command
  * 
  * Perform processes setter actions
  */
-class ProcessSetCommand extends BaseCommand
+class ProcessSeedCommand extends BaseCommand
 {
     /**
      * The name and signature of the console command.

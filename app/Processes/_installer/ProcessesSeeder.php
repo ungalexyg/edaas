@@ -1,60 +1,60 @@
 <?php 
 
-namespace App\Processes\Setter\Traits;
+// namespace App\Processes\Setter\Traits;
 
-use App\Models\Channel\Channel;
-use App\Models\Process\Process;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-// use Illuminate\Database\Migrations\Migration;
+// use App\Models\Channel\Channel;
+// use App\Models\Process\Process;
+// use Illuminate\Support\Facades\Schema;
+// use Illuminate\Database\Schema\Blueprint;
+// // use Illuminate\Database\Migrations\Migration;
 
 
-/**
- * Processes Seeder
- * 
- * Handle channels & processes seeding based on processes config
- */ 
-trait ProcessesSeeder  
-{
-    /**
-     * Seed processes & channels
-     */
-    public function seed() 
-    {   
-        $this->seedProcesses(); 
+// /**
+//  * Processes Seeder
+//  * 
+//  * Handle channels & processes seeding based on processes config
+//  */ 
+// trait ProcessesSeeder  
+// {
+//     /**
+//      * Seed processes & channels
+//      */
+//     public function seed() 
+//     {   
+//         $this->seedProcesses(); 
         
-        $this->seedChannels();
-    }
+//         $this->seedChannels();
+//     }
 
 
-    /**
-     * Seed processes
-     * 
-     * @return void
-     */
-    protected function seedProcesses() 
-    {
-        $seeds = config('processes.processes');
+//     /**
+//      * Seed processes
+//      * 
+//      * @return void
+//      */
+//     protected function seedProcesses() 
+//     {
+//         $seeds = config('processes.processes');
 
-        foreach($seeds as  $key => $seed) 
-        {
-            Process::updateOrCreate(['key' => $key], $seed);
-        }       
-    }
+//         foreach($seeds as  $key => $seed) 
+//         {
+//             Process::updateOrCreate(['key' => $key], $seed);
+//         }       
+//     }
 
 
-    /**
-     * Seed channels
-     * 
-     * @return void
-     */
-    protected function seedChannels() 
-    {
-        $seeds = config('processes.channels');
+//     /**
+//      * Seed channels
+//      * 
+//      * @return void
+//      */
+//     protected function seedChannels() 
+//     {
+//         $seeds = config('processes.channels');
 
-        foreach($seeds as $key => $seed) 
-        {
-            Channel::updateOrCreate(['key' => $key], $seed);
-        }       
-    }    
-}
+//         foreach($seeds as $key => $seed) 
+//         {
+//             Channel::updateOrCreate(['key' => $key], $seed);
+//         }       
+//     }    
+// }

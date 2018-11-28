@@ -27,10 +27,10 @@ class Channel extends BaseModel
 
 
     /**
-     * Get the processes that attached to the channel
+     * Connect the channel to it's processes
      */
     public function processes()
     {
-        return $this->belongsToMany(Process::class, 'processes_channels', 'channel_id', 'process_id')->withPivot('last_process');
+        return $this->morphMany(Process::class, 'processable');
     }    
 }
