@@ -14,7 +14,6 @@ use App\Exceptions\ProcessorException as Exception;
  */ 
 final class MainProcessor
 {
-
 	/**
 	 * Processor instance
 	 * 
@@ -78,7 +77,7 @@ final class MainProcessor
 
 		if(!($processor instanceof IProcessor)) throw new Exception(Exception::INVALID_PROCESSOR);
 
-		$this->processor = $processor->setProcess($process)->setChannels()->setConfig();
+		$this->processor = $processor->setProcess($process)->setConfig();
 
 		return $this;
 	}	
