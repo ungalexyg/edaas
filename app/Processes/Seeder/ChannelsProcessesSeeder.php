@@ -14,23 +14,12 @@ use App\Exceptions\Processors\ProcessesSetterException as Exception;
  */ 
 class ChannelsProcessesSeeder implements IProcessesSeeder
 {
-
-//    /**
-//      * Process age temp handler
-//      * the dates will be updates after the 1st process, this is just to allow the processor to start 
-//      * 
-//      * @var int
-//      */
-//     protected $process_age_days = 1;
-
-
     /**
      * Processes config holder, config('processes')
      * 
      * @var int
      */
     protected $config = [];
-
 
 
     /**
