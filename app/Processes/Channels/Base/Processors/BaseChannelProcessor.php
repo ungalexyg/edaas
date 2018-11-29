@@ -21,6 +21,28 @@ abstract class BaseChannelProcessor extends BaseProcessor implements IChannelPro
 	use HasAdapter;
 	
 
+	/**
+	 * Processable instance type  
+	 * 
+	 * @var IProcessable
+	 */
+	protected $channel;
+
+
+	/**
+	 * Set processable instance
+	 * 
+	 * @param IProcessable
+	 * @return self
+	 */	
+	protected function setProcessable($processable) 
+	{
+		$this->channel =& $processable;
+
+		return $this;
+	}	
+
+
     /**
      * Scan & fetch data from channel 
      * 

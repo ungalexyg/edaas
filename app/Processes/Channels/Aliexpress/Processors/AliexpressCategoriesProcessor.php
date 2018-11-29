@@ -21,11 +21,18 @@ class AliexpressCategoriesProcessor extends BaseChannelProcessor
 	 */
 	public function process() 	
 	{
-		$this->scan()->store();
-		
-		($this->config['auto_publish'] ?? false) ? $this->publish() : null;
 
-		return $this;
+        dd("METHOD_NOT_IMPLEMENTED", __METHOD__, [
+            $this->process->key, 
+            $this->process->processable->key, 
+            $this->channel->key
+        ]);
+
+		// $this->scan()->store();
+		
+		// ($this->config['auto_publish'] ?? false) ? $this->publish() : null;
+
+		// return $this;
 	}		
 
 

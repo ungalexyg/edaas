@@ -3,15 +3,13 @@
 namespace App\Models\Process;
 
 use App\Models\Base\BaseModel;
-use Illuminate\Support\Carbon;
-use App\Models\Channel\Channel;
-use App\Enums\DBColumnsEnum as Column;
+use App\Processes\Base\IProcess;
 
 
 /**
  * Process Model
  */
-class Process extends BaseModel
+class Process extends BaseModel implements IProcess
 {
     /**
      * Indicates if the model should be timestamped.

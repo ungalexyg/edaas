@@ -2,6 +2,8 @@
 
 namespace App\Processes\Base;
 
+use App\Lib\ProcessorException as Exception;
+
 
 /**
  * Base Processor 
@@ -25,14 +27,6 @@ abstract class BaseProcessor implements IProcessor
 
 
 	/**
-	 * The mature channels for process
-	 * 
-	 * @var array
-	 */
-	public $channels = [];	
-	
-
-	/**
 	 * Process bag
 	 * 
 	 * @var array
@@ -41,56 +35,47 @@ abstract class BaseProcessor implements IProcessor
 
 
 	/**
-	 * Process config
+	 * Construct processor
 	 * 
-	 * @var array
-	 */
-	public $config = [];	
-
-
-	#########################################
-	# Setters
-	#########################################	
-
-
-	/**
-	 * Set process
-	 * 
-	 * @param string Processes::$process 
-	 * @throws BaseProcessorException
+	 * @param IProcess
 	 * @return self
-	 */	
-	public function setProcess($process) 
+	 */
+	public function __construct($process) 
 	{
+		$this->setProcess($process);
 
-		dd("METHOD_NOT_IMPLEMENTED", __METHOD__);
-		
-
-		if(!in_array($process, Processes::getConstants())) throw new Exception(Exception::UNDEFINED_PROCESS);
-		
-		$this->process = $process;
-		
 		return $this;
 	}
 
+	
 	/**
-	 * Set process config
+	 * Set process instances
 	 * 
+	 * @param IProcess 
+	 * @throws ProcessorException
+	 * @return self
+	 */	
+	protected function setProcess($process) 
+	{		
+		if(!($process instanceof IProcess)) throw new Exception(Exception::INVALID_INSTANCE_PROCESS);
+		
+		if(!($process->processable instanceof IProcessable)) throw new Exception(Exception::INVALID_INSTANCE_PROCESSABLE);
+		
+		$this->process =& $process;
+		
+		$this->setProcessable($process->processable);
+
+		return $this;
+	}
+
+
+	/**
+	 * Set processable instance
+	 * 
+	 * @param IProcessable
 	 * @return self
 	 */
-	public function setConfig() 
-	{
-		dd("METHOD_NOT_IMPLEMENTED", __METHOD__);
-
-		// $this->config = config('processes.settings.' . $this->process) ?? [];
-
-		// return $this;
-	}	
-
-
-	#########################################
-	# Implementation
-	#########################################		
+	abstract protected function setProcessable($processable);
 
 
 	/**

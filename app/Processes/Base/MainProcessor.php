@@ -73,11 +73,9 @@ final class MainProcessor
 
 		if(!class_exists($processor))  throw new Exception(Exception::UNDEFINED_PROCESSOR . ' | processor: ' . $processor);
 
-		$processor = new $processor();
+		$this->processor = new $processor($process);
 
-		if(!($processor instanceof IProcessor)) throw new Exception(Exception::INVALID_PROCESSOR);
-
-		$this->processor = $processor->setProcess($process)->setConfig();
+		if(!($this->processor instanceof IProcessor)) throw new Exception(Exception::INVALID_INSTANCE_PROCESSOR);
 
 		return $this;
 	}	

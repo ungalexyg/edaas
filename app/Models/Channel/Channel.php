@@ -3,12 +3,13 @@ namespace App\Models\Channel;
 
 use App\Models\Base\BaseModel;
 use App\Models\Process\Process;
+use App\Processes\Base\IProcessable;
 
 
 /**
  * Channel Model
  */
-class Channel extends BaseModel 
+class Channel extends BaseModel implements IProcessable
 {
     /**
      * Indicates if the model should be timestamped.
