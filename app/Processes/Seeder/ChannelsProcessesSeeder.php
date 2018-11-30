@@ -29,7 +29,6 @@ class ChannelsProcessesSeeder implements IProcessesSeeder
      */
     public function seed() 
     {
-
         $this->config = config('processes');
 
         $this->seedChannels();

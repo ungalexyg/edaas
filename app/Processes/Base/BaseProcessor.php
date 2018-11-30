@@ -15,7 +15,15 @@ abstract class BaseProcessor implements IProcessor
 	 * 
 	 * @var string
 	 */
-	public $process;
+	protected $process;
+
+
+	/**
+	 * Process namespace
+	 * 
+	 * @var string
+	 */
+	protected $namespaces;
 
 
 	/**
@@ -23,7 +31,7 @@ abstract class BaseProcessor implements IProcessor
 	 * 
 	 * @var null|string
 	 */
-	public $message;
+	protected $message;
 
 
 	/**
@@ -31,7 +39,7 @@ abstract class BaseProcessor implements IProcessor
 	 * 
 	 * @var array
 	 */
-	public $bag = [];	
+	protected $bag = [];	
 
 
 	/**
@@ -62,8 +70,29 @@ abstract class BaseProcessor implements IProcessor
 		if(!($process->processable instanceof IProcessable)) throw new Exception(Exception::INVALID_INSTANCE_PROCESSABLE);
 		
 		$this->process =& $process;
-		
+				
 		$this->setProcessable($process->processable);
+		
+		$this->setNamespaces();
+
+		return $this;
+	}
+
+
+	/**
+	 * Set process namespaces
+	 * 
+	 * @return self
+	 */
+	protected function setNamespaces() 
+	{
+		$full_namespaces = get_called_class();
+
+		$parts = explode('\\', $full_namespaces);
+
+		array_splice($parts, -2);		
+
+		$this->namespaces = implode('\\', $parts);
 
 		return $this;
 	}

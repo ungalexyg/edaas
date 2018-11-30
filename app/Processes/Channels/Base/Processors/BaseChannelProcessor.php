@@ -5,7 +5,6 @@ namespace App\Processes\Channels\Base\Processors;
 use Log;
 use App\Models\Process\Process;
 use App\Processes\Base\BaseProcessor;
-use App\Processes\Channels\Base\Adapters\HasAdapter;
 use App\Enums\ProcessEnum as Processes;
 use App\Exceptions\ProcessorException as Exception;
 
@@ -15,12 +14,6 @@ use App\Exceptions\ProcessorException as Exception;
  */ 
 abstract class BaseChannelProcessor extends BaseProcessor implements IChannelProcessor  
 {
-	/**
-	 * Use process traits
-	 */    
-	use HasAdapter;
-	
-
 	/**
 	 * Processable instance type  
 	 * 

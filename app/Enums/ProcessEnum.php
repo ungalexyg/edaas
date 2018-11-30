@@ -10,6 +10,13 @@ use App\Enums\ChannelEnum as Channel;
  */ 
 class ProcessEnum extends BaseEnum 
 {
+    #####################################
+    # Statuses
+    #####################################
+
+    const PAUSED = 0;
+    const ACTIVE = 1;
+    
 
     #####################################
     # Channels
