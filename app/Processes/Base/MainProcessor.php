@@ -2,6 +2,7 @@
 
 namespace App\Processes\Base;
 
+use Log;
 use App\Models\Process\Process;
 use App\Enums\ProcessEnum as Processes;
 use App\Exceptions\ProcessorException as Exception;
@@ -38,12 +39,16 @@ final class MainProcessor
 		}
 		catch(\Exception $e) 
 		{
-			return [
+			$info = [
 				'exception' => get_class($e),
 				'message' 	=> $e->getMessage(),
 				'file' 		=> $e->getFile(),
 				'line' 		=> $e->getLine()				
 			];
+			
+			Log::channel(Log::MAIN_PROCESSOR)->info('Processor exception' , ['info' => $info, 'in' => __METHOD__ .':'.__LINE__]);
+
+			return $info;
 		}
 	}
 

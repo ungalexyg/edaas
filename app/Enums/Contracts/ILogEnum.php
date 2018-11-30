@@ -2,48 +2,27 @@
 
 namespace App\Enums\Contracts;
 
+use App\Enums\ProcessEnum as Processes;
+
 
 /**
  * Logs Enum Interface
- * 
- * Holds logging channels keyes per component
  */ 
 interface ILogEnum
 {
-    #########################################
-    # Log channels
-    #########################################
-
     /**
-     * Models channels
+     * Log channels
      */
-    const STORAGE_CATEGORY              =  'storage_category';
+    const MAIN_PROCESSOR            = 'main_processor';
+    const ALIEXPRESS_CATEGORIES     = Processes::ALIEXPRESS_CATEGORIES;
+    const ALIEXPRESS_CATEGORY       = Processes::ALIEXPRESS_CATEGORY;
+    const SHOPIFY_SITES             = Processes::SHOPIFY_SITES;
 
-    
+
     /**
-     * Processors channels 
+     * Log messages
      */
-    const PROCESSOR_BASE                =  'processor_base';    
-    const PROCESSOR_CATEGORIES          =  'processor_categories';
-    const PROCESSOR_ITEMS               =  'processor_items';
-    
-
-    /**
-     * Adapters channels
-     */    
-    const ADAPTERS_CATEGORIES           =  'adapters_categories';    
-    const ADAPTERS_ITEMS                =  'adapters_items';
-
-
-    /**
-     * Observers channels
-     */
-    const OBSERVER_STORAGE_CATEGORY     =  'observer_storage_category';
-
-
-    #########################################
-    # Log messages
-    #########################################    
-
-    const ACTION_COMPLETED              =  'ACTION COMPLETED';    
+    const DONE          = 'action completed';    
+    const BAG_OK        = 'got full bag'; 
+    const BAG_FAILED    = 'failed to get the bag';    
 }

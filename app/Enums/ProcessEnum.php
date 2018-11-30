@@ -10,28 +10,17 @@ use App\Enums\ChannelEnum as Channel;
  */ 
 class ProcessEnum extends BaseEnum 
 {
-    #####################################
-    # Statuses
-    #####################################
-
+    /**
+     * Processes statuses
+     */    
     const PAUSED = 0;
     const ACTIVE = 1;
     
 
-    #####################################
-    # Channels
-    #####################################
-
-
     /**
-     * Shopify processes
+     * Channels processes
      */
-    const SHOPIFY_SITES            = Channel::SHOPIFY . '_sites';
-    const SHOPIFY_CATEGORIES       = Channel::SHOPIFY . '_categories';
-
-    /**
-     * Aliexpress processes
-     */    
     const ALIEXPRESS_CATEGORIES    = Channel::ALIEXPRESS . '_categories';
-    const ALIEXPRESS_ITEMS         = Channel::ALIEXPRESS . '_items';
+    const ALIEXPRESS_CATEGORY      = Channel::ALIEXPRESS . '_category';
+    const SHOPIFY_SITES            = Channel::SHOPIFY . '_sites';
 }

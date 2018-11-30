@@ -60,42 +60,42 @@ use App\Processes\Channels\Aliexpress\Exceptions\AliexpressItemsAdapterException
 
             if($this->channel_item_id) 
             {
-                $this->fetch[$this->channel_item_id]['channel_item_id'] = $this->channel_item_id;
+                $this->bag[$this->channel_item_id]['channel_item_id'] = $this->channel_item_id;
 
                 // get title, path
                 $subcrawler->filter('h3 a.product')->each(function($node) 
                 {
-                    $this->fetch[$this->channel_item_id]['title'] = $node->attr('title');
+                    $this->bag[$this->channel_item_id]['title'] = $node->attr('title');
                     $item_url       = $node->attr('href');                                
-                    $this->fetch[$this->channel_item_id]['path']  = $this->parseUrl($item_url);         
+                    $this->bag[$this->channel_item_id]['path']  = $this->parseUrl($item_url);         
                 });  
 
                 // get img_src
                 $subcrawler->filter('div.img img.picCore')->each(function($node) 
                 {
-                    $this->fetch[$this->channel_item_id]['img_src'] = $node->attr('src');                               
+                    $this->bag[$this->channel_item_id]['img_src'] = $node->attr('src');                               
                 });
                 
                 // get price 
                 $subcrawler->filter('span[itemprop="price"]')->each(function($node)
                 {
                     $prices = $this->parsePrice($node->text());                               
-                    $this->fetch[$this->channel_item_id]['price_min'] = $prices['min'];
-                    $this->fetch[$this->channel_item_id]['price_max'] = $prices['max'];
+                    $this->bag[$this->channel_item_id]['price_min'] = $prices['min'];
+                    $this->bag[$this->channel_item_id]['price_max'] = $prices['max'];
                 });  
                 
                 // get orders
                 $subcrawler->filter('a.order-num-a')->each(function($node) 
                 {
-                    $this->fetch[$this->channel_item_id]['orders'] = $this->parseOrders($node->text());                               
+                    $this->bag[$this->channel_item_id]['orders'] = $this->parseOrders($node->text());                               
                 });                  
             }
         }); 
             
         // log results 
-        Log::channel(Log::ADAPTERS_ITEMS)->info($this->domain . ' - returned ' . (!empty($this->fetch) ? 'full fetch :)' : 'empty fetch :/'), ['in' => __METHOD__ .':'.__LINE__]);  
+        Log::channel(Log::ADAPTERS_ITEMS)->info($this->domain . ' - returned ' . (!empty($this->bag) ? 'full fetch :)' : 'empty fetch :/'), ['in' => __METHOD__ .':'.__LINE__]);  
         
-        return $this->fetch;        
+        return $this->bag;        
     }
 
 

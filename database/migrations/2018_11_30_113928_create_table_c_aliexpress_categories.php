@@ -39,11 +39,11 @@ class CreateTableCAliexpressCategories extends Migration
                 $table->unsignedBigInteger('category_id')->comment('The category id in the channel');
                 $table->unsignedBigInteger('parent_category_id')->comment('The parent category id in the channel');
                 $table->unsignedInteger('channel_id')->comment('The channel id that represent this table\'s collections');
-                
+
                 // processable fields
                 $table->unsignedTinyInteger(DBS::COLLECTION_STATUS)->default(Collection::ARCHIVED)->comment('The collection stauts define the status of this record in temrs of publicity');
                 $table->unsignedTinyInteger(DBS::PROCESS_STATUS)->default(Process::PAUSED)->comment('The process status define if this processable entity should be processed');
-                $table->unsignedInteger(DBS::PROCESS_COUNT)->nullable()->comment('Count how many times this process has run');                
+                $table->unsignedInteger(DBS::PROCESS_COUNT)->default(0)->nullable()->comment('Count how many times this process has run');                
                 $table->dateTime(DBS::LAST_PROCESS)->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Last process timestamp');
 
                  // timestamps

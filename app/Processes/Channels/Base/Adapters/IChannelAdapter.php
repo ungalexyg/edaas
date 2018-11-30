@@ -4,9 +4,9 @@ namespace App\Processes\Channels\Base\Adapters;
 
 
  /**
-  * Adapter Interface
+  * Channel Adapter Interface
   */
- interface IAdapter 
+ interface IChannelAdapter 
  {
 	/**
 	 * Fetch destenation

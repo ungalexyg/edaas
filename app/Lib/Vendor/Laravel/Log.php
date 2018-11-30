@@ -10,7 +10,6 @@
 
 namespace App\Lib\Vendor\Laravel;
 
-use App\Enums\Processes;
 use App\Enums\Contracts\ILogEnum;
 use Illuminate\Support\Facades\Log as CoreLog;
 

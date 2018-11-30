@@ -7,7 +7,7 @@ use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
 use App\Lib\Vendor\Goutte\GoutteExtension as Spider;
 use Symfony\Component\DomCrawler\Crawler as CoreCrawler;
 use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
-use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException as Exception;
+use App\Processes\Channels\Aliexpress\Exceptions\AliexpressCategoriesAdapterException as Exception;
 
 
 /**
@@ -34,7 +34,7 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException as E
 	/**
 	 * Fetch destenation
 	 * 
-     * //TODO: single point of $this->fetch build for all adapters
+     * //TODO: single point of $this->bag build for all adapters
      * 
      * @param mixed $reference
      * @return array
@@ -61,7 +61,7 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException as E
                 
                 $parent_channel_category_id = $parsed['channel_category_id'];
 
-                $this->fetch[] = [
+                $this->bag[] = [
                     'title'                         => $node->text(),
                     'path'                          => $parsed['path'],
                     'channel_category_id'           => $parent_channel_category_id,
@@ -76,7 +76,7 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException as E
                     
                     $channel_category_id = $parsed['channel_category_id'];
 
-                    $this->fetch[] = [
+                    $this->bag[] = [
                         'title'                         => $node->text(),
                         'path'                          => $parsed['path'],
                         'channel_category_id'           => $channel_category_id,
@@ -86,9 +86,9 @@ use App\Exceptions\Adapters\Aliexpress\AliexpressCategoriesAdapterException as E
             });
         }); 
                 
-        Log::channel(Log::ADAPTERS_CATEGORIES)->info($this->domain . ' - returned ' . (!empty($this->fetch) ? 'full fetch :)' : 'empty fetch :/'), ['in' => __METHOD__ .':'.__LINE__]);
+        Log::channel(Log::ALIEXPRESS_CATEGORIES)->info($this->domain . ' - fetched ' . (!empty($this->bag) ? 'full bag :)' : 'empty fetch :/'), ['in' => __METHOD__ .':'.__LINE__]);
             
-        return $this->fetch;
+        return $this->bag;
     }
 
 

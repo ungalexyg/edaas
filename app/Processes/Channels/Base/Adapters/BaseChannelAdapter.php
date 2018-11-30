@@ -8,7 +8,7 @@ use App\Exceptions\AdapterException as Exception;
 /**
  * Base Adapter
  */
- abstract class BaseAdapter implements IAdapter 
+ abstract class BaseChannelAdapter implements IChannelAdapter 
  {
     /**
      * Target URL scheme
@@ -51,11 +51,11 @@ use App\Exceptions\AdapterException as Exception;
 
 
     /**
-     * Fetched data
+     * Fetched data bag
      * 
      * @var array
      */
-    protected $fetch = [];
+    protected $bag = [];
 
 
 	/**

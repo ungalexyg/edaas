@@ -8,7 +8,7 @@ use App\Enums\ProcessEnum as Processes;
 $logs_path = storage_path('logs');
 
 // default process log days old to be deleted 
-$log_days = 7;
+$log_days = 30;
 
 
 return [
@@ -64,69 +64,38 @@ return [
 
     'channels' => [
 
-        /**
-         * Models channels
-         */        
-        Log::STORAGE_CATEGORY => [
-            'driver'    => 'daily',
-            'path'      => $logs_path . '/models/storage_category/model.log',
-            'days'      => $log_days, 
-            'level'     => 'debug', 
-        ],        
-
    
         /**
-         * Processors channels 
+         * Processes logs 
          */        
-        Log::PROCESSOR_BASE => [
+        Log::MAIN_PROCESSOR => [
             'driver'    => 'daily',
-            'path'      => $logs_path . '/processors/base/processor.log',
+            'path'      => $logs_path . '/processes/'.Log::MAIN_PROCESSOR.'.log',
             'days'      => $log_days,
             'level'     => 'debug', 
         ],
 
-        Log::PROCESSOR_CATEGORIES => [
+        Log::ALIEXPRESS_CATEGORIES => [
             'driver'    => 'daily',
-            'path'      => $logs_path . '/processors/categories/processor.log',
+            'path'      => $logs_path . '/processes/'.Log::ALIEXPRESS_CATEGORIES.'.log',
+            'days'      => $log_days,
+            'level'     => 'debug', 
+        ],
+
+        Log::ALIEXPRESS_CATEGORY => [
+            'driver'    => 'daily',
+            'path'      => $logs_path . '/processes/'.Log::ALIEXPRESS_CATEGORY.'.log',
             'days'      => $log_days, 
             'level'     => 'debug', 
         ],
 
-        Log::PROCESSOR_ITEMS => [
+        Log::SHOPIFY_SITES => [
             'driver'    => 'daily',
-            'path'      => $logs_path . '/processors/items/processor.log',
+            'path'      => $logs_path . '/processes/'.Log::SHOPIFY_SITES.'.log',
             'days'      => $log_days, 
             'level'     => 'debug', 
         ],
-
-
-        /**
-         * Adapters channels
-         */        
-        Log::ADAPTERS_CATEGORIES => [
-            'driver'    => 'daily',
-            'path'      => $logs_path . '/adapters//categories/adapters.log',
-            'days'      => $log_days, 
-            'level'     => 'debug', 
-        ],        
-
-        Log::ADAPTERS_ITEMS => [
-            'driver'    => 'daily',
-            'path'      => $logs_path . '/adapters/items/adapters.log',
-            'days'      => $log_days, 
-            'level'     => 'debug', 
-        ],           
-
-
-        /**
-         * Observers channels
-         */
-        Log::OBSERVER_STORAGE_CATEGORY => [
-            'driver'    => 'daily',
-            'path'      => $logs_path . '/observers/storage_category/observer.log',
-            'days'      => $log_days, 
-            'level'     => 'debug', 
-        ],   
+ 
 
 
         #############################################

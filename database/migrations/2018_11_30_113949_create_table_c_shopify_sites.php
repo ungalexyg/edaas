@@ -26,7 +26,6 @@ class CreateTableCShopifySites extends Migration
      */
     public function up()
     {
-
         if(!Schema::hasTable($this->table)) 
         {
             Schema::create($this->table, function (Blueprint $table) 
@@ -38,7 +37,7 @@ class CreateTableCShopifySites extends Migration
                 $table->string('title', 1060)->nullable()->comment('The meta title of the site');
                 $table->string('description', 2083)->nullable()->commet('The meta description of the site');
                 $table->unsignedInteger('channel_id')->comment('The channel id that represent this table\'s collections');
-                
+
                 // processable fields
                 $table->unsignedTinyInteger(DBS::COLLECTION_STATUS)->default(Collection::ARCHIVED)->comment('The collection stauts define the status of this record in temrs of publicity');
                 $table->unsignedTinyInteger(DBS::PROCESS_STATUS)->default(Process::PAUSED)->comment('The process status define if this processable entity should be processed');
