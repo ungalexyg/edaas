@@ -13,7 +13,7 @@
 */
 use App\Enums\ProcessEnum as Processes;
 use App\Enums\ChannelEnum as Channels;
-use App\Enums\DBEnum as DBS;
+use App\Enums\CollectionEnum as Collection;
 
 
 return [
@@ -55,12 +55,12 @@ return [
             Processes::ALIEXPRESS_CATEGORIES => [
                 'name'                  => 'Aliexpress Categories',
                 'description'           => 'Scan Aliexpress categories',    
-                 DBS::PROCESS_STATUS    => Processes::PAUSED                  
+                Collection::PROCESS_STATUS    => Collection::PROCESS_PAUSED                  
             ],
             Processes::ALIEXPRESS_CATEGORY => [
                 'name'                  => 'Aliexpress Category',
                 'description'           => 'Scan Aliexpress items from category',                                                            
-                 DBS::PROCESS_STATUS    => Processes::PAUSED
+                Collection::PROCESS_STATUS    => Collection::PROCESS_PAUSED
             ],            
         ],
 
@@ -68,7 +68,7 @@ return [
             Processes::SHOPIFY_SITES => [
                 'name'                  => 'Shopify Sites',
                 'description'           => 'Scan Shopify stores',
-                DBS::PROCESS_STATUS     => Processes::PAUSED
+                Collection::PROCESS_STATUS     => Collection::PROCESS_PAUSED
             ],      
         ],      
     ],

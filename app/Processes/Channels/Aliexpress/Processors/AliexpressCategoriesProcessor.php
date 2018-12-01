@@ -72,6 +72,9 @@ class AliexpressCategoriesProcessor extends BaseChannelProcessor
 	 */
 	public function store()
     {
+
+        dd($this->bag);
+
         dd("METHOD_NOT_IMPLEMENTED", __METHOD__, [
             $this->process->key, 
             $this->channel->key

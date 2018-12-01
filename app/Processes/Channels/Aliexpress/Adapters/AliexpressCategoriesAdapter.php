@@ -59,28 +59,28 @@ use App\Processes\Channels\Aliexpress\Exceptions\AliexpressCategoriesAdapterExce
 
                 $parsed = $this->parseUrl($url);
                 
-                $parent_channel_category_id = $parsed['channel_category_id'];
+                $parent_category_id = $parsed['category_id'];
 
                 $this->bag[] = [
                     'title'                         => $node->text(),
                     'path'                          => $parsed['path'],
-                    'channel_category_id'           => $parent_channel_category_id,
-                    'parent_channel_category_id'    => 0,
+                    'category_id'                   => $parent_category_id,
+                    'parent_category_id'            => 0,
                 ];
 
-                $subcrawler->filter('ul.sub-item-cont > li > a')->each(function($node) use($parent_channel_category_id) {
+                $subcrawler->filter('ul.sub-item-cont > li > a')->each(function($node) use($parent_category_id) {
 
                     $url = $node->attr('href'); 
 
                     $parsed = $this->parseUrl($url);
                     
-                    $channel_category_id = $parsed['channel_category_id'];
+                    $category_id = $parsed['category_id'];
 
                     $this->bag[] = [
                         'title'                         => $node->text(),
                         'path'                          => $parsed['path'],
-                        'channel_category_id'           => $channel_category_id,
-                        'parent_channel_category_id'    => $parent_channel_category_id,
+                        'category_id'                   => $category_id,
+                        'parent_category_id'            => $parent_category_id,
                     ];
                 });  
             });
@@ -121,7 +121,7 @@ use App\Processes\Channels\Aliexpress\Exceptions\AliexpressCategoriesAdapterExce
         // return
         return [
             'path' => $path,
-            'channel_category_id' => intval($category_id),
+            'category_id' => intval($category_id),
         ];
     }
  }

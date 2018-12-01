@@ -11,13 +11,6 @@ use App\Enums\ChannelEnum as Channel;
 class ProcessEnum extends BaseEnum 
 {
     /**
-     * Processes statuses
-     */    
-    const PAUSED = 0;
-    const ACTIVE = 1;
-    
-
-    /**
      * Channels processes
      */
     const ALIEXPRESS_CATEGORIES    = Channel::ALIEXPRESS . '_categories';

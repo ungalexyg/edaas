@@ -6,7 +6,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateTableChannels extends Migration
 {
-
     /**
      * Migration table
      */

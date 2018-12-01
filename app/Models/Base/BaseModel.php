@@ -3,7 +3,7 @@
 namespace App\Models\Base;
 
 use Log, Validator;
-use App\Exceptions\Models\BaseModelException as Exception;
+use App\Exceptions\ModelException as Exception;
 use Illuminate\Database\Eloquent\Model as CoreModel;
 use App\Models\Base\Traits\Singelton;
 
@@ -19,11 +19,11 @@ abstract class BaseModel extends CoreModel implements IModel
 
 	
 	/**
-	 * Called method
+	 * Called act
 	 * 
 	 * @var string
 	 */
-	protected $method;	
+	protected $act;	
 
 
 	/**
@@ -67,31 +67,19 @@ abstract class BaseModel extends CoreModel implements IModel
 
 
 	/**
-	 * Handle model's acts flow 
+	 * Perform model's act flow 
 	 * 
-	 * The method perform full act flow process,
-	 * which includes input parsing, validation, execution & response.
-	 * 
-	 * The input can be array or eloquent model instance when performing action on specific instance
-	 * e.g :
-	 * array when perform general action : 
-	 * StorageCategory::perform('customAct', ['key' => $value]) 
-	 * StorageCategory::perform('activate', $StorageCategory)
-	 * 
-	 * Regular usage of act methods is also allowed, e.g :
-	 * StorageCategory::activate($StorageCategory);
-	 * However, it won't perform the full flow  
-	 * 
-	 * @param string $method
+	 * @see App\Models\Base\IModel
+	 * @param string $act
 	 * @param mixed $input
 	 * @throws \Exception
 	 * @return void
 	 */	
-    public static function perform($method, $input=[])
+    public static function perform($act, $input=[])
 	{		
 		try 
 		{
-			static::init($method, $input);
+			static::init($act, $input);
 
 			static::$self->validate() ? static::$self->execute() : null;
 			
@@ -113,15 +101,15 @@ abstract class BaseModel extends CoreModel implements IModel
 	 * Check if flow exist for the called method
 	 * if exits, will init the instance with necessary setters
 	 * 
-	 * @param string $method
+	 * @param string $act
 	 * @param mixed $input
 	 * @return bool
 	 */
-	public static function init($method, $input) 
+	public static function init($act, $input) 
 	{
 		$class = get_called_class();
 				
-		static::self($class)->setMethod($method)->setInput($input);
+		static::self($class)->setMethod($act)->setInput($input);
 		
 		return true;
 	}
@@ -130,14 +118,14 @@ abstract class BaseModel extends CoreModel implements IModel
 	/**
 	 * Set method
 	 * 
-	 * @param string $method
+	 * @param string $act
 	 * @return void
 	 */
-	protected function setMethod($method) 
+	protected function setMethod($act) 
 	{
-		if(!method_exists(static::$self, $method)) throw new Exception(Exception::INVALID_METHOD . ' | called method: '. $method);
+		if(!method_exists(static::$self, $act)) throw new Exception(Exception::INVALID_METHOD . ' | called method: '. $act);
 
-		$this->method = $method;
+		$this->act = $act;
 
 		return static::$self;
 	}
@@ -149,8 +137,8 @@ abstract class BaseModel extends CoreModel implements IModel
 	 * the input can be array or eloquent model instance
 	 * 
 	 * e.g :
-	 * StorageCategory::perform('activate', ['id' => $id])
-	 * StorageCategory::perform('activate', $StorageCategory)
+	 * Model::perform('activate', ['id' => $id])
+	 * Model::perform('activate', $Model)
 	 * 
 	 * @param array|Illuminate\Database\Eloquent\Model $input
 	 * @return self
@@ -191,7 +179,7 @@ abstract class BaseModel extends CoreModel implements IModel
 	{		
 		if(!$this->entity) 
 		{
-			$method = 'validate' . $this->method;
+			$method = 'validate' . $this->act;
 
 			$rules = $this->{$method}();
 
@@ -223,25 +211,25 @@ abstract class BaseModel extends CoreModel implements IModel
 		// execute general act without input & without entity - e.g : publishAll()
 		if(!$this->entity && !$this->input) 
 		{
-			$this->{$this->method}();  
+			$this->{$this->act}();  
 		}	
 
 		// execute general act with input & without entity - e.g : storeBatch($categories)
 		if(!$this->entity && $this->input) 
 		{
-			$this->{$this->method}($this->input);  
+			$this->{$this->act}($this->input);  
 		}				
 
 		// execute custom act on entity, without input - e.g: activate($entity), publish($entity)
 		if($this->entity && !$this->input) 
 		{
-			$this->{$this->method}($this->entity);
+			$this->{$this->act}($this->entity);
 		}
 
 		// execute update act on entity, with input - e.g: update($entity, $updates) 
 		if($this->entity && $this->input) 
 		{
-			$this->{$this->method}($this->entity, $this->input);  
+			$this->{$this->act}($this->entity, $this->input);  
 		}	
 
 		return static::$self;		
