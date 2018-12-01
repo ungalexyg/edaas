@@ -15,7 +15,7 @@ class CreateTableCAliexpressCategories extends Migration
      * 
      * @var string
      */
-    protected $table = Collection::PREFIX . 'aliexpress_categories';
+    protected $table = Collection::ALIEXPRESS_CATEGORIES;
 
 
     /**
@@ -36,19 +36,19 @@ class CreateTableCAliexpressCategories extends Migration
                 $table->string('description', 1060)->nullable();
                 $table->unsignedBigInteger('category_id')->comment('The category id in the channel');
                 $table->unsignedBigInteger('parent_category_id')->comment('The parent category id in the channel');
-                $table->unsignedInteger('channel_id')->comment('The channel id that represent this table\'s collections');
-
+                
                 // processable fields
+                // $table->unsignedInteger(Collection::CHANNEL_ID)->comment('The channel id that represent this table\'s collections');                
                 $table->unsignedTinyInteger(Collection::CONTENT_STATUS)->default(Collection::CONTENT_ARCHIVED)->comment('The collection stauts define the status of this record in temrs of publicity');
                 $table->unsignedTinyInteger(Collection::PROCESS_STATUS)->default(Collection::PROCESS_PAUSED)->comment('The process status define if this processable entity should be processed');
                 $table->unsignedInteger(Collection::PROCESS_COUNT)->default(0)->nullable()->comment('Count how many times this process has run');                
-                $table->dateTime(Collection::LAST_PROCESS)->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Last process timestamp');
+                $table->dateTime(Collection::PROCESS_LAST)->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Last process timestamp');
 
                  // timestamps
                 $table->timestamps();
 
                 // foreign keys
-                $table->foreign('channel_id')->references('id')->on('channels')->onDelete('cascade');                
+                // $table->foreign('channel_id')->references('id')->on('channels')->onDelete('cascade');                
                 
             });
         }

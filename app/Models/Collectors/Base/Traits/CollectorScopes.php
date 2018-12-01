@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Models\Collections\Base\Traits;
+namespace App\Models\Collectors\Base\Traits;
 
 // use Illuminate\Support\Carbon;
-// use App\Models\Category\Category;
-// use App\Models\StorageCategory\StorageCategory;
 use App\Enums\CollectionStatusEnum as Collections;
+use App\Exceptions\ModelException as Exception;
 
 
 /**
- * Storage Category Scopes 
+ * Collector models scopes 
  */
-trait Scopes
+trait CollectorScopes
 {
     /**
-     * Get published storage category records
+     * Get published collection records
      * 
      * useage : CollectionModel::published()->get(); 
      * 
@@ -23,12 +22,12 @@ trait Scopes
      */    
     public function scopePublished($query) 
     {
-        $query->where(static::COLLECTION_STATUS, '=', Collections::PUBLISHED);
+        $query->where(static::CONTENT_STATUS, '=', static::CONTENT_PUBLISHED);
     }
 
 
     /**
-     * Get unpublished storage category records
+     * Get unpublished collection records
      * 
      * useage : CollectionModel::unpublished()->get(); 
      * 
@@ -37,12 +36,12 @@ trait Scopes
      */    
     public function scopeUnpublished($query) 
     {
-        $query->where(static::COLLECTION_STATUS, '=', Collections::ARCHIVED);
+        $query->where(static::CONTENT_STATUS, '=', static::CONTENT_ARCHIVED);
     }
 
 
     /**
-     * Get active storage category records
+     * Get active collection records
      * 
      * useage : CollectionModel::active()->get(); 
      * 
@@ -51,11 +50,12 @@ trait Scopes
      */    
     public function scopeActive($query) 
     {
-        $query->where(static::COLLECTION_STATUS, '=', Collections::ACTIVE);
+        $query->where(static::PROCESS_STATUS, '=', static::PROCESS_ACTIVE);
     }
 
+
     /**
-     * Get unactive storage category records
+     * Get unactive collection records
      * 
      * useage : CollectionModel::unactive()->get(); 
      * 
@@ -64,12 +64,12 @@ trait Scopes
      */    
     public function scopeUnactive($query) 
     {
-        $query->where(static::COLLECTION_STATUS, '=', Collections::PAUSED);
+        $query->where(static::PROCESS_STATUS, '=', static::PROCESS_PAUSED);
     }  
     
     
     /**
-     * Scope mature storage category records
+     * Scope mature collection records
      *  
      * Bsed on processes config, generate similar to the following query : 
      * 
@@ -87,6 +87,9 @@ trait Scopes
      */
     public function scopeMatureCollection($query, $channel_id)
     {
+
+        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+
         // $config     = config('processes.settings.'. Processes::ITEMS);
 
         // $min_age    = $config['mature_category'] ?? 60; // 1 hour 
@@ -98,8 +101,8 @@ trait Scopes
         // $query
         //     ->where('channel_id', '=', $channel_id)
         //     ->where('active','=', 1)
-        //     ->where(Column::LAST_PROCESS,'<=', $datetime)
-        //     ->orderBy($this->table . '.' . Column::LAST_PROCESS, 'asc')
+        //     ->where(Column::PROCESS_LAST,'<=', $datetime)
+        //     ->orderBy($this->table . '.' . Column::PROCESS_LAST, 'asc')
         //     ->take($limit);        
     }       
 }

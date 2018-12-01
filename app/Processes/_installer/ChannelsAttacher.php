@@ -102,7 +102,7 @@
 //                 var_dump('+ attaching channel | id: ' . $channel->id . ' | key: ' . $channel->key);
 
 //                 $process->channels()->attach($channel->id, [
-//                     Column::LAST_PROCESS => Carbon::now()->subDays($this->process_age_days), 
+//                     Column::PROCESS_LAST => Carbon::now()->subDays($this->process_age_days), 
 //                     Column::PROCESS_COUNT => 0,
 //                 ]);  
 

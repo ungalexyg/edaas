@@ -70,28 +70,28 @@ return [
          */        
         Log::MAIN_PROCESSOR => [
             'driver'    => 'daily',
-            'path'      => $logs_path . '/processes/'.Log::MAIN_PROCESSOR.'.log',
+            'path'      => $logs_path . '/processes/'. Log::MAIN_PROCESSOR.'/'. Log::MAIN_PROCESSOR . '.log',
             'days'      => $log_days,
             'level'     => 'debug', 
         ],
 
         Log::ALIEXPRESS_CATEGORIES => [
             'driver'    => 'daily',
-            'path'      => $logs_path . '/processes/'.Log::ALIEXPRESS_CATEGORIES.'.log',
+            'path'      => $logs_path . '/processes/'. Log::ALIEXPRESS_CATEGORIES.'/'. Log::ALIEXPRESS_CATEGORIES .'.log',
             'days'      => $log_days,
             'level'     => 'debug', 
         ],
 
-        Log::ALIEXPRESS_CATEGORY => [
+        Log::ALIEXPRESS_ITEMS => [
             'driver'    => 'daily',
-            'path'      => $logs_path . '/processes/'.Log::ALIEXPRESS_CATEGORY.'.log',
+            'path'      => $logs_path . '/processes/'. Log::ALIEXPRESS_ITEMS.'/'. Log::ALIEXPRESS_ITEMS .'.log',
             'days'      => $log_days, 
             'level'     => 'debug', 
         ],
 
         Log::SHOPIFY_SITES => [
             'driver'    => 'daily',
-            'path'      => $logs_path . '/processes/'.Log::SHOPIFY_SITES.'.log',
+            'path'      => $logs_path . '/processes/'. Log::SHOPIFY_SITES.'/'. Log::SHOPIFY_SITES .'.log',
             'days'      => $log_days, 
             'level'     => 'debug', 
         ],

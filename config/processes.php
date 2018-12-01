@@ -57,7 +57,7 @@ return [
                 'description'           => 'Scan Aliexpress categories',    
                 Collection::PROCESS_STATUS    => Collection::PROCESS_PAUSED                  
             ],
-            Processes::ALIEXPRESS_CATEGORY => [
+            Processes::ALIEXPRESS_ITEMS => [
                 'name'                  => 'Aliexpress Category',
                 'description'           => 'Scan Aliexpress items from category',                                                            
                 Collection::PROCESS_STATUS    => Collection::PROCESS_PAUSED

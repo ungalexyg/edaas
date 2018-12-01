@@ -2,7 +2,10 @@
 
 namespace App\Processes\Base;
 
-use App\Lib\ProcessorException as Exception;
+use Log;
+use App\Exceptions\ProcessorException as Exception;
+use Illuminate\Database\Eloquent\Model as Eloquent;
+use App\Enums\CollectionEnum as Collection;
 
 
 /**
@@ -11,19 +14,27 @@ use App\Lib\ProcessorException as Exception;
 abstract class BaseProcessor implements IProcessor  
 {
 	/**
-	 * The current process
+	 * The current process instance
 	 * 
-	 * @var string
+	 * @var IProcess 
 	 */
 	protected $process;
 
 
 	/**
-	 * Process namespace
+	 * Process log instance
 	 * 
-	 * @var string
+	 * @var Log 
 	 */
-	protected $namespaces;
+	protected $log;
+
+
+	/**
+	 * Reference to process's exception class 
+	 * 
+	 * @var Exception
+	 */
+	protected $exception;	
 
 
 	/**
@@ -48,9 +59,19 @@ abstract class BaseProcessor implements IProcessor
 	 * @param IProcess
 	 * @return self
 	 */
-	public function __construct($process) 
+	public function __construct(IProcess $process) 
 	{
 		$this->setProcess($process);
+
+		if($this->process->process_status == Collection::PROCESS_PAUSED) 
+		{		
+			throw new Exception(Exception::PROCESS_PAUSED . ' | process_key: ' . $this->process->key);
+		}		
+
+		$this
+			->setLog()
+			->setException(Exception::class)
+			->setSpecifics();
 
 		return $this;
 	}
@@ -63,48 +84,56 @@ abstract class BaseProcessor implements IProcessor
 	 * @throws ProcessorException
 	 * @return self
 	 */	
-	protected function setProcess($process) 
+	protected function setProcess(IProcess $process) 
 	{		
+		// ensure proper instances 
 		if(!($process instanceof IProcess)) throw new Exception(Exception::INVALID_INSTANCE_PROCESS);
 		
 		if(!($process->processable instanceof IProcessable)) throw new Exception(Exception::INVALID_INSTANCE_PROCESSABLE);
 		
 		$this->process =& $process;
 				
-		$this->setProcessable($process->processable);
-		
-		$this->setNamespaces();
-
 		return $this;
 	}
-
+	
 
 	/**
-	 * Set process namespaces
+	 * Set log instance
 	 * 
 	 * @return self
 	 */
-	protected function setNamespaces() 
+	protected function setLog() 
 	{
-		$full_namespaces = get_called_class();
+		$this->log = new Log;
+		
+		$this->log->logger = $this->log::channel($this->process->key);
 
-		$parts = explode('\\', $full_namespaces);
-
-		array_splice($parts, -2);		
-
-		$this->namespaces = implode('\\', $parts);
+		$this->logger =& $this->log->logger; // for convenience
 
 		return $this;
 	}
 
 
 	/**
-	 * Set processable instance
+	 * Set exception class 
 	 * 
-	 * @param IProcessable
+	 * @param string $exception // exception namesapce, not the initiated instance, so it can be throwen
 	 * @return self
 	 */
-	abstract protected function setProcessable($processable);
+	protected function setException($exception) 
+	{
+		$this->exception = $exception; 
+
+		return $this;
+	}
+
+
+	/**
+	 * Set process's specific properties
+	 * 
+	 * @return self
+	 */
+	abstract protected function setSpecifics();
 
 
 	/**
@@ -122,24 +151,11 @@ abstract class BaseProcessor implements IProcessor
 	 */
 	public function stamp() 
 	{
-		dd("METHOD_NOT_IMPLEMENTED", __METHOD__);
-		
-		// $process = Process::with('channels')->where('key', $this->process)->first();
-		
-		// $processed_channels = $this->bag[$this->process] ?? [];
-		
-		// foreach($process->channels as $channel) 
-		// {
-		// 	if(array_key_exists($channel->key, $processed_channels)) 
-		// 	{
-		// 		$process->channels()->updateExistingPivot($channel->id, [
-		// 			Column::LAST_PROCESS => date("Y-m-d H:i:s"),
-		// 			Column::PROCESS_COUNT => ($channel->pivot->process_count + 1),
-		// 		]);
-		// 	}
-		// }
+		$this->process->process_last = date("Y-m-d H:i:s");
+		$this->process->process_count++;
+		$this->process->save();
 
-		// return $this;
+		return $this;
 	}	
 
 
@@ -150,20 +166,38 @@ abstract class BaseProcessor implements IProcessor
 	 */
 	public function response() 
 	{
-		dd("METHOD_NOT_IMPLEMENTED", __METHOD__);
+		if(!$this->message) 
+		{
+			$this->message = $this->log::DONE;
+		}
 
-		// if(!$this->message) 
-		// {
-		// 	$this->message = ucwords($this->process).'Processor@response completed';
-		// }
+		return [
+			'message' => $this->message,
+			'bag' => $this->bag
+		];		
+	}	
+	
 
-		// $log_channel = ($this->process ? 'processor_' . $this->process :  Log::PROCESSOR_MAIN);
+	####################################
+	# Helpers
+	####################################
 
-		// Log::channel($log_channel)->info($this->message, ['in' => __METHOD__.':'.__LINE__]);
 
-		// return [
-		// 	'message' => $this->message,
-		// 	'bag' => $this->bag
-		// ];
-	}		
+	/**
+	 * Get process namespaces
+	 * 
+	 * @return string $namespaces
+	 */
+	protected function getNamespaces() 
+	{
+		$full_namespaces = get_called_class();
+
+		$parts = explode('\\', $full_namespaces);
+
+		array_splice($parts, -2);		
+
+		$namespaces = implode('\\', $parts);
+
+		return $namespaces;
+	}	
 }

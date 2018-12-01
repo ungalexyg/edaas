@@ -3,13 +3,13 @@
 namespace App\Processes\Channels\Aliexpress\Adapters;
 
 use App\Enums\ChannelEnum as Channels;
-use App\Processes\Channels\Base\Adapters\BaseChannelAdapter;
+use App\Processes\Channels\Base\Adapters\BaseAdapter;
 
 
 /**
  * Base Aliexpress Adapter
  */
- abstract class BaseAliexpressAdapter extends BaseChannelAdapter 
+ abstract class BaseAliexpressAdapter extends BaseAdapter 
  {
 	/**
 	 * Channel adapter key

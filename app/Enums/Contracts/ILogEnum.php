@@ -15,7 +15,7 @@ interface ILogEnum
      */
     const MAIN_PROCESSOR            = 'main_processor';
     const ALIEXPRESS_CATEGORIES     = Processes::ALIEXPRESS_CATEGORIES;
-    const ALIEXPRESS_CATEGORY       = Processes::ALIEXPRESS_CATEGORY;
+    const ALIEXPRESS_ITEMS          = Processes::ALIEXPRESS_ITEMS;
     const SHOPIFY_SITES             = Processes::SHOPIFY_SITES;
 
 

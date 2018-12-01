@@ -2,11 +2,10 @@
 
 namespace App\Processes\Channels\Base\Processors;
 
-use Log;
-use App\Models\Process\Process;
+use App\Models\Channel\Channel;
 use App\Processes\Base\BaseProcessor;
-use App\Enums\ProcessEnum as Processes;
-use App\Exceptions\ProcessorException as Exception;
+use App\Models\Collectors\Base\ICollector;
+use App\Processes\Channels\Base\Adapters\IAdapter;
 
     
 /**
@@ -15,25 +14,77 @@ use App\Exceptions\ProcessorException as Exception;
 abstract class BaseChannelProcessor extends BaseProcessor implements IChannelProcessor  
 {
 	/**
-	 * Processable instance type  
+	 * Process channel instance 
 	 * 
-	 * @var IProcessable
+	 * @var Channel 
 	 */
 	protected $channel;
+	
+
+	/**
+	 * Process collector model
+	 * 
+	 * @var IAdapter
+	 */
+	protected $adapter;
 
 
 	/**
-	 * Set processable instance
+	 * Process collector model
 	 * 
-	 * @param IProcessable
+	 * @var ICollector
+	 */
+	protected $collector;
+
+
+	/**
+	 * Set channel instance
+	 * 
+	 * @param Channel
 	 * @return self
 	 */	
-	protected function setProcessable($processable) 
+	protected function setChannel(Channel &$channel) 
 	{
-		$this->channel =& $processable;
+		$this->channel = $channel;
 
 		return $this;
 	}	
+
+
+	/**
+	 * Set adapter instance
+	 * 
+	 * @var IAdapter $adapter
+	 * @return self
+	 */
+	protected function setAdapter(IAdapter &$adapter) 
+	{
+		$this->adapter = $adapter;
+
+		return $this;
+	}	
+
+
+	/**
+	 * Set collector instance
+	 * 
+	 * @var ICollector $collector
+	 * @return self
+	 */
+	protected function setCollector(ICollector &$collector) 
+	{
+		$this->collector = $collector;
+
+		return $this;
+	}		
+
+	
+	/**
+	 * Set process specific properties
+	 * 
+	 * @return self
+	 */	
+	abstract protected function setSpecifics();
 
 
     /**
@@ -59,6 +110,3 @@ abstract class BaseChannelProcessor extends BaseProcessor implements IChannelPro
      */
 	abstract public function publish();			
 }
-
-
-

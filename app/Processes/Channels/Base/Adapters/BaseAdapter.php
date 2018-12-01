@@ -8,7 +8,7 @@ use App\Exceptions\AdapterException as Exception;
 /**
  * Base Adapter
  */
- abstract class BaseChannelAdapter implements IChannelAdapter 
+ abstract class BaseAdapter implements IAdapter 
  {
     /**
      * Target URL scheme

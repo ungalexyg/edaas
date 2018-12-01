@@ -1,30 +1,23 @@
 <?php
 
-namespace App\Models\Collections\Base;
+namespace App\Models\Collectors\Base;
 
-use App\Enums\CollectionsEnum as Collections;
+use App\Enums\CollectionEnum as Collections;
+use App\App\Models\Collectors\Base\ICollector as CollectorModel;
 
 /**
- * Collection Interface
+ * Collector Interface
+ * Implemented by models which responsoble on Collection Tables
  */
-interface ICollection
-{
+interface ICollector
+{    
     /**
-     * Processable collection fields
-     */
-    const COLLECTION_STATUS     = Collections::CONTENT_STATUS;    
-    const PROCESS_STATUS        = Collections::PROCESS_STATUS;
-    const PROCESS_COUNT         = Collections::PROCESS_COUNT;
-    const LAST_PROCESS          = Collections::LAST_PROCESS;
-
-    
-    /**
-     * Store a batch of collection records
+     * Store a batch of records
      * 
-     * @param array $collections
+     * @param array $batch
      * @return void
      */
-    public function storeBatch($collections);
+    public function storeBatch(array $batch);
 
 
     /**
@@ -47,10 +40,10 @@ interface ICollection
     /**
      * Publish collection record
      * 
-     * @param ICollectionModel $model 
+     * @param CollectorModel $model 
      * @return void
      */
-    public function publish(ICollectionModel $model);
+    public function publish(CollectorModel $model);
 
 
     /**
@@ -64,10 +57,10 @@ interface ICollection
     /**
      * Unpublish published collection record
      * 
-     * @param ICollectionModel $model 
+     * @param CollectorModel $model 
      * @return void
      */
-    public function unpublish(ICollectionModel $model);    
+    public function unpublish(CollectorModel $model);    
     
     
     /**
@@ -81,10 +74,10 @@ interface ICollection
     /**
      * Activate collection record 
      * 
-     * @param ICollectionModel $model
+     * @param CollectorModel $model
      * @return void
      */
-    public function activate(ICollectionModel $model);    
+    public function activate(CollectorModel $model);    
     
     
     /**
@@ -98,8 +91,8 @@ interface ICollection
     /**
      * Deactivate collection record
      * 
-     * @param ICollectionModel $model
+     * @param CollectorModel $model
      * @return void
      */
-    public function deactivate(ICollectionModel $model);    
+    public function deactivate(CollectorModel $model);    
 }

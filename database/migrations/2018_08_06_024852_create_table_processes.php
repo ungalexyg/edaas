@@ -38,7 +38,7 @@ class CreateTableProcesses extends Migration
                 // processable fields
                 $table->unsignedTinyInteger(Collection::PROCESS_STATUS)->default(Collection::PROCESS_PAUSED)->comment('The process status define if this processable entity should be processed');
                 $table->unsignedInteger(Collection::PROCESS_COUNT)->default(0)->nullable()->comment('Count how many times this process has run');                
-                $table->dateTime(Collection::LAST_PROCESS)->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Last process timestamp');
+                $table->dateTime(Collection::PROCESS_LAST)->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Last process timestamp');
 
 
                 $table->string('name', 255)->nullable()->comment('Process reference key, must be snake_case');                 
