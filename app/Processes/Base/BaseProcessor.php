@@ -22,6 +22,14 @@ abstract class BaseProcessor implements IProcessor
 
 
 	/**
+	 * Process config
+	 * 
+	 * @var array|null
+	 */
+	protected $config;
+
+
+	/**
 	 * Process log instance
 	 * 
 	 * @var Log 
@@ -61,14 +69,9 @@ abstract class BaseProcessor implements IProcessor
 	 */
 	public function __construct(IProcess $process) 
 	{
-		$this->setProcess($process);
-
-		if($this->process->process_status == Collection::PROCESS_PAUSED) 
-		{		
-			throw new Exception(Exception::PROCESS_PAUSED . ' | process_key: ' . $this->process->key);
-		}		
-
 		$this
+			->setProcess($process)
+			->setConfig()
 			->setLog()
 			->setException(Exception::class)
 			->setSpecifics();
@@ -98,6 +101,19 @@ abstract class BaseProcessor implements IProcessor
 	
 
 	/**
+	 * Set process config
+	 * 
+	 * @return self
+	 */
+	protected function setConfig() 
+	{
+		$this->config = config('processes.settings.' . $this->process->key) ?? [];
+
+		return $this;	
+	}
+
+
+	/**
 	 * Set log instance
 	 * 
 	 * @return self
@@ -110,7 +126,7 @@ abstract class BaseProcessor implements IProcessor
 
 		$this->logger =& $this->log->logger; // for convenience
 
-		return $this;
+		return $this;		
 	}
 
 
@@ -145,7 +161,7 @@ abstract class BaseProcessor implements IProcessor
 
 
 	/**
-	 * Update process timestamp
+	 * Update process timestamp & count
 	 * 
 	 * @return self
 	 */
@@ -162,19 +178,29 @@ abstract class BaseProcessor implements IProcessor
 	/**
 	 * Generate process response
 	 * 
+	 * @param string|false $message
 	 * @return array $response
 	 */
-	public function response() 
+	public function response($message=false) 
 	{
-		if(!$this->message) 
+		if(!$this->message && !$message) 
 		{
 			$this->message = $this->log::DONE;
 		}
-
-		return [
-			'message' => $this->message,
-			'bag' => $this->bag
+		
+		$response = [
+			'process' => $this->process->key ?? 0,
+			'message' => ($message ? $message : $this->message),
 		];		
+
+		if(isset($this->config['store_bag']) && $this->config['store_bag']) 
+		{
+			//TODO: store this as backup during dev/pilot in /storage/processes/{process}/date-bag.json
+			// Storage::disk('processes')...
+			$response['bag'] = $this->bag; 
+		}
+
+		return $response;
 	}	
 	
 
@@ -200,4 +226,20 @@ abstract class BaseProcessor implements IProcessor
 
 		return $namespaces;
 	}	
+
+
+	/**
+	 * Check if the initiated process is active or paused
+	 * 
+	 * @return bool
+	 */
+	public function isActive() 
+	{
+		if(isset($this->process)) 
+		{
+			return $this->process->process_status ? true : false;
+		}
+
+		return false;
+	}		
 }

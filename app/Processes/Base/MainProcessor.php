@@ -35,21 +35,32 @@ final class MainProcessor
 		{
 			$this->loadProcessor($process_key);
 
-			return $this->processor->process()->stamp()->response();
+			if($this->processor->isActive()) 
+			{
+				$response = $this->processor->process()->stamp()->response();
+			}
+			else 
+			{
+				$response = $this->processor->response(Exception::PROCESS_PAUSED . ' | process_key: ' . $process_key); 
+			}
+			
+			$log_message = Log::DONE;
 		}
 		catch(\Exception $e) 
 		{
-			$info = [
+			$response = [
 				'exception' => get_class($e),
 				'message' 	=> $e->getMessage(),
 				'file' 		=> $e->getFile(),
 				'line' 		=> $e->getLine()				
 			];
-			
-			Log::channel(Log::MAIN_PROCESSOR)->info('Processor exception' , ['info' => $info, 'in' => __METHOD__ .':'.__LINE__]);
 
-			return $info;
+			$log_message	= LOG::EXCEPTION;
 		}
+
+		Log::channel(Log::MAIN_PROCESSOR)->info($log_message , ['response' => $response, 'in' => __METHOD__ .':'.__LINE__]);
+
+		return $response;
 	}
 
 

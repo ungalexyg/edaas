@@ -13,7 +13,7 @@ class ProcessorException extends BaseException
     const INVALID_INSTANCE_PROCESS      = 'Trying to load invalid process instance';
     const INVALID_INSTANCE_PROCESSABLE  = 'Trying to load invalid process instance';
     const INVALID_BAG_CONTENTS          = 'Invalid bag contents passed to processor';  
-    const PROCESS_PAUSED                = 'This process is paused';  
+    const PROCESS_PAUSED                = 'Trying to run paused process';  
 }
 
 

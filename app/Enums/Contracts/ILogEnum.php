@@ -25,4 +25,5 @@ interface ILogEnum
     const DONE          = 'action completed';    
     const BAG_OK        = 'got full bag'; 
     const BAG_FAILED    = 'failed to get the bag';    
+    const EXCEPTION     = 'EXCEPTION!';    
 }
