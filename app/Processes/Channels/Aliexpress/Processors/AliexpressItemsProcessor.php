@@ -2,14 +2,11 @@
 
 namespace App\Processes\Channels\Aliexpress\Processors;
 
-use Log;
-use App\Models\StorageItem\StorageItem;
-use App\Models\StorageCategory\StorageCategory;
 
-use App\Processes\Channels\Traits\HasAdapter;
-use App\Processes\Channels\Base\BaseChannelProcessor;
+use App\Processes\Channels\Base\Traits\ChennelProcess;
+use App\Processes\Channels\Base\Processors\BaseChannelProcessor;
+use App\Models\Collectors\Aliexpress\CAliexpressItem as Collector;
 use App\Processes\Channels\Aliexpress\Exceptions\AliexpressItemsProcessorException as Exception;
-
 
 
 /**
@@ -17,28 +14,13 @@ use App\Processes\Channels\Aliexpress\Exceptions\AliexpressItemsProcessorExcepti
  */ 
 class AliexpressItemsProcessor extends BaseChannelProcessor
 {
-	/**
-	 * Use process traits
-	 */    
-    use HasAdapter;
+    /**
+     * Use traits
+     */
+    use ChennelProcess;
 
-
-	/**
-	 * The categories for process scan
-	 * 
-	 * @var array
-	 */
-	protected $categories; 
 
 	
-	/**
-	 * Channel key
-	 * 
-	 * @var string
-	 */
-	protected $channel_key; 	
-
-
 
 	#########################################
 	# Implementations 
@@ -52,18 +34,20 @@ class AliexpressItemsProcessor extends BaseChannelProcessor
 	 */
 	public function process() 
 	{
-		foreach($this->channels as $channel) 
-		{
-			$this->setCategoiries($channel->id)->loadAdapter($channel->key);
+		dd("METHOD NOT IMPLEMENTED", __METHOD__);
 
-			$this->channel_key = $channel->key;
+		// foreach($this->channels as $channel) 
+		// {
+		// 	$this->setCategoiries($channel->id)->loadAdapter($channel->key);
 
-			$this->scan()->store();
+		// 	$this->channel_key = $channel->key;
 
-			($this->config['auto_publish'] ?? false) ? $this->publish() : null;			
-		}
+		// 	$this->scan()->store();
 
-		return $this;
+		// 	($this->config['auto_publish'] ?? false) ? $this->publish() : null;			
+		// }
+
+		// return $this;
 	}
 
 
@@ -74,14 +58,17 @@ class AliexpressItemsProcessor extends BaseChannelProcessor
      */
 	public function scan() 
 	{
-		foreach($this->categories as $storageCategory) 
-		{
-			$this->bag[$this->process][$this->channel_key][$storageCategory->id] = $this->adapter->fetch($storageCategory);			
-		}
 
-		Log::channel(Log::PROCESSOR_ITEMS)->info(Log::ACTION_COMPLETED, ['in' => __METHOD__ .':'. __LINE__]);
+		dd("METHOD NOT IMPLEMENTED", __METHOD__);
 
-		return $this;
+		// foreach($this->categories as $storageCategory) 
+		// {
+		// 	$this->bag[$this->process][$this->channel_key][$storageCategory->id] = $this->adapter->fetch($storageCategory);			
+		// }
+
+		// Log::channel(Log::PROCESSOR_ITEMS)->info(Log::ACTION_COMPLETED, ['in' => __METHOD__ .':'. __LINE__]);
+
+		// return $this;
 	}
 
     
@@ -108,14 +95,16 @@ class AliexpressItemsProcessor extends BaseChannelProcessor
      * @return self
 	 */
 	public function store() 
-	{        
-		$items =& $this->bag[$this->process] ?? null;
+	{      
+		dd("METHOD NOT IMPLEMENTED", __METHOD__);
 
-        StorageItem::perform('storeBatch', $items);
+		// $items =& $this->bag[$this->process] ?? null;
 
-        Log::channel(Log::PROCESSOR_ITEMS)->info(Log::ACTION_COMPLETED, ['in' => __METHOD__ .':'. __LINE__]);
+        // StorageItem::perform('storeBatch', $items);
 
-        return $this;
+        // Log::channel(Log::PROCESSOR_ITEMS)->info(Log::ACTION_COMPLETED, ['in' => __METHOD__ .':'. __LINE__]);
+
+        // return $this;
 	}
 
 
@@ -126,7 +115,7 @@ class AliexpressItemsProcessor extends BaseChannelProcessor
      */
 	public function publish() 
 	{
-		//TODO: ...
+		dd("METHOD NOT IMPLEMENTED", __METHOD__);
 
 		return $this;
 	}	
@@ -147,18 +136,22 @@ class AliexpressItemsProcessor extends BaseChannelProcessor
 	 */
 	protected function setCategoiries($channel_id) 
 	{		
-		$storageCategories = StorageCategory::matureStorageCategories($channel_id)->get();
 
-		if(!$storageCategories->count()) 
-		{
-			Log::channel(Log::PROCESSOR_ITEMS)->info(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND, ['in' => __METHOD__ .':'. __LINE__]);
+		dd("METHOD NOT IMPLEMENTED", __METHOD__);
+		
+
+		// $storageCategories = StorageCategory::matureStorageCategories($channel_id)->get();
+
+		// if(!$storageCategories->count()) 
+		// {
+		// 	Log::channel(Log::PROCESSOR_ITEMS)->info(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND, ['in' => __METHOD__ .':'. __LINE__]);
 			
-			throw new Exception(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND);
-		} 
+		// 	throw new Exception(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND);
+		// } 
 
-		$this->categories = $storageCategories;		
+		// $this->categories = $storageCategories;		
 
-		return $this;
+		// return $this;
 	}	
 
 }

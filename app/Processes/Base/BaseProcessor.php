@@ -168,7 +168,9 @@ abstract class BaseProcessor implements IProcessor
 	public function stamp() 
 	{
 		$this->process->process_last = date("Y-m-d H:i:s");
+		
 		$this->process->process_count++;
+		
 		$this->process->save();
 
 		return $this;
