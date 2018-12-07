@@ -134,7 +134,7 @@ abstract class BaseModel extends CoreModel implements IModel
 	/**
 	 * Set input
 	 * 
-	 * the input can be array or eloquent model instance
+	 * the input can be array or eloquent model instance 
 	 * 
 	 * e.g :
 	 * Model::perform('activate', ['id' => $id])

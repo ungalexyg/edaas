@@ -6,7 +6,7 @@ use App\Exceptions\ModelException;
 
 
 /**
- * Storage Category Exception
+ * Model Exception
  */
 class CAliexpressCategoryException extends ModelException
 {

@@ -70,8 +70,8 @@ class Process extends BaseModel implements IProcess
         
     //     $query->with(['channels' => function($q) use ($datetime, $limit){
 
-    //         $q->wherePivot(Column::PROCESS_LAST,'<=', $datetime)
-    //         ->orderBy($this->table . '.' . Column::PROCESS_LAST, 'asc')
+    //         $q->wherePivot(Column::LAST_PROCESS,'<=', $datetime)
+    //         ->orderBy($this->table . '.' . Column::LAST_PROCESS, 'asc')
     //         ->take($limit);
 
     //     }])->where('key', $process);   

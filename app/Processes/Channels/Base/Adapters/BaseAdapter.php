@@ -3,6 +3,8 @@
 namespace App\Processes\Channels\Base\Adapters;
 
 use App\Exceptions\AdapterException as Exception;
+use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
+use App\Lib\Vendor\Goutte\GoutteExtension as Spider;
 
 
 /**
@@ -48,6 +50,22 @@ use App\Exceptions\AdapterException as Exception;
      * @var string
      */
     protected $url;
+
+
+    /**
+     * Spider instance
+     * 
+     * @var App\Lib\Vendor\Goutte\GoutteExtension as Spider;
+     */
+    protected $spider;
+
+
+    /**
+     * Web instance
+     * 
+     * @var App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
+     */
+    protected $web;
 
 
     /**
@@ -149,5 +167,23 @@ use App\Exceptions\AdapterException as Exception;
         }
 
         return $this;
+    }
+
+
+    /**
+     * Set spider with web
+     * http handlers based on :
+     * use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
+     * use App\Lib\Vendor\Goutte\GoutteExtension as Spider;
+     * 
+     * @return self
+     */
+    public function setSpider() 
+    {
+        $this->spider = new Spider();
+        $this->web = new web(['timeout' => 60]);
+        $this->spider->setClient($this->web);        
+
+        return $this;        
     }
  }

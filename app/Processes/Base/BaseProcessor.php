@@ -5,7 +5,6 @@ namespace App\Processes\Base;
 use Log;
 use App\Exceptions\ProcessorException as Exception;
 use Illuminate\Database\Eloquent\Model as Eloquent;
-use App\Enums\CollectionEnum as Collection;
 
 
 /**
@@ -167,7 +166,7 @@ abstract class BaseProcessor implements IProcessor
 	 */
 	public function stamp() 
 	{
-		$this->process->process_last = date("Y-m-d H:i:s");
+		$this->process->last_process = date("Y-m-d H:i:s");
 		
 		$this->process->process_count++;
 		

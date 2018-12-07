@@ -4,7 +4,7 @@ namespace App\Processes\Base;
 
 use Log;
 use App\Models\Process\Process;
-use App\Enums\ProcessEnum as Processes;
+use App\Enums\ProcessableEnum as Processable;
 use App\Exceptions\ProcessorException as Exception;
 
 
@@ -26,7 +26,7 @@ final class MainProcessor
 	/**
 	 * Run pre process operations
 	 * 
-	 * @param string $process_key App\Enums\ProcessEnum
+	 * @param string $process_key App\Enums\ProcessableEnum::$keys
 	 * @return mixed
 	 */
 	public function run($process_key) 
@@ -67,13 +67,13 @@ final class MainProcessor
 	/**
 	 * Load Processor
 	 * 
-	 * @param string $process_key App\Enums\ProcessEnum
+	 * @param string $process_key App\Enums\ProcessableEnum::$keys
 	 * @throws ProcessorException
 	 * @return self
 	 */	
 	private function loadProcessor($process_key) 
 	{		
-		if(!in_array($process_key, Processes::getConstants())) throw new Exception(Exception::UNDEFINED_PROCESS . ' | $process_key: ' . $process_key);
+		if(!in_array($process_key, Processable::$keys)) throw new Exception(Exception::UNDEFINED_PROCESS . ' | $process_key: ' . $process_key);
 		
 		$process = Process::with('processable')->where(['key' => $process_key])->first();
 		

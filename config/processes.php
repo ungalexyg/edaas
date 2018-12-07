@@ -11,9 +11,8 @@
 | and should be added to the relevant enum
 |
 */
-use App\Enums\ProcessEnum as Processes;
 use App\Enums\ChannelEnum as Channels;
-use App\Enums\CollectionEnum as Collection;
+use App\Enums\ProcessableEnum as Processable;
 
 
 return [
@@ -52,23 +51,23 @@ return [
     'channels_processes' => [
 
         Channels::ALIEXPRESS => [
-            Processes::ALIEXPRESS_CATEGORIES => [
+            Processable::KEY_ALIEXPRESS_CATEGORIES => [
                 'name'                  => 'Aliexpress Categories',
                 'description'           => 'Scan Aliexpress categories',    
-                Collection::PROCESS_STATUS    => Collection::PROCESS_PAUSED                  
+                Processable::ACTIVE_STATUS    => Processable::ACTIVE_STATUS_PAUSED                  
             ],
-            Processes::ALIEXPRESS_ITEMS => [
+            Processable::KEY_ALIEXPRESS_ITEMS => [
                 'name'                  => 'Aliexpress Category',
                 'description'           => 'Scan Aliexpress items from category',                                                            
-                Collection::PROCESS_STATUS    => Collection::PROCESS_PAUSED
+                Processable::ACTIVE_STATUS    => Processable::ACTIVE_STATUS_PAUSED
             ],            
         ],
 
         Channels::SHOPIFY => [
-            Processes::SHOPIFY_SITES => [
+            Processable::KEY_SHOPIFY_SITES => [
                 'name'                  => 'Shopify Sites',
                 'description'           => 'Scan Shopify stores',
-                Collection::PROCESS_STATUS     => Collection::PROCESS_PAUSED
+                Processable::ACTIVE_STATUS     => Processable::ACTIVE_STATUS_PAUSED
             ],      
         ],      
     ],
@@ -87,12 +86,19 @@ return [
      */
     'settings' => [
 
-        Processes::ALIEXPRESS_CATEGORIES => [
-            'store_bag' => false // log the bag contents ?
+        Processable::KEY_ALIEXPRESS_CATEGORIES => [
+            'store_bag'     => false // log the bag contents ?
         ],
 
 
-        // Processes::CATEGORIES => [
+        Processable::KEY_ALIEXPRESS_ITEMS => [
+            'store_bag'     => false,
+            'mature_age'    => 60, // in minutes
+            'limit'         => 1, 
+        ],
+
+
+        // Processable::CATEGORIES => [
 
         //     // what should be the minimum age of a process on channel in order to re-run it, by MINUTES ?
         //     // the age of the process checked in db by : processes_channels.last_process           
@@ -106,7 +112,7 @@ return [
         //     'auto_active'       => true,                         
         // ],
 
-        // Processes::ITEMS => [
+        // Processable::ITEMS => [
 
         //     //TODO: change it to 10 minutes 
         //     'mature_channel'    => 1, // the items in the channel can be scanned every 10 minutes

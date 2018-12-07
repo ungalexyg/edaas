@@ -3,8 +3,8 @@
 namespace App\Models\Collectors\Base\Traits;
 
 // use Illuminate\Support\Carbon;
-use App\Enums\CollectionStatusEnum as Collections;
-use App\Exceptions\ModelException as Exception;
+
+use App\Models\Collectors\Base\BaseCollectorException;
 
 
 /**
@@ -22,7 +22,7 @@ trait CollectorScopes
      */    
     public function scopePublished($query) 
     {
-        $query->where(static::CONTENT_STATUS, '=', static::CONTENT_PUBLISHED);
+        $query->where(static::$processable::PUBLIC_STATUS, '=', static::$processable::PUBLIC_STATUS_PUBLISHED);
     }
 
 
@@ -36,7 +36,7 @@ trait CollectorScopes
      */    
     public function scopeUnpublished($query) 
     {
-        $query->where(static::CONTENT_STATUS, '=', static::CONTENT_ARCHIVED);
+        $query->where(static::$processable::PUBLIC_STATUS, '=', static::$processable::PUBLIC_STATUS_HIDDEN);
     }
 
 
@@ -50,7 +50,7 @@ trait CollectorScopes
      */    
     public function scopeActive($query) 
     {
-        $query->where(static::PROCESS_STATUS, '=', static::PROCESS_ACTIVE);
+        $query->where(static::$processable::PROCESS_STATUS, '=', static::$processable::PROCESS_STATUS_ACTIVE);
     }
 
 
@@ -64,45 +64,38 @@ trait CollectorScopes
      */    
     public function scopeUnactive($query) 
     {
-        $query->where(static::PROCESS_STATUS, '=', static::PROCESS_PAUSED);
+        $query->where(static::$processable::PROCESS_STATUS, '=', static::$processable::PROCESS_STATUS_PAUSED);
     }  
     
     
     /**
-     * Scope mature collection records
+     * Scope awake collection records
      *  
-     * Bsed on processes config, generate similar to the following query : 
-     * 
-     *  select * from `storage_categories` 
-     *  where `channel_id` = ? 
-     *  and `last_process` <= ? 
-     *  and `active` = 1 
-     *  order by `storage_categories`.`last_process` asc 
-     *  limit 2
-     * 
      * @see config('processes.settings')
      * @param Illuminate\Database\Query\Builder // injected natively
-     * @param int $channel_id
      * @return void
      */
-    public function scopeMatureCollection($query, $channel_id)
+    public function scopeAwakeCollections($query)
     {
 
-        dd(Exception::METHOD_NOT_IMPLEMENTED, __METHOD__);
+        // dd(static::$processable::PROCESS_STATUS);
 
-        // $config     = config('processes.settings.'. Processes::ITEMS);
+        dd(__METHOD__);
 
-        // $min_age    = $config['mature_category'] ?? 60; // 1 hour 
-        
-        // $limit      = $config['limit_categories'] ?? 1; 
-        
-        // $datetime   = Carbon::now()->subMinutes($min_age)->toDateTimeString();
+        // $query->where('id', 2);
+
+        // $config     = config('processes.settings.'. $this->process) ?? null;
+        // $sleep      = $config['sleep'] ?? null; 
+        // $limit      = $config['limit'] ?? null; 
+
+        // if(!$config || !$sleep || !$limit) throw new Exception(Exception::INVALID_PROCESS_CONFIG . ' | config : ' . var_export($config, 1));
+
+        // $datetime = Carbon::now()->subMinutes($sleep)->toDateTimeString();
         
         // $query
-        //     ->where('channel_id', '=', $channel_id)
-        //     ->where('active','=', 1)
-        //     ->where(Column::PROCESS_LAST,'<=', $datetime)
-        //     ->orderBy($this->table . '.' . Column::PROCESS_LAST, 'asc')
+        //     ->where(static::PROCESS_STATUS, '=', static::PROCESS_ACTIVE)
+        //     ->where(static::LAST_PROCESS,'<=', $datetime)
+        //     ->orderBy($this->table . '.' . static::LAST_PROCESS, 'asc')
         //     ->take($limit);        
     }       
 }

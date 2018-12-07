@@ -3,10 +3,8 @@
 namespace App\Processes\Channels\Aliexpress\Adapters;
 
 use Log;
-use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
-use App\Lib\Vendor\Goutte\GoutteExtension as Spider;
-use Symfony\Component\DomCrawler\Crawler as CoreCrawler;
-use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
+use Symfony\Component\DomCrawler\Crawler as CoreCrawler; //works only with the direct instance
+// use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
 use App\Processes\Channels\Aliexpress\Exceptions\AliexpressCategoriesAdapterException as Exception;
 
 
@@ -41,18 +39,10 @@ use App\Processes\Channels\Aliexpress\Exceptions\AliexpressCategoriesAdapterExce
 	 */        
     public function fetch($reference=null) 
     {
-        $this->setUrl();
-
-        $spider = new Spider();
-     
-        $web = new web(['timeout' => 60]);
-     
-        $spider->setClient($web);
-
-        $crawler = $spider->request('GET', $this->url);    
+        $crawler = $this->spider->request('GET', $this->url);    
 
         $crawler->filter('body .cg-main .item.util-clearfix')->each(function (CoreCrawler $subcrawler) {
-
+     
             $subcrawler->filter('h3.big-title > a')->each(function($node) use($subcrawler) {
 
                 $url = $node->attr('href'); 

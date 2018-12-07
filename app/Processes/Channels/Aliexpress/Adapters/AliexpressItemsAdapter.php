@@ -5,8 +5,6 @@ namespace App\Processes\Channels\Aliexpress\Adapters;
 
 use Log;
 use App\Models\StorageCategory\StorageCategory;
-use App\Lib\Vendor\Guzzle\GuzzleExtension as Web;
-use App\Lib\Vendor\Goutte\GoutteExtension as Spider;
 use Symfony\Component\DomCrawler\Crawler as CoreCrawler;
 use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
 use App\Processes\Channels\Aliexpress\Exceptions\AliexpressItemsAdapterException as Exception;
@@ -40,10 +38,8 @@ use App\Processes\Channels\Aliexpress\Exceptions\AliexpressItemsAdapterException
         $this->setPath($storageCategory->path)->setUrl();
 
         // prep clients
-        $spider = new Spider();
-        $web    = new web(['timeout' => 60]);
-        $spider->setClient($web);
-        $crawler = $spider->request('GET', $this->url);  
+
+        $crawler = $this->spider->request('GET', $this->url);  
         
 
         // get items

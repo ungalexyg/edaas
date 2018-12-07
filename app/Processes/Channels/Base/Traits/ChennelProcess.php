@@ -11,7 +11,7 @@ trait ChennelProcess
 	/**
 	 * Manage the process
 	 * 
-	 * @return array $this->response()
+	 * @return self
 	 */
 	public function process() 	
 	{
@@ -30,7 +30,7 @@ trait ChennelProcess
      */
 	public function scan() 
 	{        
-        $this->bag = $this->adapter->fetch();
+        $this->bag = $this->adapter->setUrl()->setSpider()->fetch();
         
         $this->logger->info((!empty($this->bag) ? $this->log::BAG_OK : $this->log::BAG_FAILED), ['in' => __METHOD__ .':'.__LINE__]);
         

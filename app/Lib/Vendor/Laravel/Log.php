@@ -1,12 +1,4 @@
 <?php
- /**
- * --------------------------------------------------------------------------
- *  Vendor Extension
- * --------------------------------------------------------------------------
- * Extending vendor component
- * Extension namespace : Illuminate\Support\Facades\Log
- * 
- */
 
 namespace App\Lib\Vendor\Laravel;
 

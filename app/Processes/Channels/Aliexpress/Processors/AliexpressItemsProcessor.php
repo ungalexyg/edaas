@@ -5,7 +5,9 @@ namespace App\Processes\Channels\Aliexpress\Processors;
 
 use App\Processes\Channels\Base\Traits\ChennelProcess;
 use App\Processes\Channels\Base\Processors\BaseChannelProcessor;
-use App\Models\Collectors\Aliexpress\CAliexpressItem as Collector;
+use App\Models\Collectors\Aliexpress\CAliexpressItem as ItemCollector;
+use App\Models\Collectors\Aliexpress\CAliexpressCategory as CategoryCollector;
+use App\Processes\Channels\Aliexpress\Adapters\AliexpressItemsAdapter as Adapter;
 use App\Processes\Channels\Aliexpress\Exceptions\AliexpressItemsProcessorException as Exception;
 
 
@@ -20,7 +22,44 @@ class AliexpressItemsProcessor extends BaseChannelProcessor
     use ChennelProcess;
 
 
-	
+	/**
+	 * Category collector instance
+	 * 
+	 * @var App\Models\Collectors\Aliexpress\CAliexpressCategory
+	 */
+	protected $categoryCollector;
+
+
+	/**
+	 * Items categories
+	 * 
+	 * @var array
+	 */
+	protected $categoires = [];
+
+
+	/**
+	 * Set process specific properties
+	 * 
+	 * @return self
+	 */	
+	protected function setSpecifics() 
+	{
+		$this->categoryCollector  	= new categoryCollector;
+        $itemCollector  			= new ItemCollector;
+        $adapter    				= new Adapter;   
+        $channel    				=& $this->process->processable; 
+        $exception  				= Exception::class;     
+		
+		$this->setChannel($channel);
+		$this->setAdapter($adapter);
+		$this->setCollector($itemCollector);
+        $this->setException($exception); 
+        $this->setCategories(); 
+
+		return $this;
+	}	
+
 
 	#########################################
 	# Implementations 
@@ -134,11 +173,12 @@ class AliexpressItemsProcessor extends BaseChannelProcessor
 	 * 2 - get mature storage categories from mature channels
 	 * 3 - process these categories
 	 */
-	protected function setCategoiries($channel_id) 
+	protected function setCategories() 
 	{		
+		$categories = $this->categoryCollector::awakeCollections();
 
-		dd("METHOD NOT IMPLEMENTED", __METHOD__);
-		
+		dd($categories->first());
+
 
 		// $storageCategories = StorageCategory::matureStorageCategories($channel_id)->get();
 

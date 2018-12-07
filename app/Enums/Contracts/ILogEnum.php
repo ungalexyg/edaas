@@ -2,7 +2,7 @@
 
 namespace App\Enums\Contracts;
 
-use App\Enums\ProcessEnum as Processes;
+use App\Enums\ProcessableEnum as Processable;
 
 
 /**
@@ -14,9 +14,9 @@ interface ILogEnum
      * Log channels
      */
     const MAIN_PROCESSOR            = 'main_processor';
-    const ALIEXPRESS_CATEGORIES     = Processes::ALIEXPRESS_CATEGORIES;
-    const ALIEXPRESS_ITEMS          = Processes::ALIEXPRESS_ITEMS;
-    const SHOPIFY_SITES             = Processes::SHOPIFY_SITES;
+    const ALIEXPRESS_CATEGORIES     = Processable::KEY_ALIEXPRESS_CATEGORIES;
+    const ALIEXPRESS_ITEMS          = Processable::KEY_ALIEXPRESS_ITEMS;
+    const SHOPIFY_SITES             = Processable::KEY_SHOPIFY_SITES;
 
 
     /**

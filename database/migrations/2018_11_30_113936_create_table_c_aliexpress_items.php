@@ -3,21 +3,25 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
-use App\Enums\DBEnum as DBS;
-use App\Enums\ProcessEnum as Process;
-use App\Enums\CollectionEnum as Collection;
+use App\Lib\Migrations\ProcessableMigration; 
+use App\Enums\ProcessableEnum as Processable;
 
 
 
 class CreateTableCAliexpressItems extends Migration
 {
     /**
+     * Use migration trait
+     */
+    use ProcessableMigration;
+
+
+    /**
      * Migration table
      * 
      * @var string
      */
-    protected $table = Collection::ALIEXPRESS_ITEMS;
+    protected $table = Processable::TABLE_ALIEXPRESS_ITEMS;
 
 
     /**
@@ -42,20 +46,15 @@ class CreateTableCAliexpressItems extends Migration
                 $table->text('img_src')->nullable()->comment('Thumbnail image src');
                 $table->unsignedInteger('category_id')->comment('The category id of this item in the channel');
 
-
-                // processable fields
-                // $table->unsignedInteger(Collection::CHANNEL_ID)->comment('The channel id that represent this table\'s collections');                
-                $table->unsignedTinyInteger(Collection::CONTENT_STATUS)->default(Collection::CONTENT_ARCHIVED)->comment('The collection stauts define the status of this record in temrs of publicity');
-                $table->unsignedTinyInteger(Collection::PROCESS_STATUS)->default(Collection::PROCESS_PAUSED)->comment('The process status define if this processable entity should be processed');
-                $table->unsignedInteger(Collection::PROCESS_COUNT)->default(0)->nullable()->comment('Count how many times this process has run');                
-                $table->dateTime(Collection::PROCESS_LAST)->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Last process timestamp');
+                // add processable fields
+                $this->processable($table); 
 
                 // timestamps
                 $table->timestamps();                     
 
                 // foreign keys
-                // $table->foreign(Collection::CHANNEL_ID)->references('id')->on('channels')->onDelete('cascade');                               
-                $table->foreign('category_id')->references('id')->on(Collection::PREFIX . 'aliexpress_categories');//->onDelete('cascade');                                               
+                // $table->foreign(Processable::CHANNEL_ID)->references('id')->on('channels')->onDelete('cascade');                               
+                $table->foreign('category_id')->references('id')->on(Processable::TABLE_ALIEXPRESS_CATEGORIES);//->onDelete('cascade');                                               
             });
         }
     }

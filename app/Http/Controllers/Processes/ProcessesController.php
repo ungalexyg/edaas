@@ -14,7 +14,7 @@ class ProcessesController extends BaseController
     /**
      * Process channels
      * 
-     * @param string $process App\Enums\ProcessEnum
+     * @param string $process App\Enums\ProcessableEnum::$keys
      * @return mixed $response
      */
     public function process($process) 

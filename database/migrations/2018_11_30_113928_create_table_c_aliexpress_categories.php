@@ -3,19 +3,24 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
-use App\Enums\CollectionEnum as Collection;
-
+use App\Lib\Migrations\ProcessableMigration; 
+use App\Enums\ProcessableEnum as Processable;
 
 
 class CreateTableCAliexpressCategories extends Migration
 {
     /**
+     * Use migration trait
+     */
+    use ProcessableMigration;
+
+
+    /**
      * Migration table
      * 
      * @var string
      */
-    protected $table = Collection::ALIEXPRESS_CATEGORIES;
+    protected $table = Processable::TABLE_ALIEXPRESS_CATEGORIES;
 
 
     /**
@@ -37,14 +42,10 @@ class CreateTableCAliexpressCategories extends Migration
                 $table->unsignedBigInteger('category_id')->comment('The category id in the channel');
                 $table->unsignedBigInteger('parent_category_id')->comment('The parent category id in the channel');
                 
-                // processable fields
-                // $table->unsignedInteger(Collection::CHANNEL_ID)->comment('The channel id that represent this table\'s collections');                
-                $table->unsignedTinyInteger(Collection::CONTENT_STATUS)->default(Collection::CONTENT_ARCHIVED)->comment('The collection stauts define the status of this record in temrs of publicity');
-                $table->unsignedTinyInteger(Collection::PROCESS_STATUS)->default(Collection::PROCESS_PAUSED)->comment('The process status define if this processable entity should be processed');
-                $table->unsignedInteger(Collection::PROCESS_COUNT)->default(0)->nullable()->comment('Count how many times this process has run');                
-                $table->dateTime(Collection::PROCESS_LAST)->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Last process timestamp');
+                // add processable fields
+                $this->processable($table); 
 
-                 // timestamps
+                 // add timestamps fields
                 $table->timestamps();
 
                 // foreign keys

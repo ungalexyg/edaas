@@ -2,8 +2,8 @@
 
 namespace App\Models\Collectors\Base;
 
-use App\Enums\CollectionEnum as Collections;
 use App\App\Models\Collectors\Base\ICollector as CollectorModel;
+
 
 /**
  * Collector Interface

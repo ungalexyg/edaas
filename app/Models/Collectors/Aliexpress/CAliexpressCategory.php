@@ -2,14 +2,14 @@
 
 namespace App\Models\Collectors\Aliexpress;
 
-use App\Enums\CollectionEnum as Collection;
+use App\Enums\ProcessableEnum as Processable;
 use App\Models\Collectors\Base\BaseCollector;
 use App\Models\Collectors\Base\Traits\CategoryFamily;
 use App\Models\Collectors\Aliexpress\Exceptions\CAliexpressCategoryException as Exception;
 
 
 /**
- * Aliexpress Category Collection Model
+ * Collection Model- Aliexpress Category
  */
 class CAliexpressCategory extends BaseCollector 
 {
@@ -18,15 +18,23 @@ class CAliexpressCategory extends BaseCollector
      */
     use CategoryFamily;
 
+
+    /**
+     * Associate collector model with it's processs key
+     * 
+     * @var string
+     */
+    protected $process_key = Processable::KEY_ALIEXPRESS_CATEGORIES;
+
     
     /**
      * The table associated with the model.
      * 
      * @var string
      */
-    protected $table = Collection::ALIEXPRESS_CATEGORIES;
+    protected $table = Processable::TABLE_ALIEXPRESS_CATEGORIES;
 
-    
+
     /**
      * Store a batch of records
      * 
