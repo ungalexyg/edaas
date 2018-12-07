@@ -238,7 +238,7 @@ abstract class BaseProcessor implements IProcessor
 	{
 		if(isset($this->process)) 
 		{
-			return $this->process->process_status ? true : false;
+			return $this->process->active_status ? true : false;
 		}
 
 		return false;

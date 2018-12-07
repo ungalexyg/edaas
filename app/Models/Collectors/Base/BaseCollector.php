@@ -2,7 +2,6 @@
 
 namespace App\Models\Collectors\Base;
 
-use App\Enums\ProcessableEnum as Processable;
 use App\Models\Base\BaseModel;
 use App\Exceptions\ModelException as Exception;
 use App\Models\Collectors\Base\Traits\{CollectorRelations, CollectorScopes, CollectorValidations, CollectorActs};
@@ -33,24 +32,5 @@ abstract class BaseCollector extends BaseModel implements ICollector
      * 
      * @var string|null
      */
-    protected $process_key; 
-
-
-    /**
-     * Process enum reference
-     * 
-     * @var App\Enums\ProcessableEnum as Processable
-     */
-    protected static $processable;
-    
-
-    /**
-     * Boot setup
-     */
-    public static function boot()
-    {
-        // refer the collection enum for shared usage 
-        $enum = (new Processable);
-        static::$processable =& $enum;
-    }    
+    protected $process_key;   
 }

@@ -38,7 +38,7 @@ class ProcessableEnum extends BaseEnum
      */
     const PROCESS_COUNT                         = 'process_count'; // process counter, incremented in each process flight
     const LAST_PROCESS                          = 'last_process'; // updated in each process flight
-    const SLEEP_TIME                            = 'sleep_time'; // for how long the process should be disabled after the last flight (in minutes)
+    const SLEEP_TIME                            = 'sleep_minutes'; // for how long the process should be disabled after the last flight (in minutes)
     const MULTIPLE_LIMIT                        = 'multiple_limit'; // how many "awake" processable records should be processed in single process flight 
    
     

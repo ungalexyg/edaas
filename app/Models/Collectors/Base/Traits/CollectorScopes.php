@@ -2,10 +2,10 @@
 
 namespace App\Models\Collectors\Base\Traits;
 
-// use Illuminate\Support\Carbon;
-
+use Illuminate\Support\Carbon;
+use App\Models\Process\Process;
+use App\Enums\ProcessableEnum as Processable;
 use App\Models\Collectors\Base\BaseCollectorException;
-
 
 /**
  * Collector models scopes 
@@ -22,7 +22,7 @@ trait CollectorScopes
      */    
     public function scopePublished($query) 
     {
-        $query->where(static::$processable::PUBLIC_STATUS, '=', static::$processable::PUBLIC_STATUS_PUBLISHED);
+        $query->where(Processable::PUBLIC_STATUS, '=', Processable::PUBLIC_STATUS_PUBLISHED);
     }
 
 
@@ -36,7 +36,7 @@ trait CollectorScopes
      */    
     public function scopeUnpublished($query) 
     {
-        $query->where(static::$processable::PUBLIC_STATUS, '=', static::$processable::PUBLIC_STATUS_HIDDEN);
+        $query->where(Processable::PUBLIC_STATUS, '=', Processable::PUBLIC_STATUS_HIDDEN);
     }
 
 
@@ -50,7 +50,7 @@ trait CollectorScopes
      */    
     public function scopeActive($query) 
     {
-        $query->where(static::$processable::PROCESS_STATUS, '=', static::$processable::PROCESS_STATUS_ACTIVE);
+        $query->where(Processable::ACTIVE_STATUS, '=', Processable::ACTIVE_STATUS_ACTIVE);
     }
 
 
@@ -64,7 +64,7 @@ trait CollectorScopes
      */    
     public function scopeUnactive($query) 
     {
-        $query->where(static::$processable::PROCESS_STATUS, '=', static::$processable::PROCESS_STATUS_PAUSED);
+        $query->where(Processable::ACTIVE_STATUS, '=', Processable::ACTIVE_STATUS_PAUSED);
     }  
     
     
@@ -75,27 +75,16 @@ trait CollectorScopes
      * @param Illuminate\Database\Query\Builder // injected natively
      * @return void
      */
-    public function scopeAwakeCollections($query)
+    public function scopeAwakeProcessables($query)
     {
-
-        // dd(static::$processable::PROCESS_STATUS);
-
-        dd(__METHOD__);
-
-        // $query->where('id', 2);
-
-        // $config     = config('processes.settings.'. $this->process) ?? null;
-        // $sleep      = $config['sleep'] ?? null; 
-        // $limit      = $config['limit'] ?? null; 
-
-        // if(!$config || !$sleep || !$limit) throw new Exception(Exception::INVALID_PROCESS_CONFIG . ' | config : ' . var_export($config, 1));
-
-        // $datetime = Carbon::now()->subMinutes($sleep)->toDateTimeString();
+        $process        = Process::where('key', '=', $this->process_key)->first(); 
+        $sleep_time     = Carbon::now()->subMinutes($process->sleep_minutes)->toDateTimeString();
+        $multiple_limit = $process->multiple_limit;
         
-        // $query
-        //     ->where(static::PROCESS_STATUS, '=', static::PROCESS_ACTIVE)
-        //     ->where(static::LAST_PROCESS,'<=', $datetime)
-        //     ->orderBy($this->table . '.' . static::LAST_PROCESS, 'asc')
-        //     ->take($limit);        
+        $query
+            ->where(Processable::ACTIVE_STATUS, '=', Processable::ACTIVE_STATUS_ACTIVE)
+            ->where(Processable::LAST_PROCESS,'<=', $sleep_time)
+            ->orderBy($this->table . '.' . Processable::LAST_PROCESS, 'asc')
+            ->take($multiple_limit);        
     }       
 }

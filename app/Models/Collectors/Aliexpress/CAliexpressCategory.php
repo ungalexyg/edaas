@@ -51,7 +51,6 @@ class CAliexpressCategory extends BaseCollector
 
             unset($record['category_id']); // adjustment for updateOrCreate
                             
-            // if there's a StorageCategory with the given channel_category_id, set the rest of the data to the given $category_data, otherwise create it.
             $storageCategory = static::$self::updateOrCreate(['category_id' => $category_id], $record); 
         }    
     }    

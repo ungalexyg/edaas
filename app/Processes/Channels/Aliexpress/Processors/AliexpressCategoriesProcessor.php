@@ -31,7 +31,7 @@ class AliexpressCategoriesProcessor extends BaseChannelProcessor
         $collector  = new Collector;
         $channel    =& $this->process->processable; 
         $exception  = Exception::class;     
-
+		
 		$this->setChannel($channel);
 		$this->setAdapter($adapter);
 		$this->setCollector($collector);

@@ -168,30 +168,24 @@ class AliexpressItemsProcessor extends BaseChannelProcessor
 	/**
 	 * Set categories to scan items from
 	 * 
-	 * TODO:
-	 * 
-	 * 2 - get mature storage categories from mature channels
-	 * 3 - process these categories
+	 * @return self
 	 */
 	protected function setCategories() 
 	{		
-		$categories = $this->categoryCollector::awakeCollections();
+		$this->categories = $this->categoryCollector::awakeProcessables()->get();
 
-		dd($categories->first());
+		if(!$this->categories->count()) 
+		{
+			//TODO: log...
 
+			dd("METHOD NOT IMPLEMENTED - continue here", __METHOD__);
 
-		// $storageCategories = StorageCategory::matureStorageCategories($channel_id)->get();
+			// Log::channel(Log::ALIEXPRESS_ITEMS)->info(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND, ['in' => __METHOD__ .':'. __LINE__]);
+			// $this->logger->info($this->log::DONE, ['in' => __METHOD__ .':'.__LINE__]);
 
-		// if(!$storageCategories->count()) 
-		// {
-		// 	Log::channel(Log::PROCESSOR_ITEMS)->info(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND, ['in' => __METHOD__ .':'. __LINE__]);
-			
-		// 	throw new Exception(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND);
-		// } 
+			throw new Exception(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND);
+		} 
 
-		// $this->categories = $storageCategories;		
-
-		// return $this;
+		return $this;
 	}	
-
 }
