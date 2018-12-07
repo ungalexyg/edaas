@@ -55,8 +55,7 @@ class AliexpressItemsProcessor extends BaseChannelProcessor
 		$this->setAdapter($adapter);
 		$this->setCollector($itemCollector);
         $this->setException($exception); 
-        $this->setCategories(); 
-
+        
 		return $this;
 	}	
 
@@ -73,20 +72,9 @@ class AliexpressItemsProcessor extends BaseChannelProcessor
 	 */
 	public function process() 
 	{
-		dd("METHOD NOT IMPLEMENTED", __METHOD__);
+		$this->setCategories()->scan()->store(); 
 
-		// foreach($this->channels as $channel) 
-		// {
-		// 	$this->setCategoiries($channel->id)->loadAdapter($channel->key);
-
-		// 	$this->channel_key = $channel->key;
-
-		// 	$this->scan()->store();
-
-		// 	($this->config['auto_publish'] ?? false) ? $this->publish() : null;			
-		// }
-
-		// return $this;
+		return $this;
 	}
 
 
@@ -97,49 +85,47 @@ class AliexpressItemsProcessor extends BaseChannelProcessor
      */
 	public function scan() 
 	{
+        $this->adapter->setSpider();
+		
 
-		dd("METHOD NOT IMPLEMENTED", __METHOD__);
+		foreach($this->categories as $category) 
+		{
+			$this->bag[$category->id] = $this->adapter->fetch($category);	
+		}
+		
+		$this->logger->info((!empty($this->bag) ? $this->log::BAG_OK : $this->log::BAG_FAILED), ['in' => __METHOD__ .':'.__LINE__]);
 
-		// foreach($this->categories as $storageCategory) 
-		// {
-		// 	$this->bag[$this->process][$this->channel_key][$storageCategory->id] = $this->adapter->fetch($storageCategory);			
-		// }
-
-		// Log::channel(Log::PROCESSOR_ITEMS)->info(Log::ACTION_COMPLETED, ['in' => __METHOD__ .':'. __LINE__]);
-
-		// return $this;
+		return $this;
 	}
 
     
 	/**
-	 * Store fresh scanned data in the storage
-	 * 
+	 * Store fresh scanned data 
      * At this stage $this->bag should have the following contents:
      *  
-     * [items] => Array // process name
-     *   (
-     *       [aliexpress] => Array // channel key
-     *           (
-     *               [123] => Array // storage_category_id
-     *                   ( 
-	 * 						 [0] => Array // item data
-	 * 							(
-	 *                       		[title] => Women's Watch
-     *                       		[price] => 12.13$
-     *                       		[orders] => 5
-	 * 							)	
-	 *
-     *                   )
+     *   [
+	 *		32905725878 => 
+	 *		[
+	 *			"item_id" => 32905725878
+	 *			"title" => "Ulzzang Harajuku hoodies Fashion BTS Kpop Clothes Women Casual Hooded Sweatshirts Pullovers Tops Short Sleeve Hoodie Shirts"
+	 *			"path" => "/item/Ulzzang-Harajuku-hoodies-Fashion-BTS-Kpop-Clothes-Women-Casual-Hooded-Sweatshirts-Pullovers-Tops-Short-Sleeve-Hoodie/32905725878.html"
+	 *			"img_src" => null
+	 *			"price_min" => 7.51
+	 *			"price_max" => false
+	 *			"orders" => 419
+	 *		]
+     *      ...
+     *   ]
 	 * 
      * @return self
 	 */
 	public function store() 
 	{      
-		dd("METHOD NOT IMPLEMENTED", __METHOD__);
+		// dd("METHOD NOT IMPLEMENTED", __METHOD__);
 
-		// $items =& $this->bag[$this->process] ?? null;
+        $this->collector::perform('storeBatch', $this->bag);
 
-        // StorageItem::perform('storeBatch', $items);
+        $this->logger->info($this->log::DONE, ['in' => __METHOD__ .':'.__LINE__]);
 
         // Log::channel(Log::PROCESSOR_ITEMS)->info(Log::ACTION_COMPLETED, ['in' => __METHOD__ .':'. __LINE__]);
 
@@ -171,19 +157,14 @@ class AliexpressItemsProcessor extends BaseChannelProcessor
 	 * @return self
 	 */
 	protected function setCategories() 
-	{		
+	{				
 		$this->categories = $this->categoryCollector::awakeProcessables()->get();
-
+		
 		if(!$this->categories->count()) 
 		{
-			//TODO: log...
+			$this->logger->info(Exception::AWAKE_ENTITIES_NOT_FOUND, ['in' => __METHOD__ .':'.__LINE__]);
 
-			dd("METHOD NOT IMPLEMENTED - continue here", __METHOD__);
-
-			// Log::channel(Log::ALIEXPRESS_ITEMS)->info(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND, ['in' => __METHOD__ .':'. __LINE__]);
-			// $this->logger->info($this->log::DONE, ['in' => __METHOD__ .':'.__LINE__]);
-
-			throw new Exception(Exception::MATURE_STORAGE_CATEGORIES_NOT_FOUND);
+			throw new Exception(Exception::AWAKE_ENTITIES_NOT_FOUND);
 		} 
 
 		return $this;

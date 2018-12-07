@@ -10,5 +10,5 @@ use App\Exceptions\ModelException;
  */
 class CAliexpressItemException extends ModelException
 {
-    
+    const INVALID_CHANNEL_ITEM_ID     = 'Store failed, got record with invalid channel item id';    
 }

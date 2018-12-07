@@ -26,7 +26,28 @@ class CAliexpressItem extends BaseCollector
      * @var string
      */
     protected $table = Processable::TABLE_ALIEXPRESS_ITEMS;    
+
     
+    // /**
+    //  * Store a batch of records
+    //  * 
+    //  * @param array $batch
+    //  * @return void
+    //  */
+    // public function storeBatch(array $batch)
+    // {
+    //     foreach($batch as $record) 
+    //     {
+    //         $category_id = $record['category_id'] ?? null;
+
+    //         if(!is_numeric($category_id)) throw new Exception(Exception::INVALID_CHANNEL_CATEGORY_ID . ' | category_id : ' . var_export($category_id, 1));
+
+    //         unset($record['category_id']); // adjustment for updateOrCreate
+                            
+    //         $storageCategory = static::$self::updateOrCreate(['category_id' => $category_id], $record); 
+    //     }    
+    // }   
+
     
     /**
      * Store a batch of records
@@ -36,18 +57,23 @@ class CAliexpressItem extends BaseCollector
      */
     public function storeBatch(array $batch)
     {
-        dd("METHOD NOT IMPLEMENTED", __METHOD__);
+        foreach($batch as $category_id => $items) 
+        {
+            foreach($items as $item_id => $item) 
+            {
+                $item_id = $item['item_id'] ?? null;
 
-        // foreach($batch as $record) 
-        // {
-        //     $category_id = $record['category_id'] ?? null;
+                if(!is_numeric($item_id)) throw new Exception(Exception::INVALID_CHANNEL_ITEM_ID . ' | item_id : ' . var_export($item_id, 1));
+    
+                unset($item['item_id']); // adjustment for updateOrCreate
+                    
+                // dd(static::$self->table);
 
-        //     if(!is_numeric($category_id)) throw new Exception(Exception::INVALID_CHANNEL_CATEGORY_ID . ' | category_id : ' . var_export($category_id, 1));
+                // if there's a record with the given item_id, set the rest of the data to the given $record, otherwise create it.
+                $r = static::$self::updateOrCreate(['item_id' => $item_id], $item); 
 
-        //     unset($record['category_id']); // adjustment for updateOrCreate
-                            
-        //     // if there's a StorageCategory with the given channel_category_id, set the rest of the data to the given $category_data, otherwise create it.
-        //     $storageCategory = static::$self::updateOrCreate(['category_id' => $category_id], $record); 
-        // }    
+                // dd($r);
+            }
+        }    
     }    
 }

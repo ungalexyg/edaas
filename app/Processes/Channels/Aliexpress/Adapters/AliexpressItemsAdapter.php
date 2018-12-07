@@ -4,7 +4,7 @@ namespace App\Processes\Channels\Aliexpress\Adapters;
 
 
 use Log;
-use App\Models\StorageCategory\StorageCategory;
+use App\Models\Collectors\Aliexpress\CAliexpressCategory;
 use Symfony\Component\DomCrawler\Crawler as CoreCrawler;
 use App\Lib\Vendor\Symfony\DomCrawler\CrawlerExtension as Crawler;
 use App\Processes\Channels\Aliexpress\Exceptions\AliexpressItemsAdapterException as Exception;
@@ -21,75 +21,71 @@ use App\Processes\Channels\Aliexpress\Exceptions\AliexpressItemsAdapterException
      * 
      * @var int
      */
-    protected $channel_item_id = 0;
+    protected $item_id = 0;
 
 
 	/**
 	 * Fetch targets
 	 * 
-     * @param StorageCategory $storageCategory
+     * @param CAliexpressCategory $category
      * @return mixed
 	 */        
-    public function fetch($storageCategory=null) 
+    public function fetch($category=null) 
     {
-        if(!($storageCategory instanceof StorageCategory)) throw new Exception(Exception::INVALID_STORAGE_CATEORY_INSTANCE);
-
         // prep target url
-        $this->setPath($storageCategory->path)->setUrl();
+        $this->setPath($category->path)->setUrl();
 
         // prep clients
-
         $crawler = $this->spider->request('GET', $this->url);  
         
-
         // get items
         $crawler->filter('body #list-items li.list-item')->each(function (CoreCrawler $subcrawler) 
         {
-            $this->channel_item_id = 0;  // ensure reset to avoid data assginement for wrong rcord
+            $this->item_id = 0;  // ensure reset to avoid data assginement for wrong rcord
             
             
-            // get channel_item_id
+            // get item_id
             $subcrawler->filter('input.atc-product-id')->each(function($node) 
             {
-                $this->channel_item_id = intval(trim($node->attr('value')));
+                $this->item_id = intval(trim($node->attr('value')));
             });  
 
-            if($this->channel_item_id) 
+            if($this->item_id) 
             {
-                $this->bag[$this->channel_item_id]['channel_item_id'] = $this->channel_item_id;
+                $this->bag[$this->item_id]['item_id'] = $this->item_id;
 
                 // get title, path
                 $subcrawler->filter('h3 a.product')->each(function($node) 
                 {
-                    $this->bag[$this->channel_item_id]['title'] = $node->attr('title');
+                    $this->bag[$this->item_id]['title'] = $node->attr('title');
                     $item_url       = $node->attr('href');                                
-                    $this->bag[$this->channel_item_id]['path']  = $this->parseUrl($item_url);         
+                    $this->bag[$this->item_id]['path']  = $this->parseUrl($item_url);         
                 });  
 
                 // get img_src
                 $subcrawler->filter('div.img img.picCore')->each(function($node) 
                 {
-                    $this->bag[$this->channel_item_id]['img_src'] = $node->attr('src');                               
+                    $this->bag[$this->item_id]['img_src'] = $node->attr('src');                               
                 });
                 
                 // get price 
                 $subcrawler->filter('span[itemprop="price"]')->each(function($node)
                 {
                     $prices = $this->parsePrice($node->text());                               
-                    $this->bag[$this->channel_item_id]['price_min'] = $prices['min'];
-                    $this->bag[$this->channel_item_id]['price_max'] = $prices['max'];
+                    $this->bag[$this->item_id]['price_min'] = $prices['min'];
+                    $this->bag[$this->item_id]['price_max'] = $prices['max'];
                 });  
                 
                 // get orders
                 $subcrawler->filter('a.order-num-a')->each(function($node) 
                 {
-                    $this->bag[$this->channel_item_id]['orders'] = $this->parseOrders($node->text());                               
+                    $this->bag[$this->item_id]['orders'] = $this->parseOrders($node->text());                               
                 });                  
             }
         }); 
             
         // log results 
-        Log::channel(Log::ADAPTERS_ITEMS)->info($this->domain . ' - returned ' . (!empty($this->bag) ? 'full fetch :)' : 'empty fetch :/'), ['in' => __METHOD__ .':'.__LINE__]);  
+        Log::channel(Log::ALIEXPRESS_ITEMS)->info($this->domain . ' - returned ' . (!empty($this->bag) ? 'full fetch :)' : 'empty fetch :/'), ['in' => __METHOD__ .':'.__LINE__]);  
         
         return $this->bag;        
     }

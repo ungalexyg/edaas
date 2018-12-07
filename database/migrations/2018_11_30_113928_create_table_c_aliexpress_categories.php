@@ -36,12 +36,12 @@ class CreateTableCAliexpressCategories extends Migration
             {
                 // info fields   
                 $table->increments('id');
+                $table->unsignedBigInteger('category_id')->comment('The category id in the channel');
+                $table->unsignedBigInteger('parent_category_id')->comment('The parent category id in the channel');                
                 $table->string('title', 1060)->nullable();
                 $table->string('path', 1060)->nullable()->comment('The realtive path of the collection in the channel');                ;
                 $table->string('description', 1060)->nullable();
-                $table->unsignedBigInteger('category_id')->comment('The category id in the channel');
-                $table->unsignedBigInteger('parent_category_id')->comment('The parent category id in the channel');
-                
+
                 // add processable fields
                 $this->processable($table); 
 

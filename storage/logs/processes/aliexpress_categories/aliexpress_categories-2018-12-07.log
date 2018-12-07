@@ -1,0 +1,3 @@
+[2018-12-07 20:50:35] local.INFO: got full bag {"in":"App\\Processes\\Channels\\Base\\Traits\\ChennelProcess::scan:35"} 
+[2018-12-07 20:50:35] local.INFO: action completed {"in":"App\\Processes\\Channels\\Base\\Traits\\ChennelProcess::store:61"} 
+[2018-12-07 20:50:35] local.INFO: action completed {"in":"App\\Processes\\Channels\\Base\\Traits\\ChennelProcess::process:20"} 

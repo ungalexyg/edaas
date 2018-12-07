@@ -40,7 +40,6 @@ trait ChennelProcess
     
 	/**
 	 * Store fresh scanned data in the storage
-     *
      * At this stage $this->bag should have the following contents:
      *  
      *   [

@@ -51,7 +51,7 @@ class CAliexpressCategory extends BaseCollector
 
             unset($record['category_id']); // adjustment for updateOrCreate
                             
-            $storageCategory = static::$self::updateOrCreate(['category_id' => $category_id], $record); 
+            static::$self::updateOrCreate(['category_id' => $category_id], $record); 
         }    
     }    
 }

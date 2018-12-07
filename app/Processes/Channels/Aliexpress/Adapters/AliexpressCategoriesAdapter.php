@@ -32,8 +32,6 @@ use App\Processes\Channels\Aliexpress\Exceptions\AliexpressCategoriesAdapterExce
 	/**
 	 * Fetch destenation
 	 * 
-     * //TODO: single point of $this->bag build for all adapters
-     * 
      * @param mixed $reference
      * @return array
 	 */        
@@ -76,7 +74,7 @@ use App\Processes\Channels\Aliexpress\Exceptions\AliexpressCategoriesAdapterExce
             });
         }); 
                 
-        Log::channel(Log::ALIEXPRESS_CATEGORIES)->info($this->domain . ' - fetched ' . (!empty($this->bag) ? 'full bag :)' : 'empty fetch :/'), ['in' => __METHOD__ .':'.__LINE__]);
+        Log::channel(Log::ALIEXPRESS_ITEMS)->info($this->domain . ' - fetched ' . (!empty($this->bag) ? 'full bag :)' : 'empty fetch :/'), ['in' => __METHOD__ .':'.__LINE__]);
             
         return $this->bag;
     }

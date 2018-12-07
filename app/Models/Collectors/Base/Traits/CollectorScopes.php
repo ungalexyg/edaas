@@ -81,6 +81,8 @@ trait CollectorScopes
         $sleep_time     = Carbon::now()->subMinutes($process->sleep_minutes)->toDateTimeString();
         $multiple_limit = $process->multiple_limit;
         
+        // dd($this->process_key, $process->id, $sleep_time, $multiple_limit);
+        
         $query
             ->where(Processable::ACTIVE_STATUS, '=', Processable::ACTIVE_STATUS_ACTIVE)
             ->where(Processable::LAST_PROCESS,'<=', $sleep_time)

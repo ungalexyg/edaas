@@ -37,6 +37,8 @@ class CreateTableCAliexpressItems extends Migration
             {
                 // info fields
                 $table->increments('id');
+                $table->unsignedBigInteger('item_id')->comment('The item id in the channel');
+                $table->unsignedInteger('category_id')->comment('The category id of this item in the app (not the channel)');                
                 $table->string('title', 1060)->nullable();
                 $table->string('path', 1060)->nullable()->comment('The realtive path of the collection in the channel');
                 $table->string('description', 2083)->nullable();
@@ -44,7 +46,6 @@ class CreateTableCAliexpressItems extends Migration
                 $table->float('price_min', 9, 2)->nullable();
                 $table->float('price_max', 9, 2)->nullable();
                 $table->text('img_src')->nullable()->comment('Thumbnail image src');
-                $table->unsignedInteger('category_id')->comment('The category id of this item in the channel');
 
                 // add processable fields
                 $this->processable($table); 
@@ -53,7 +54,8 @@ class CreateTableCAliexpressItems extends Migration
                 $table->timestamps();                     
 
                 // foreign keys
-                // $table->foreign(Processable::CHANNEL_ID)->references('id')->on('channels')->onDelete('cascade');                               
+                // category refer to app category id to keep control on data integrity 
+                // from the it can be refered to the channel category id 
                 $table->foreign('category_id')->references('id')->on(Processable::TABLE_ALIEXPRESS_CATEGORIES);//->onDelete('cascade');                                               
             });
         }
