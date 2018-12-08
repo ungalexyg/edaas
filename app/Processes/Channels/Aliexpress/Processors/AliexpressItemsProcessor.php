@@ -3,7 +3,6 @@
 namespace App\Processes\Channels\Aliexpress\Processors;
 
 
-use App\Processes\Channels\Base\Traits\ChennelProcess;
 use App\Processes\Channels\Base\Processors\BaseChannelProcessor;
 use App\Models\Collectors\Aliexpress\CAliexpressItem as ItemCollector;
 use App\Models\Collectors\Aliexpress\CAliexpressCategory as CategoryCollector;
@@ -16,12 +15,6 @@ use App\Processes\Channels\Aliexpress\Exceptions\AliexpressItemsProcessorExcepti
  */ 
 class AliexpressItemsProcessor extends BaseChannelProcessor
 {
-    /**
-     * Use traits
-     */
-    use ChennelProcess;
-
-
 	/**
 	 * Category collector instance
 	 * 

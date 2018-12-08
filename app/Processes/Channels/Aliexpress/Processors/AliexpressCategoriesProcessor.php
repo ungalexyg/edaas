@@ -2,7 +2,6 @@
 
 namespace App\Processes\Channels\Aliexpress\Processors;
 
-use App\Processes\Channels\Base\Traits\ChennelProcess;
 use App\Processes\Channels\Base\Processors\BaseChannelProcessor;
 use App\Models\Collectors\Aliexpress\CAliexpressCategory as Collector;
 use App\Processes\Channels\Aliexpress\Adapters\AliexpressCategoriesAdapter as Adapter;
