@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Processes;
 
 use App\Http\Controllers\Base\BaseController;
 use App\Processes\Base\MainProcessor as Processor;
+use App\Models\Collectors\Aliexpress\CAliexpressItem;
 
 
 /**

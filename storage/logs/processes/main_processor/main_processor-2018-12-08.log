@@ -1,0 +1,5 @@
+[2018-12-08 21:10:38] local.INFO: action completed {"response":{"process":"aliexpress_items","message":"action completed"},"in":"App\\Processes\\Base\\MainProcessor::run:61"} 
+[2018-12-08 21:25:45] local.INFO: action completed {"response":{"process":"aliexpress_items","message":"action completed"},"in":"App\\Processes\\Base\\MainProcessor::run:61"} 
+[2018-12-08 21:34:22] local.INFO: action completed {"response":{"process":"aliexpress_categories","message":"action completed"},"in":"App\\Processes\\Base\\MainProcessor::run:61"} 
+[2018-12-08 21:35:28] local.INFO: action completed {"response":{"process":"aliexpress_categories","message":"action completed"},"in":"App\\Processes\\Base\\MainProcessor::run:61"} 
+[2018-12-08 21:35:36] local.INFO: EXCEPTION! {"response":{"exception":"App\\Processes\\Channels\\Aliexpress\\Exceptions\\AliexpressItemsProcessorException","message":"Awake processable entities not found","file":"/Users/ungalexy/code/valet/edaas/app/Processes/Channels/Aliexpress/Processors/AliexpressItemsProcessor.php","line":167},"in":"App\\Processes\\Base\\MainProcessor::run:61"} 

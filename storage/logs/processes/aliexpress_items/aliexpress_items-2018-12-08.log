@@ -1,0 +1,17 @@
+[2018-12-08 21:03:22] local.INFO: aliexpress.com - returned full fetch :) {"in":"App\\Processes\\Channels\\Aliexpress\\Adapters\\AliexpressItemsAdapter::fetch:88"} 
+[2018-12-08 21:03:22] local.INFO: got full bag {"in":"App\\Processes\\Channels\\Aliexpress\\Processors\\AliexpressItemsProcessor::scan:96"} 
+[2018-12-08 21:04:02] local.INFO: aliexpress.com - returned full fetch :) {"in":"App\\Processes\\Channels\\Aliexpress\\Adapters\\AliexpressItemsAdapter::fetch:88"} 
+[2018-12-08 21:04:02] local.INFO: got full bag {"in":"App\\Processes\\Channels\\Aliexpress\\Processors\\AliexpressItemsProcessor::scan:96"} 
+[2018-12-08 21:04:15] local.INFO: aliexpress.com - returned full fetch :) {"in":"App\\Processes\\Channels\\Aliexpress\\Adapters\\AliexpressItemsAdapter::fetch:88"} 
+[2018-12-08 21:04:15] local.INFO: got full bag {"in":"App\\Processes\\Channels\\Aliexpress\\Processors\\AliexpressItemsProcessor::scan:96"} 
+[2018-12-08 21:05:51] local.INFO: aliexpress.com - returned full fetch :) {"in":"App\\Processes\\Channels\\Aliexpress\\Adapters\\AliexpressItemsAdapter::fetch:88"} 
+[2018-12-08 21:05:51] local.INFO: got full bag {"in":"App\\Processes\\Channels\\Aliexpress\\Processors\\AliexpressItemsProcessor::scan:96"} 
+[2018-12-08 21:10:38] local.INFO: aliexpress.com - returned full fetch :) {"in":"App\\Processes\\Channels\\Aliexpress\\Adapters\\AliexpressItemsAdapter::fetch:88"} 
+[2018-12-08 21:10:38] local.INFO: got full bag {"in":"App\\Processes\\Channels\\Aliexpress\\Processors\\AliexpressItemsProcessor::scan:96"} 
+[2018-12-08 21:10:38] local.INFO: action completed {"in":"App\\Processes\\Channels\\Aliexpress\\Processors\\AliexpressItemsProcessor::store:128"} 
+[2018-12-08 21:25:45] local.INFO: aliexpress.com - returned full fetch :) {"in":"App\\Processes\\Channels\\Aliexpress\\Adapters\\AliexpressItemsAdapter::fetch:88"} 
+[2018-12-08 21:25:45] local.INFO: got full bag {"in":"App\\Processes\\Channels\\Aliexpress\\Processors\\AliexpressItemsProcessor::scan:96"} 
+[2018-12-08 21:25:45] local.INFO: action completed {"in":"App\\Processes\\Channels\\Aliexpress\\Processors\\AliexpressItemsProcessor::store:128"} 
+[2018-12-08 21:34:22] local.INFO: aliexpress.com - fetched full bag :) {"in":"App\\Processes\\Channels\\Aliexpress\\Adapters\\AliexpressCategoriesAdapter::fetch:77"} 
+[2018-12-08 21:35:28] local.INFO: aliexpress.com - fetched full bag :) {"in":"App\\Processes\\Channels\\Aliexpress\\Adapters\\AliexpressCategoriesAdapter::fetch:77"} 
+[2018-12-08 21:35:36] local.INFO: Awake processable entities not found {"in":"App\\Processes\\Channels\\Aliexpress\\Processors\\AliexpressItemsProcessor::setCategories:165"} 

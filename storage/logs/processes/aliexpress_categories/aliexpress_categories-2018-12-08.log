@@ -1,0 +1,6 @@
+[2018-12-08 21:34:22] local.INFO: got full bag {"in":"App\\Processes\\Channels\\Aliexpress\\Processors\\AliexpressCategoriesProcessor::scan:67"} 
+[2018-12-08 21:34:22] local.INFO: action completed {"in":"App\\Processes\\Channels\\Aliexpress\\Processors\\AliexpressCategoriesProcessor::store:93"} 
+[2018-12-08 21:34:22] local.INFO: action completed {"in":"App\\Processes\\Channels\\Aliexpress\\Processors\\AliexpressCategoriesProcessor::process:52"} 
+[2018-12-08 21:35:28] local.INFO: got full bag {"in":"App\\Processes\\Channels\\Aliexpress\\Processors\\AliexpressCategoriesProcessor::scan:67"} 
+[2018-12-08 21:35:28] local.INFO: action completed {"in":"App\\Processes\\Channels\\Aliexpress\\Processors\\AliexpressCategoriesProcessor::store:93"} 
+[2018-12-08 21:35:28] local.INFO: action completed {"in":"App\\Processes\\Channels\\Aliexpress\\Processors\\AliexpressCategoriesProcessor::process:52"} 

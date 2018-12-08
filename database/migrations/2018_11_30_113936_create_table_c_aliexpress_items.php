@@ -38,11 +38,11 @@ class CreateTableCAliexpressItems extends Migration
                 // info fields
                 $table->increments('id');
                 $table->unsignedBigInteger('item_id')->comment('The item id in the channel');
-                $table->unsignedInteger('category_id')->comment('The category id of this item in the app (not the channel)');                
+                $table->unsignedInteger('category_id')->nullable()->comment('The category id of this item in the app (not the channel)');                
                 $table->string('title', 1060)->nullable();
                 $table->string('path', 1060)->nullable()->comment('The realtive path of the collection in the channel');
                 $table->string('description', 2083)->nullable();
-                $table->integer('orders')->default(0)->comment('Item orders count in channel');
+                $table->integer('orders')->default(0)->nullable()->comment('Item orders count in channel');
                 $table->float('price_min', 9, 2)->nullable();
                 $table->float('price_max', 9, 2)->nullable();
                 $table->text('img_src')->nullable()->comment('Thumbnail image src');

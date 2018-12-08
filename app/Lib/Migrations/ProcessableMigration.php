@@ -20,13 +20,13 @@ trait ProcessableMigration
      */
     public function processable(Blueprint &$table) 
     {
-        $table->unsignedTinyInteger(Processable::ACTIVE_STATUS)->default(Processable::ACTIVE_STATUS_PAUSED)->comment('The process status define if this processable entity should be processed');
+        $table->unsignedTinyInteger(Processable::ACTIVE_STATUS)->default(Processable::ACTIVE_STATUS_PAUSED)->nullable()->comment('The process status define if this processable entity should be processed');
         
-        $table->unsignedTinyInteger(Processable::PUBLIC_STATUS)->default(Processable::PUBLIC_STATUS_HIDDEN)->comment('The collection stauts define the status of this record in temrs of publicity');
+        $table->unsignedTinyInteger(Processable::PUBLIC_STATUS)->default(Processable::PUBLIC_STATUS_HIDDEN)->nullable()->comment('The collection stauts define the status of this record in temrs of publicity');
                 
         $table->unsignedBigInteger(Processable::PROCESS_COUNT)->default(0)->nullable()->comment('Count how many times this process has run');                
                         
-        $table->dateTime(Processable::LAST_PROCESS)->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Last process timestamp');        
+        $table->dateTime(Processable::LAST_PROCESS)->default(DB::raw('CURRENT_TIMESTAMP'))->nullable()->comment('Last process timestamp');        
     }
 }   
 
